@@ -1,0 +1,124 @@
+table {
+	border: 1px solid black;
+}
+tr {
+	border: 1px solid black;
+	padding: 5px;
+	margin: 0;
+}
+td {
+	padding: 5px;
+	margin: 0;
+}
+#Weekday {
+	color: lightgray;
+	display: inline;
+	border-top: solid 1px gray;
+	border-left: solid 1px gray;
+	border-right: solid 1px gray;
+	border-radius: 5px 5px 0 0;
+	padding: 2px 10px;
+	cursor: pointer;
+}
+#Saturday {
+	color: lightgray;
+	display: inline;
+	border-top: solid 1px gray;
+	border-left: solid 1px gray;
+	border-right: solid 1px gray;
+	border-radius: 5px 5px 0 0;
+	padding: 2px 10px;
+	cursor: pointer;
+}
+#Sunday {
+	color: lightgray;
+	display: inline;
+	border-top: solid 1px gray;
+	border-left: solid 1px gray;
+	border-right: solid 1px gray;
+	border-radius: 5px 5px 0 0;
+	padding: 2px 10px;
+	cursor: pointer;
+}
+#dayTabs div.selectedDay {
+	color: #238;
+	border: solid 1px gray;
+	border-bottom: solid 2px white;
+	font-weight: bold;
+	z-index:999;
+}
+
+#flipRoute {
+	padding: 5px;
+	border-radius: 5px;
+	margin: 10px;
+	margin-bottom: 25px;
+}
+
+#schedule {
+	overflow-x: auto;
+	overflow-y: auto;
+	border: solid 1px gray;
+	margin-bottom: 15px;
+	border-radius: 0 5px 5px 5px;
+}
+ul {
+	list-style-type: none;
+}
+#side-nav {
+	height: 100%;
+	width: 100%;
+	margin: 50px 0 0 0;
+}
+.selectedTab:hover {
+	background-color: gray;
+}
+
+#schedule{  
+    overflow-x:scroll;
+}
+#busTable{
+    overflow:visible;
+    width:100% !important;
+}
+
+#ui-datepicker-div {
+	background-color: white;
+	border: solid 1px gray;
+	border-radius: 5px;
+}
+#ui-datepicker-div tr {
+	border: 1px solid gray;
+}
+.ui-datepicker td a {
+	text-align: center;
+}
+#mainSchedule {
+	clear: both;
+	padding-top: 15px;
+}
+#dayTabs input[type="button"] {
+	border-radius: 5px;
+}
+#applyFilter {
+	
+}
+#disclaimer {
+	margin-left: 20px;
+}
+input[type="time"] {
+	border-radius: 5px;
+	height: 30px;
+	padding: 5px 1px;
+	border: 1px solid gray;
+	margin-bottom: 10px;
+}
+select#stopListStart, select#stopListEnd {
+	margin-bottom: 10px;
+}
+.centerText {
+	margin: 0;
+}
+#customizeRoute h4 {
+	color: #238;
+}

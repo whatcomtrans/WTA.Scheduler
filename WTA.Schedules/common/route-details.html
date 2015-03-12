@@ -1,0 +1,75 @@
+﻿
+<div class="route-details drop-shadow">
+    <h3 id="routeNumber"></h3>
+    <div class="direction-row">
+        <h3 id="routeDir1"></h3>
+        <i class="fa fa-arrows-h"></i>
+        <h3 id="routeDir2"></h3>
+        <!--<input type="button" class="fa fa-refresh" name="flipRoute" id="flipRoute" onclick="flipRoute();">-->
+        
+        <div  id="flipRoute" onclick="flipRoute();">
+            <i class="fa fa-refresh"></i>
+        </div>
+      
+        <span>Reverse<br />Direction</span>
+    </div>
+    <div id="routeMap" class="map-image normal">
+        <img alt="route map" src="/Images/maps/Map-14.png" />
+        <div class="map-bottom-row"><span>System Map</span><a href="javascript:swapMapSize()">Expand >></a></div>
+    </div>
+    <div id="customizeRoute">
+        <h4>Customize Schedule</h4>
+        <div class="locations">
+            <fieldset>
+                <label class="centerText">Start</label>
+                <select id="stopListStart" name="stopListStart">
+                    <option value="selectStopListStart" disabled>Starting Bus Stop</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <label class="centerText">End</label>
+                <select id="stopListEnd" name="stopListEnd">
+                    <option value="selectStopListEnd" disabled>Select the Starting Bus Stop First</option>
+                </select>
+            </fieldset>
+        </div>
+        <div class="times">
+            <fieldset>
+                <label class="centerText">Between</label>
+                <input type="time" id="startTime">
+            </fieldset>
+            <fieldset>
+                <label class="centerText">And</label>
+                <input type="time" id="endTime">
+            </fieldset>
+        </div>
+
+        <div class="button-row">
+            <input type="button" name="applyFilter" id="applyFilter" value="Apply Filter" onclick="applyFilter();">
+            <input type="button" name="clearFilter" id="clearFilter" value="Clear Filter" onclick="clearFilter();">
+            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('schedule');">
+        </div>
+    </div>
+
+    <div id="mainSchedule">
+
+        <div id="dayTabs">
+            <ul>
+                <li><a href="javascript:thisDay('Weekday')">Weekday</a></li>
+                <li><a href="javascript:thisDay('Saturday')">Saturday</a></li>
+                <li><a href="javascript:thisDay('Sunday');">Sunday</a></li>
+            </ul>
+            <div id="datePicker">
+                Schedule for: <input type="text" name="datepicker" id="datepicker" value="" onclick="">
+            </div>
+            <div id="schedule">
+                <table id="busTable" class="table table-striped table-hover table-bordered"></table>
+                <p id="disclaimer">* Please note that all times are estimates and bus times may vary.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

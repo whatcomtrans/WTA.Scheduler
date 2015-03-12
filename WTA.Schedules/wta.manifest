@@ -1,0 +1,55 @@
+﻿CACHE MANIFEST
+# v1 2014-011-11
+
+common/footer.html
+common/left-nav.html
+common/sidebar.html
+common/topnav.html
+
+default.html
+routes.html
+map.html
+demo.html
+
+fonts/fontawesome-webfont.eot
+fonts/fontawesome-webfont.svg
+fonts/fontawesome-webfont.ttf
+fonts/fontawesome-webfont.woff
+fonts/FontAwesome.otf
+
+css/bootstrap-theme.min.css
+css/bootstrap.min.css
+css/font-awesome.min.css
+css/main.css
+cssjquery-ui.min.css
+css/scheduler.css
+
+data/agency.js
+data/calendar.js
+data/calendar_dates.js
+data/fare_atributes.js
+data/fare_rules.js
+data/feed_info.js
+data/frequencies.js
+data/routes.js
+data/shapes.js
+data/stop_times.js
+data/stops.js
+data/transfers.js
+data/trips.js
+
+Scripts/jquery-1.9.0.min.js
+Scripts/jquery-ui.min.js
+Scripts/bootstrap.min.js
+Scripts/main.min.js
+Scripts/scheduler.js
+
+
+images/
+
+# Use from network if available
+NETWORK:
+
+
+# Fallback content
+FALLBACK:

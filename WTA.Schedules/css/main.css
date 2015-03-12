@@ -1,0 +1,1304 @@
+body,html {
+    width: 100%;
+    height: 100%;
+}
+body,h1,h2,h3,h4,h5,h6 {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+}
+
+/* Allow Font Awesome Icons in lieu of jQuery UI and only apply when using a FA icon */
+
+
+/*************************************** Bootstrap Overrides  ***************************************/
+html {
+	margin:0;
+	padding:0;
+}
+.row {
+	margin-right:0;
+	margin-left:0;
+}
+.container-fluid{
+    padding:0;
+}
+@-ms-viewport{ width: auto !important; }
+/*************************************** Misc Start ***************************************/
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color:none;
+}
+/*************************************** Misc End ***************************************/
+
+/*************************************** Main Elements Start ***************************************/
+#s4-workspace {
+	background-color:transparent;
+}
+body {
+	background-color:transparent;
+	color:#3D3D3D;
+	font-family:Arial, Helvetica, sans-serif;
+}
+.ms-TPBody a:link,
+.ms-TPBody a:visited,
+.ms-TPBody a{
+    color:#008472;
+}
+.container {
+	max-width:inherit;
+}
+a,
+a:focus,
+a:link {
+	color:#008472;
+	text-decoration:none;
+}
+a:visited {
+	color:#008472;
+	text-decoration:none;
+}
+a:hover {
+	color:#008472;
+	text-decoration:underline;
+}
+h3{
+    color:#008472;
+    text-transform:uppercase;
+    margin-top:8px;
+}
+h4{
+    color:#0f457a;
+    text-transform:uppercase;
+    margin-top:8px;
+}
+hr {
+	height:0px;
+	color:#FFFFFF;
+	background-color:transparent;
+	margin:0px;	
+}
+.link-item,
+.link-item a,
+.link-item a:link {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    color:#008472;
+    text-decoration:none;
+}
+.link-item:hover,
+.link-item a:hover,
+.link-item a:link:hover {
+	color:#008472;
+}
+.drop-shadow
+{
+    -webkit-box-shadow: 4px 2px 8px 2px rgba(200, 200, 200, 9);
+    box-shadow: 4px 2px 8px 2px rgba(200,200,200,1);
+    padding:8px;
+    box-sizing: border-box;
+}
+/*************************************** Main Elements End ***************************************/
+
+/*************************************** Main body Start ***************************************/
+#loader{
+    display:none;
+    width:200px;
+    height:100px;
+    background: #ffffff url('../Images/wta-loader.gif') center center no-repeat;
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:1000;
+    border:1px solid #D1D1D1;
+    border-radius:5px;
+}
+A.ms-signInLink {
+	display:none!important; /* Hide sign in link */
+}
+#s4-bodyContainer {
+	background-color:#FFFFFF;
+	padding-bottom: 0px;
+}
+#main {
+	padding-top:20px;
+}
+#main,
+.panel {
+	background-color:#F2F2F2;
+}
+#mainbody {
+	padding:0px 10px 5px 10px;
+	margin-bottom:10px;
+}
+.content-main{
+    padding:10px;
+}
+
+#leftNav,#appPage,#sidebar{
+    float:left;
+}
+
+::-webkit-input-placeholder {
+   color: #D1D1D1;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: #D1D1D1;  
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #D1D1D1; 
+}
+:-ms-input-placeholder,
+option[disabled] {  
+   color: #D1D1D1 !important;  
+}
+input[type=text],
+select{
+    border:1px solid #8E8E8E;
+    border-radius:3px;
+    height:20px;
+}
+input[type=submit],
+input[type=button]{
+    border:3px solid #D1D1D1;
+    border-radius:5px; 
+    background-color:#203A8B;
+    color:#ffffff;
+}
+
+/*************************************** Main body End ***************************************/
+
+/* App pages start */
+/* Routes */
+#routeList {
+    list-style:none;
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 20px;
+    column-count: 2;
+    column-gap: 20px;
+    padding-left:0;
+    font-size:1em;
+}
+#routeList li{
+    display:table;
+    border-spacing:5px;
+}
+#routeList a:link{
+    color:#0f457a;
+}
+#routeList .route-num{
+    font-weight:bold;
+    display:table-cell;
+    padding-right:5px;
+}
+#routeList .fa {
+    padding:0 3px;
+}
+#noticeList{
+    list-style:disc;
+    padding-left:10px;
+}
+/* Trip Planner */
+#google-transit-maps #tbStartLocation,
+#google-transit-maps #tbEndLocation,
+#selRoutes,
+#tbStop{
+    width:60%;
+}
+#google-transit-maps #fdate,
+#google-transit-maps #ftime{
+    width:29%;
+}
+.route-num{
+    display:inline-block;
+    width:45px;
+    text-align:right;
+    margin-right:5px;
+}
+/* Route Details */
+.direction-row *{
+    display:inline-block;
+    margin:0;
+    padding:0;
+    vertical-align:middle;
+}
+.direction-row #routeDir2{
+    color:#000000;
+}
+.direction-row #flipRoute{
+    background-color:#8E8E8E;
+    border-radius:50%;
+    border-width:0;
+    color:#ffffff;
+    width:24px;
+    height:24px;
+    line-height:24px;
+    text-align:center;
+    vertical-align:middle;
+}
+.direction-row #flipRoute .fa{
+    width:24px;
+    height:24px;
+    line-height:24px;
+}
+.direction-row #flipRoute:hover{
+    background-color:#008472;
+    border-collapse:collapse;
+    border-width:0;
+    transform:none;
+    cursor:pointer;
+}
+.direction-row span{
+    color:#8E8E8E;
+    font-size:12px;
+    line-height:14px;
+}
+.route-details,
+.stops {
+    font-size:14px;
+}
+.route-details #schedule{
+    overflow-x:scroll;
+}
+input[type=time],
+input[type=text],
+input[type=date],
+ select,
+ label{
+    line-height:14px;
+}
+.ui-datepicker-trigger{
+    border:none;
+    background-color:transparent;
+    background-image:none;
+    font-size:18px;
+}
+.ui-tabs-panel{
+    padding:0;
+}
+.route-details .button-row{
+    height:40px;
+    font-size:14px;
+    line-height:20px;
+    vertical-align:middle;
+}
+.route-details .locations,
+.route-details .times{
+    display:inline-block;
+    vertical-align:top;
+}
+.route-details fieldset{
+    height:40px;
+    margin-right:20px;
+}
+.route-details fieldset label,
+.route-details fieldset select{
+    display:block;
+}
+.route-details fieldset select{
+    max-width:250px;
+}
+.route-details #datePicker{
+    margin:5px;
+}
+.route-details #customizeRoute{
+   
+}
+.route-details .map-image{
+    min-width:200px;
+    margin:10px 20px 10px 0px;
+}
+.route-details .map-image.normal{
+    width:20%;
+}
+.route-details .map-image.full{
+    
+}
+.route-details .map-image img {
+    width:100%;
+}
+.route-details .map-image,
+.route-details #customizeRoute{
+    display:inline-block;    
+}
+.route-details .map-image .map-bottom-row a{
+    float:right;
+}
+
+.route-details #customizeRoute{
+    vertical-align:bottom;
+}
+
+#searchStops,
+#datepicker{
+    min-width:250px;
+}
+
+
+/* Map */
+#map-canvas {
+    height: 100%;
+    margin: 0;
+    padding: 50px 0 0 0;
+}
+
+/* App pages end */
+
+
+/************************************ Social Share Buttons Start ***************************************/
+#SocialShare {
+	background-color:#F2F2F2;
+	height:auto;
+	text-align:right;
+}
+#Spanish {
+	font-size:20px;
+	font-weight:bold;
+	color:#008472;
+}
+#Spanish a {
+	text-decoration:underline;
+}
+/************************************ Social Share Buttons End ***************************************/
+
+/*************************************** Header Start ***************************************/
+.masthead {
+	background-color:#005E82;
+	margin-bottom:0px;
+}
+.masthead > .container {
+	padding-left:0px;
+	padding-right:0px;
+}
+.header {
+	margin-top:0px;
+	padding-top:0px;
+	background:#005E82 url('../Images/LogoBanner.jpg') no-repeat;
+	height:300px;
+}
+#DeltaSiteLogo {
+	float:left;
+	margin-top:0px;
+	padding:0px;
+	background-color:transparent;
+	width:230px;
+	height:230px;
+}
+.masthead .siteicon-div {
+	margin-left:5px;
+}
+.masthead .ms-siteicon-img,
+.masthead .ms-siteicon-a {
+	max-height:none;
+	max-width:none;
+}
+.masthead .col-md-12 {
+	padding-left:0px;
+	padding-right:0px;
+}
+
+/*************************************** Search Start ***************************************/
+.header .searchbox {
+	position:relative;
+	top:200px;
+	padding-right:12px;
+    z-index:90;
+}
+.header #SearchBox {	
+	background-color:#FFFFFF;
+}
+#SearchBox .ms-srch-sb-border,
+#SearchBox .ms-srch-sb-borderFocused {
+	-webkit-box-shadow: 5px 5px 5px 0 rgba(5,5,5,5);
+	box-shadow: 5px 5px 5px 0 rgba(5,5,5,5);
+}
+#SearchBox .ms-srch-sb > input {
+	background-color:#FFFFFF;
+	color:#008472;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+    font-weight:normal;
+	padding:5px;
+    border:0;
+}
+#SearchBox .ms-srch-sb-searchLink{
+    padding:3px 5px;
+    font-size:16px;
+    cursor:pointer;
+    width:100%;
+}
+
+/*************************************** Search End ***************************************/
+/*************************************** Header End ***************************************/
+
+/*************************************** Global Nav Start ***************************************/
+@media (min-width:768px) {
+.nav {
+	margin-top:0px;
+}
+.navbar {
+	margin-bottom:0px;
+	margin-left: 0px;
+   margin-right:5px;
+	border-radius:0px;
+	border:none;
+	min-height:33px!important;
+}
+.navbar-collapse {
+	padding-right:0px;
+}
+.navbar-default {
+	background-color:transparent;
+}
+.container > .navbar-header, 
+.container > .navbar-collapse {
+    margin-right:0px;
+    padding:0px;
+}
+#topnavbar .collapse.navbar-collapse {
+	margin-top:0px;
+}
+
+/***************************************
+Margin padding resets
+***************************************/
+#topnavbar .ms-core-listMenu-horizontalBox ul, 
+#topnavbar .ms-core-listMenu-horizontalBox li  {
+    margin:0px;
+    padding:0px;
+}
+/*************************************** Root Level Start ***************************************/
+#topnavbar {
+	top:37px;
+}
+#topnavbar .nav ul.static {
+    float: right;
+}
+#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a, 
+#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span,
+#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span.dynamic-children  {
+    padding:0px;			
+}
+#topnavbar ul.root li.static > .menu-item,
+#topnavbar ul.root li.static > .menu-item.dynamic-children {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;	
+	color:#000000;	
+	text-transform:uppercase;
+	background-color:transparent;
+    padding:10px;
+	width:auto;
+	height:auto;
+}
+#topnavbar .nav li.static {
+    background-color:#FFFFFF;
+    margin-right:5px;
+}
+#topnavbar ul.root li.static > .menu-item:hover {
+	box-shadow:inset 0px 5px 0px 0px #008472; 
+    text-decoration:none !important;
+}
+#topnavbar ul.root li.static > .menu-item.selected {
+	box-shadow:inset 0px 5px 0px 0px #008472;
+}
+/*************************************** Root Level End ***************************************/	
+
+/*************************************** First/Second Level Drop Down Start ***************************************/	
+/* Start Mega Menu Code */
+
+#topnavbar ul.dynamic > li {
+    min-width:inherit;
+}
+#topnavbar .nav ul.static > li.dynamic-children > ul.dynamic {
+    top:auto!important;
+}
+#topnavbar .ms-core-listMenu-horizontalBox UL.root UL.dynamic UL.dynamic {
+    display:block!important;
+    font-weight:normal;
+}
+#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic {
+    background-color:#FFFFFF;
+    display:table-row;
+    width:auto!important;
+    border-spacing:10px;
+    border:none;
+}
+#topnavbar .ms-core-listMenu-horizontalBox UL.root > LI > UL.dynamic > LI {
+    display:table-cell;
+    font-weight:bold;
+    padding-right:5px;
+    border-left:2px solid #008472;
+}
+#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL {
+    display:block !important;
+    width:auto;                        
+    left:0px !important;
+}
+#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL > LI {
+    display:list-item;
+    margin-right:10px;
+    padding-left:0px;
+}
+#topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children,
+#topnavbar .nav .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
+    background-image:none;
+    padding-right:0px;
+}
+#topnavbar .nav ul.dynamic > li.dynamic-children > ul {
+    position:relative !important;
+    left:0px !important;
+    width:auto;
+    box-shadow:none;
+}
+#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic LI {
+    border:1px solid transparent;
+}
+#topnavbar li.dynamic > .menu-item {
+    height: auto;
+    line-height:normal;
+    padding: 5px 10px;
+}
+#topnavbar .nav .ms-core-listMenu-horizontalBox ul.root ul.dynamic > li a {
+    padding: 5px;
+}
+/* End Mega Menu Code */
+
+#topnavbar li.hover ul.dynamic {
+	padding-top:0px;
+}
+#topnavbar li.hover-off ul.dynamic {
+	display:none;
+}
+#topnavbar ul.dynamic > li {
+	border-top:none;
+}
+#topnavbar ul.dynamic {
+    -webkit-box-shadow: 2px 2px 10px 0 #8E8E8E;
+	box-shadow: 2px 2px 10px 0 #8E8E8E;
+}
+#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;	
+	color:#000000;	
+	background-color:transparent;
+    padding:10px;
+}
+#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A:hover {
+	/*background-color:#008472;*/
+	color:#008472;
+	text-decoration:underline;
+}
+/*************************************** First/Second Level Drop Down End ***************************************/}
+/*************************************** Global Nav End ***************************************/
+
+/*************************************** Left Nav Start ***************************************/
+
+#leftNav ul{
+    padding-left:10px;
+}
+#leftNav ul li{
+    list-style:none;
+    font-size:1.2em;
+    font-weight:normal;
+    line-height:1.5em;
+}
+/*************************************** Left Nav End ***************************************/
+
+
+
+
+/***************************************Footer Start ******************************************************/
+.mastfooter {
+	background-color:#F2F2F2;
+	border-top:2px #A0A0A0 solid;
+	color:#0F457A;
+	font-size:13px;
+    padding-top:20px;
+}
+.mastfooter .col-md-12 {
+	min-height:50px;
+	vertical-align:middle;
+	display:table;	
+	width:100%;
+	text-align:left;
+	margin-top:20px;
+	padding-left:0px;
+}
+.mastfooter a,
+.mastfooter a:focus,
+.mastfooter a:link,
+.mastfooter a:visited,
+.mastfooter a:hover {
+	color:#008472;
+	text-decoration:underline;
+}
+
+
+.mastfooter #topContact {
+	float:left;
+}
+.socialTop {
+	text-transform:uppercase;
+	font-weight:bold;
+	text-align:left;
+	font-size:13px;
+}
+.mastfooter .socialTop a,
+.mastfooter .socialTop a:focus,
+.mastfooter .socialTop a:link,
+.mastfooter .socialTop a:visited,
+.mastfooter .socialTop a:hover {
+	color:#0F457A;
+	text-decoration:none;
+}
+.socialBottom {
+	font-size:10px;
+	text-align:left;
+}
+.socialBottom,.TwitterIMG,.TwitterInfo,.FacebookIMG,.FacebookInfo,.EmailIMG,
+.EmailInfo,.AddressMap,.GeneralPhone,.GeneralEmail,.GeneralMisc{
+   position:relative;
+   float:left;
+}
+.TwitterIMG {
+   left:0px;
+}
+.TwitterInfo {
+   left:10px;
+   padding-right:20px;
+}
+.FacebookIMG {
+   left:20px;
+}
+.FacebookInfo {
+   left:30px;
+   padding-right:20px;
+}
+.EmailIMG {
+   left:40px;
+}
+.EmailInfo {
+   left:50px;
+   padding-right:60px;
+}
+.AddressMap {
+   left:0px;
+   padding-right:40px;
+   text-align:left;
+}
+.GeneralPhone {
+   left:0px;
+   padding-right:40px;
+   text-align:left;
+}
+.GeneralEmail {
+   left:0px;
+   text-align:left;
+   padding-right:40px;
+}
+.GeneralMisc {
+   left:0px;
+   text-align:left;
+   padding-right:40px;
+}
+/*************************************** Footer Nav Start ***************************************/
+.mastfooter .bottomSiteMap {
+	float:left;
+	color:#00394E;
+}
+.mastfooter .bottomSiteMap a,
+.mastfooter .bottomSiteMap a:focus,
+.mastfooter .bottomSiteMap a:link,
+.mastfooter .bottomSiteMap a:visited,
+.mastfooter .bottomSiteMap a:hover {
+	color:#00394e;
+	text-decoration:none;
+}
+.footer-nav .ms-core-listMenu-root {
+	max-height:inherit;
+	padding-left:0px;
+}
+.footer-nav UL.root > LI > A,
+.footer-nav UL.root > LI > SPAN {
+	display:none;
+}
+.footer-nav UL.root {    
+	-webkit-columns:6; /* Chrome, Safari, Opera */
+	-webkit-column-width:auto;
+	-webkit-column-gap:0px;
+	    
+	/* Firefox */
+	/*-moz-columns:2;
+	-moz-column-width:auto;
+	-moz-column-gap:0px;
+	                
+	columns:2;
+	column-width:auto;
+	column-gap:0px;*/
+}
+.footer-nav UL.root > UL 	{
+	margin-bottom:10px;     
+}
+.footer-nav UL.root UL,
+.footer-nav UL.root LI 	{
+	display:block;
+	padding:0;
+	break-inside:avoid;        
+	page-break-inside:avoid;               
+}
+.footer-nav UL.root > LI > UL > LI 	{
+	font-size:14px;
+	font-weight:bold;
+    margin-bottom:20px;
+}
+.footer-nav UL.root > LI > UL > LI > UL LI {
+	font-size:12px;
+	font-weight:normal;
+}
+.ms-core-listMenu-horizontalBox ul {
+	display:inline-flex;
+	margin-right:30px;
+}
+/*************************************** Footer Nav End ***************************************/
+/*************************************** Footer End ***************************************/
+
+
+/*************************************** Responsive Start ***************************************/
+
+@media(min-width:1200px){
+    #leftNav{
+        width:15%;
+    }
+    #appPage{
+        width:58%;
+        margin-left:1%;
+        margin-right:1%;
+    }
+    #sidebar{
+        width:25%;
+    }
+}
+@media(max-width:1199px){
+    #leftNav{
+        display:none;
+    }
+    #appPage{
+        width:68%;
+        margin-left:1%;
+        margin-right:1%;
+    }
+    #sidebar{
+        width:30%;
+    }
+    ul.banner-social-buttons {
+        float: left;
+        margin-top: 15px;
+    }
+}
+@media(max-width:900px){
+    #leftNav{
+        display:none;
+    }
+    #appPage{
+        width:100%;
+        margin:0;
+    }
+    #sidebar{
+        width:100%;
+    }
+}
+@media(max-width:767px) {
+    .banner h2 {
+        margin: 0;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        font-size: 3em;
+    }
+    ul.banner-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+    ul.banner-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width:960px) {
+	.header {
+		background:url('../Images/LogoBannerMd.jpg') no-repeat;
+		height:200px;
+	}
+	.header .searchbox {
+	    position:relative;
+	    top:100px;
+	}
+	#topnavbar {
+	    top:20px;
+	}
+	#DeltaSiteLogo {
+		width:150px;
+		height:150px;
+	}
+	#topnavbar ul.root li.static > .menu-item,
+	#topnavbar ul.root li.static > .dynamic-children.menu-item {
+	    font-size:12px;
+	    padding:9px;
+	}
+	.navbar {
+	    min-height:30px!important;
+	}
+}
+@media (max-width:895px){
+	#topnavbar {
+	    top:25px;
+	}
+	#topnavbar ul.root li.static > .menu-item,
+	#topnavbar ul.root li.static > .dynamic-children.menu-item {
+	    font-size:11px;
+	    padding:8px;
+	}
+	.navbar {
+	    min-height:27px!important;
+	}
+    #routeList {
+        list-style:none;
+        -moz-column-count: 1;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 1;
+        -webkit-column-gap: 20px;
+        column-count: 1;
+        column-gap: 20px;
+        padding-left:0;
+    }
+}
+
+/*************************************** Footer Top Contact Responsive Design Start ***************************************/
+/* Footer Social Start */
+@media (max-width:466px) {
+	.TwitterInfo {
+		left:10px;
+		padding-right:10px;
+	}
+	.FacebookIMG {
+		left:20px;
+	}
+	.FacebookInfo {
+		left:30px;
+		padding-right:10px;
+	}
+	.EmailIMG {
+		left:40px;
+	}
+	.EmailInfo {
+		left:50px;
+		padding-right:5px;
+	}
+}
+@media (max-width:407px) {
+	.socialTop {
+	    font-size:10px;
+	}
+	.TwitterInfo {
+	    left:0px;
+	    padding-right:0px;
+	}
+	.FacebookIMG {
+	    left:10px;
+	}
+	.FacebookInfo {
+	    left:10px;
+	    padding-right:0px;
+	}
+	.EmailIMG {
+	    left:20px;
+	}
+	.EmailInfo {
+	    left:20px;
+	    padding-right:0px;
+	}
+}
+@media (max-width:355px) {
+	.socialTop,
+	.socialBottom {
+		display:none;
+	}
+	.col-md-12 .topContact {
+		padding-right:0px;
+	}
+}
+/* Footer Social End */
+
+@media (min-width:1267px) {
+	.AddressMap {
+		left:445px;
+	}
+	.GeneralPhone {
+		left:455px;
+	}
+	.GeneralEmail {
+		left:465px;
+	}
+	.GeneralMisc {
+		left:475px;
+		padding-right:5px;
+	}
+	.AddressMap,
+	.GeneralPhone,
+	.GeneralEmail,
+	.GeneralMisc {
+		bottom:70px;
+	}
+}
+@media (max-width:875px) {
+	.AddressMap,
+	.GeneralPhone,
+	.GeneralEmail,
+	.GeneralMisc {
+		font-size:12px;
+	}
+}
+@media (max-width:805px) {
+	.GeneralMisc {
+		padding-top:10px;
+	}
+}
+@media (max-width:570px) {
+	.GeneralEmail {
+		padding-right:0px;
+	}
+}
+@media (max-width:515px) {
+	.GeneralEmail {
+	    padding-right:30px;
+	    padding-top:10px;
+	}
+}
+@media (max-width:480px) {
+	.AddressMap,
+	.GeneralPhone,
+	.GeneralEmail,
+	.GeneralMisc {
+		font-size:11px;
+	}
+}
+@media (max-width:360px) {
+	.GeneralPhone {
+		padding-top:10px;
+	}
+}
+/*************************************** Footer Top Contact Responsive Design End ***************************************/
+
+/*************************************** Footer Bottom Responsive Design Start ***************************************/
+@media (max-width:1440px) {
+	.ms-core-listMenu-horizontalBox ul {
+	    margin-right:20px;
+	}
+	.ms-core-listMenu-horizontalBox {
+	    display:inline-block;
+	}
+
+    #routeList {
+        list-style:none;
+        -moz-column-count: 1;
+        -moz-column-gap: 0px;
+        -webkit-column-count: 1;
+        -webkit-column-gap: 0px;
+        column-count: 1;
+        column-gap: 0px;
+        padding-left:0;
+    }
+}
+@media (max-width:1320px) {
+	.ms-core-listMenu-horizontalBox ul {
+	    margin-right:10px;
+	}
+}
+@media (max-width:1175px) {
+	.ms-core-listMenu-horizontalBox ul {
+	    margin-right:5px;
+	}
+	.footer-nav UL.root > LI > UL > LI 	{
+		font-size:13px;
+	}
+	.footer-nav UL.root > LI > UL > LI > UL LI {
+		font-size:11px;
+	}
+}
+@media (max-width:1040px) {
+	.ms-core-listMenu-horizontalBox ul {
+	    margin-right:0px;
+	}
+	.footer-nav UL.root > LI > UL > LI 	{
+		font-size:12px;
+	}
+	.footer-nav UL.root > LI > UL > LI > UL LI {
+		font-size:10px;
+	}
+	.ms-core-listMenu-horizontalBox ul {
+		display:inline-block;
+	}
+		.footer-nav UL.root {    
+	    -webkit-columns:4; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px;
+	    
+	    -moz-columns:4; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+	                
+	    columns:4;
+	    column-width:auto;
+	    column-gap:0px;
+	}
+}
+@media (max-width:775px) {
+		.footer-nav UL.root {          
+ 	    -webkit-columns:3; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px;
+  	
+	   	-moz-columns:3; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+ 
+	    columns:3;
+	    column-width:auto;
+	    column-gap:0px;
+	}
+}
+@media (max-width:480px) {
+		.footer-nav UL.root {          
+   	    -webkit-columns:2; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px; 
+   	    
+   	    -moz-columns:2; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+
+	    columns:2;
+	    column-width:auto;
+	    column-gap:0px;
+	}
+}
+
+/*************************************** Footer Bottom Responsive Design End ***************************************/
+/***************************************
+Menu shrinks to dropdown at this point
+***************************************/
+@media (max-width:767px) {
+	#DeltaSiteLogo {
+	    padding:0px;
+	    margin-left:0px;
+	    height:100px;
+	}
+    .headtitle,
+    .masthead .breadcrumb,
+    #ms-designer-ribbon,
+    #sideNavBox {
+        display:none !important; /* Hide Page Title / Breadcrumbs / Left Nav / Ribbon? */
+    }
+    .ms-dialog #ms-designer-ribbon {
+        display:block !important;
+    }
+	.headtitle {
+	    margin-top:0px;
+	    margin-left:10px;
+	    clear:both;
+	}
+
+	.well,
+	#pageTitle,
+	.ms-core-pageTitle,
+	.ms-core-pageTitle A,
+	.ms-core-pageTitle A:hover,
+	li.s4-breadcrumbRootNode,
+	li.s4-breadcrumbRootNode,
+	ul.s4-breadcrumb,
+	ul.s4-breadcrumb ul {
+		display:none;			
+	}
+	#topnavbar {
+		width:auto;
+		height:37px;
+		border:none;
+	}
+	.nav {
+		width:100%;
+	}
+	.navbar {
+		margin-bottom:0px;
+        clear:both;
+	}
+	.navbar-toggle {
+		padding:0px;
+		margin:0 30px;
+        position:static;
+	}
+	.navbar-default {
+		background-color:#008472;
+	}
+	.nav .ms-core-listMenu-horizontalBox UL.root {
+		background-color:#FFFFFF;
+		padding:5px;
+		border:0px solid #E0E0E0;		
+	}
+	.nav .ms-core-listMenu-horizontalBox
+	{
+		width:100% !important;
+	}
+	.navbar-default .navbar-toggle {
+		color:#ffffff;
+		border:none;
+		font-size:20px;
+		line-height:26px;
+        padding:5px 8px;
+	}
+    .navbar-default .navbar-toggle:hover, 
+    .navbar-default .navbar-toggle:focus {
+        background-color: #8E8E8E;
+    }
+
+	.navbar-collapse {
+		padding-left:0px;
+		padding-right:0px;
+		padding:0px;
+	}
+	.header .searchbox { /* from MG RD */
+		top:0px;
+		margin-top:5px;
+		margin-bottom:10px;
+	}
+	/*.navbar-default .navbar-toggle:hover,
+	.navbar-default .navbar-toggle:focus {
+	    background-color:transparent;
+	}*/
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root
+	{
+		padding:0px;
+	}
+	#topnavbar ul.dynamic > li {
+	    border:none;	    
+	}
+	#topnavbar ul.dynamic {
+	    border:0px solid #D1D1D1;
+	    background-color:transparent;
+	}	
+	#topnavbar ul.root li.static .menu-item:hover {
+		color:#008472;
+	}
+	#topnavbar ul.root ul.dynamic > li.dynamic > .menu-item {
+	    padding: 5px 15px;
+	    font-weight:bold;
+	}
+	#topnavbar ul.root ul.dynamic ul.dynamic li.dynamic > .menu-item {
+	    padding: 0px 30px;
+	    font-weight:normal;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static
+	{
+		border-bottom:1px solid #D1D1D1;
+		line-height:20px;
+		*background-color:#efefef;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > .menu-item
+	{
+		background-color:#efefef;
+	}
+    #topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children {
+        background-image:url('../Images/GlobalNavDown.png');
+        background-repeat:no-repeat;
+        background-position:right;
+    }
+
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root li.dynamic .additional-background
+	{
+		*background-image:url('../Images/GlobalNavChild.png');
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.shown > a
+	{
+	    border-bottom: 1px solid #D1D1D1 !important;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root li.shown ul.dynamic
+	{
+		display:block !important;
+	    width: 90% !important;
+	    left: auto !important;
+	    top: auto !important;
+	    padding-right: 5%;
+	    margin-right: 5%;		
+	    margin-left:10px;
+	    border-bottom:1px solid #d1d1d1;
+	}	
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > UL.dynamic
+	{
+		background-color:#fff;
+	}	 
+	#topnavbar ul.root li.static > .menu-item,
+	#topnavbar ul.root li.static > .dynamic-children.menu-item {
+	    font-size:1.2em;
+	    font-weight:bold;
+	    padding:10px 30px 5px 15px;
+	    margin:0px;
+		line-height:normal;
+	    height: auto;	    
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.static > ul.dynamic {
+		border:none;
+	}	
+}
+@media (max-width:680px) {
+	.WTA-main .col1,
+	.WTA-main .col2 {
+		float:none;	
+	}
+	.WTA-main .col1 {
+		width:100%;
+		overflow:hidden;
+	}
+	.WTA-main .col2 {
+		width:100%;
+		margin-right:10px;
+	}
+	#topnavbar {
+		width:auto;
+	}
+	.WTA-landing .col2 .cta-cont > DIV {
+		display:block;
+		margin:0 auto;
+	}
+}
+@media (max-width:530px) {
+	.ms-srch-sb > input {
+		width:100px;
+	}
+	.header .searchbox {
+		padding-left: 10px;
+	}
+	.navbar-toggle {
+		*display: table-column;
+	}
+	#topnavbar {
+		*margin-top: 90px;
+	}
+    #Spanish{
+        font-size:14px;
+        font-weight:normal;
+    }
+    .drop-shadow{
+        box-shadow:none;
+        border:1px solid #D1D1D1;
+        border-radius:5px;
+    }
+}
+@media (max-width:280px) {
+	#SocialShare img {
+	    width:80%;
+	    height:80%;
+	}
+}
+/*************************************** Responsive End ***************************************/
+
+

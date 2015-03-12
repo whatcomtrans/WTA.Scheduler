@@ -1,0 +1,64 @@
+﻿
+<div class="stops drop-shadow">
+    <h3>
+        <i class="fa fa-bus"></i>
+        <span>Choose a Stop:</span>
+    </h3>
+    <input id="searchStops" type="text" placeholder="Enter Stop Id, Address or Intersection">
+    <input id="searchStopsButton" type="button" value="Find" onclick="directSearch();">
+    <div id="mainSchedule">
+        <div id="dayTabs">
+
+            <ul>
+                <li><a href="javascript:thisDayStops('Weekday')">Weekday</a></li>
+                <li><a href="javascript:thisDayStops('Saturday')">Saturday</a></li>
+                <li><a href="javascript:thisDayStops('Sunday');">Sunday</a></li>
+                <li><a href="javascript:thisDayStops(''StreetView'');">Street View</a></li>
+            </ul>
+
+            <div id="schedule">
+                <h3 id="stopNameHeader">Stop Name</h3>
+                <input id="mapButton" type="button" value="Map" onclick="directMap();">
+
+                <table id="stopTable1" class="table table-striped table-hover table-bordered">
+                    <tr>
+                        <th>Stop ID</th>
+                        <th>Served By</th>
+                    </tr>
+                    <tr>
+                        <td id="selectedStopId"></td>
+                        <td id="servedByRoutes"></td>
+                    </tr>
+                </table>
+
+                <div id="printThis">
+                    <div id="datePicker" class="">
+                        <fieldset>
+                            <label>Date:</label>
+                            <input type="text" name="datepicker" id="datepicker" value="" onclick="">
+                        </fieldset>
+                        <fieldset>
+                            <label>Schedule for:</label>
+                            <select id="scheduleFor"><option id="all" value="All Routes">All Routes</option></select>
+                            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('printThis');">
+                        </fieldset>
+                    </div>
+
+                    <div id="tableRow" class="">
+                        <table id="stopTable" class="table table-striped table-hover table-bordered">
+                            <tr>
+                                <th>Time</th>
+                                <th>Route</th>
+                            </tr>
+                        </table>
+                        <p id="disclaimer">* Please note that all times are estimates and bus times may vary.</p>
+                    </div>
+
+                </div>
+                <div id="map-canvas" style="display: none;"></div>
+            </div>
+
+        </div>
+      
+    </div>
+</div>
