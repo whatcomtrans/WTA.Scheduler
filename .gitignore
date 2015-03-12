@@ -154,3 +154,6 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/packages/GTFS.0.0.3.57
+/packages
+/WTA.Schedules/Properties/PublishProfiles
