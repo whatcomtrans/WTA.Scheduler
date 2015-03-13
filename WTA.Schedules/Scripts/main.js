@@ -2,7 +2,7 @@
 var currentRouteID, currentRouteNumber, currentStopID, currentAppPage, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId,
-    stopIdVariable, bounds, panorama, stopIdVariable, stopNameVariable, stopVariable;
+    stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery;
 var currentDirectionID = 0;
 var currentServiceID = 1; // Weekdays
 var entryPanoId = null;
@@ -28,10 +28,24 @@ function loadQueryParams() {
     if (r && (r == parseInt(r))) {
         currentRouteID = r;
     }
+    else {
+        currentRouteID = null;
+    }
     //StopId
     var s = getQueryParameterByName("stopId");
     if (s && (s == parseInt(r))) {
         currentStopID = s;
+    }
+    else {
+        currentStopID = null;
+    }
+    // Stop query - used if searching for either a stop id or an address
+    var q = getQueryParameterByName("search");
+    if (q) {
+        stopQuery = q;
+    }
+    else {
+        stopQuery = null;
     }
 }
 function loadMain() {
@@ -76,6 +90,7 @@ function setHistory(appPage) {
             history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
             break;
         case "map":
+            if (stopQuery) { params = "?search=" + encodeURIComponent(stopQuery) }
             history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage);
             break;
         case "stops":
@@ -139,6 +154,12 @@ function initializeSidebar() {
         selRoutes.append("<option value='" + routeList[i].route_id + "'>" + routeList[i].route_short_name + "</option>");
     }
     $("#findRoute").click(findRouteClick);
+    $('#tbStop').keypress(function (e) {
+        if (e.which == 13) {
+            loadStops($('#tbStop').val());
+        }
+    });
+
     // Notices
     var noticeList = $("#noticeList");
     for (i = 0; i < notices.length; i ++) {
@@ -290,7 +311,7 @@ function swapMapSize() {
         rMap.animate({ width: "100%" }, "slow");
         rMap.removeClass("normal");
         rMap.addClass("full");        
-        $(".map-image a").html("<< Shrink");
+        $(".map-image a").html("Shrink >>");
     } else {
         var offset = rMap.offset();
         rMap.removeClass("full");
@@ -692,8 +713,8 @@ function throwTheDate() {
 }
 
 // -------- Stops ----------
-function loadStops(query) {
-    // query could be a stop number or address
+function loadStops(stopId) {    
+    currentStopID = stopId;
     $("#appPage").load("/common/stops.html", function () { initializeStops(); });
 }
 function initializeStops() {
@@ -726,27 +747,27 @@ function initializeStops() {
     //}
     //stopVariable = parseInt(window.location.search.substring(5, 9));
     //stopNameVariable = (window.location.search.substring(9)).replace(/%20/g, " ");
-    //var day = new Date().getDay();
-    //var presentDate = new Date();
-    //var newDate = (presentDate.getDate()).toString();
-    //if (newDate.length < 2) { newDate = '0' + newDate; }
-    //var newMonth = (presentDate.getMonth() + 1).toString();
-    //if (newMonth.length < 2) { newMonth = '0' + newMonth; }
-    //var newYear = (presentDate.getFullYear()).toString();
-    //specialServiceDate = newYear + newMonth + newDate;
-    //if (day > 0 && day < 6) {
-    //    $('#Weekday').addClass('selectedDay');
-    //    service_id = 1;
-    //}
-    //else if (day == 6) {
-    //    $('#Saturday').addClass('selectedDay');
-    //    service_id = 2;
-    //}
-    //else if (day == 0) {
-    //    $('#Sunday').addClass('selectedDay');
-    //    service_id = 3;
-    //}
 
+    var day = new Date().getDay();
+    var presentDate = new Date();
+    var newDate = (presentDate.getDate()).toString();
+    if (newDate.length < 2) { newDate = '0' + newDate; }
+    var newMonth = (presentDate.getMonth() + 1).toString();
+    if (newMonth.length < 2) { newMonth = '0' + newMonth; }
+    var newYear = (presentDate.getFullYear()).toString();
+    specialServiceDate = newYear + newMonth + newDate;
+    if (day > 0 && day < 6) {
+        $('#Weekday').addClass('selectedDay');
+        currentServiceID = 1;
+    }
+    else if (day == 6) {
+        $('#Saturday').addClass('selectedDay');
+        currentServiceID = 2;
+    }
+    else if (day == 0) {
+        $('#Sunday').addClass('selectedDay');
+        currentServiceID = 3;
+    }
 
     $("#dayTabs").tabs({
         activate: function (event, ui) {
@@ -781,6 +802,16 @@ function initializeStops() {
         selectedDay = selectedDay.split(',')[0];
         thisDayStops(selectedDay);
     });
+
+    // Load stop if currently selected
+    if (currentStopID) {
+        $('#stopNameHeader')[0].innerHTML = stopNameVariable;
+        displaySelectedStop(currentStopID, currentServiceID);
+    } else {
+        $('#searchStops').addClass('pulse');
+        setTimeout(function () { $('#searchStops').removeClass('pulse') }, 6500);
+    }
+
 }
 function codeAddressStop() {
     var address = document.getElementById('address').value;
@@ -809,10 +840,10 @@ function directSearch() {
             stopNameVariable = stopCodeResult[0].stop_name;
             displaySelectedStop(currentStopID, currentServiceID);
         } else {
-            window.location.href = "map.html?" + searchTerm;
+            window.location.href = "#map?search=" + searchTerm;
         }
     } else {
-        window.location.href = "map.html?" + searchTerm;
+        window.location.href = "#map?search=" + searchTerm;
     }
 }
 function directMap() {
@@ -840,7 +871,7 @@ function thisDayStops(day) {
         $('#Sunday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
-    } else if (day == 'StreetView') {
+    } else if (day == 'Street View') {
         $('#StreetView').addClass('selectedDay');
         $('#printThis').hide();
         $('#map-canvas').show();
@@ -850,18 +881,26 @@ function thisDayStops(day) {
     displaySelectedStop(selectedStopId, currentServiceID);
 }
 function displaySelectedStop(selectedStopId, service_id) {
-    $('#stopTable').empty();
-    $('#stopTable').append('<tr><th>Time</th><th>Route</th></tr>');
-    $('#stopNameHeader')[0].innerHTML = stopNameVariable;
-    $('#selectedStopId')[0].innerHTML = selectedStopId;
-    servingRoutes();
-    $('#servedByRoutes')[0].innerHTML = servedByRoutes;
-    var option = '';
-    for (i = 0; i < finalStops.length; i++) {
-        option += '<option value="' + finalStops[i].route_short_name + '" id="' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</option>';
+    // get Stop info and populate header if found
+    var stop = getStop(selectedStopId);
+
+    if (stop) {
+        $('#stopTable').empty();
+        $('#stopTable').append('<tr><th>Time</th><th>Route</th></tr>');
+        $('#stopNameHeader')[0].innerHTML = stop.stop_name;
+        $('#selectedStopId')[0].innerHTML = selectedStopId;
+        servingRoutes();
+        $('#servedByRoutes')[0].innerHTML = servedByRoutes;
+        var option = '';
+        for (i = 0; i < finalStops.length; i++) {
+            option += '<option value="' + finalStops[i].route_short_name + '" id="' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</option>';
+        }
+        $('#scheduleFor option:not(:first-child)').remove();
+        $('#scheduleFor').append(option);
     }
-    $('#scheduleFor option:not(:first-child)').remove();
-    $('#scheduleFor').append(option);
+    else {
+        // TODO: add no stop information?
+    }
 }
 function servingRoutes() {
     var specialService = $.grep(calendar_dates, function (a) {
@@ -1068,7 +1107,7 @@ function initializeMap() {
         kmlStopCode = kmlStop[0].stop_code;
         kmlStopName = kmlStop[0].stop_name;
         e.featureData = {
-            'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="stops.html?' + kmlStopId + kmlStopCode + kmlStopName + '">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
+            'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="javascript:loadStops(' + kmlStopCode + ')">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
         }
     });
 }
@@ -1206,6 +1245,16 @@ function getRoute(routeID) {
     });
     if (route) { return route[0]; }
     else { return null}
+}
+
+function getStop(stopID) {
+    var stop = Enumerable.From(stops)
+        .Where("$.stop_code == " + stopID)
+        .ToArray();
+    if (stop) {
+        stop = stop[0]
+    }
+    return stop;
 }
 
 

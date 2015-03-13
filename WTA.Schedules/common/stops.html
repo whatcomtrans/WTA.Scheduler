@@ -4,7 +4,7 @@
         <i class="fa fa-bus"></i>
         <span>Choose a Stop:</span>
     </h3>
-    <input id="searchStops" type="text" placeholder="Enter Stop Id, Address or Intersection">
+    <input id="searchStops" type="text" class="pulse" placeholder="Enter Stop Id, Address or Intersection">
     <input id="searchStopsButton" type="button" value="Find" onclick="directSearch();">
     <div id="mainSchedule">
         <div id="dayTabs">
@@ -13,7 +13,7 @@
                 <li><a href="javascript:thisDayStops('Weekday')">Weekday</a></li>
                 <li><a href="javascript:thisDayStops('Saturday')">Saturday</a></li>
                 <li><a href="javascript:thisDayStops('Sunday');">Sunday</a></li>
-                <li><a href="javascript:thisDayStops(''StreetView'');">Street View</a></li>
+                <li><a href="javascript:thisDayStops('StreetView');">Street View</a></li>
             </ul>
 
             <div id="schedule">
