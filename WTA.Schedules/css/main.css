@@ -327,7 +327,10 @@ input[type=date],
 .route-details .map-image .map-bottom-row a{
     float:right;
 }
-
+.route-details .map-image:hover {
+    z-index:999;
+    background-color: black;
+}
 .route-details #customizeRoute{
     vertical-align:bottom;
 }

@@ -290,7 +290,7 @@ function swapMapSize() {
         rMap.animate({ width: "100%" }, "slow");
         rMap.removeClass("normal");
         rMap.addClass("full");        
-        $(".map-image a").html("Shrink >>");
+        $(".map-image a").html("<< Shrink");
     } else {
         var offset = rMap.offset();
         rMap.removeClass("full");
