@@ -737,25 +737,25 @@ function loadStops(stopId) {
 function initializeStops() {
     //setHistory("stops");
    
-    //geocode = new google.maps.Geocoder();
-    //var MOAB = new google.maps.LatLng(48.786961, -122.447938);
-    //var mapOptions = {
-    //    center: MOAB,
-    //    zoom: 16
-    //};
-    //map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    //panorama = map.getStreetView();
-    //var panoOptions = {
-    //    position: MOAB,
-    //    pov: {
-    //        heading: 285,
-    //        pitch: 5
-    //    },
-    //    visible: true,
-    //};
-    //panorama.setOptions(panoOptions);
-    //var streetviewService = new google.maps.StreetViewService();
-    //var radius = 50;
+    geocode = new google.maps.Geocoder();
+    var MOAB = new google.maps.LatLng(48.786961, -122.447938);
+    var mapOptions = {
+        center: MOAB,
+        zoom: 16
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    panorama = map.getStreetView();
+    var panoOptions = {
+        position: MOAB,
+        pov: {
+            heading: 285,
+            pitch: 5
+        },
+        visible: true,
+    };
+    panorama.setOptions(panoOptions);
+    var streetviewService = new google.maps.StreetViewService();
+    var radius = 50;
 
 
     // Following code is from the fillStops function. Don't think we want to do this on load so commenting out for now.
