@@ -863,7 +863,7 @@ function SVpano() {
     //Step 5- what's the SVpano's lat/lng?
     var panoPosition = new google.maps.LatLng(map.streetView.position.k,map.streetView.position.D);
     //Step 6- calculate the heading between the stop lat/lng and the pano lat/lng
-    var camHeading = google.maps.geometry.spherical.computeHeading(panoPosition,stopPosition)
+    var camHeading = google.maps.geometry.spherical.computeHeading(panoPosition,stopPosition);
     //Step 7- setPov of pano to this calculated heading
     panorama.setPov({
         heading: camHeading,
