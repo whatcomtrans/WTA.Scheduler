@@ -754,6 +754,17 @@ function initializeStops() {
         visible: true,
     };
     panorama.setOptions(panoOptions);
+
+    google.maps.event.addListener(panorama, 'position_changed', function() {
+        var lat = panorama.getPosition().k;
+        var lng = panorama.getPosition().D;
+        var panoLocation = new google.maps.LatLng(lat, lng);
+        var heading = google.maps.geometry.spherical.computeHeading(panoLocation,LatLng);
+        panorama.setPov({
+            heading: heading,
+            pitch:5
+        });
+    });
     var streetviewService = new google.maps.StreetViewService();
     var radius = 50;
 
