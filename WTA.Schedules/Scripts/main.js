@@ -12,7 +12,7 @@ $(document).ready(function () {
     loadMain();
     window.onpopstate = onPopState;
     $(window).on('hashchange', function () {
-        loadMain();
+        loadPageContent();
     });
 });
 
@@ -56,25 +56,34 @@ function loadMain() {
     $("#footer").load("/common/footer.html");
     $("#leftNav").load("/common/left-nav.html");
 
+    loadPageContent();
+}
+function loadPageContent() {
+    // Clear Google map stuff. This isn't 100% working yet
+    google.maps.event.clearListeners(window, 'resize');
+    $('#map-canvas').remove();
+
+    loadQueryParams();
+
     // If we have a hash then load that section otherwise load Routes
-    var hash = window.location.hash.split("?")[0];
+    var hash = window.location.hash.split("?")[0].replace("#","");
     switch (hash) {
-        case "#route-details":
+        case "route-details":
             loadRouteDetails(currentRouteID);
             break;
-        case "#map":
+        case "map":
             loadMap();
             break;
-        case "#stops":
+        case "stops":
             loadStops(currentStopID);
             break;
-        case "#routes":
+        case "routes":
         default:
+            hash = "routes";
             loadRoutes();
             break;
     }
-    // Set initial history 
-    setHistory("routes");
+    setHistory(hash);
 }
 
 // ----------- History -------------------
@@ -103,7 +112,7 @@ function setHistory(appPage) {
     }
 
 }
-function onPopState (event) {
+function onPopState(event) {
     if (event.state) {        
         switch (event.state.page) {
             case "routes":
@@ -178,26 +187,27 @@ function loadRoutes() {
     $("#appPage").load("/common/routes.html", function () { initializeRoutes(); });
 }
 function initializeRoutes() {
-    setHistory("routes");
+    //setHistory("routes");
     if (!routeList) {
         routeList = getRoutes();
     }
     var ulRoutes = $("#routeList");
     for (i = 0; i < routeList.length; i ++) {
         //ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].trip_headsign + '<i class=\"fa fa-arrows-h\"></i>' + routeList[i + 1].trip_headsign + "</a></li>");
-        ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].route_long_name + "</a></li>");
+        //ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].route_long_name + "</a></li>");
+        ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='schedules.html#route-details?routeId=" + routeList[i].route_id + "'>" + routeList[i].route_long_name + "</a></li>");
     }
 }
 
 // -------- Route Details ----------
-function loadRouteDetails(route_id) {    
+function loadRouteDetails(route_id) {
     currentRouteID = route_id;
     $("#appPage").load("/common/route-details.html", function () {
          initializeRouteDetails();
     });    
 }
 function initializeRouteDetails() {
-    setHistory("route-details")
+    //setHistory("route-details")
     // Get main route info
     // If no route number selected go back to routes
     if (currentRouteID){
@@ -713,32 +723,32 @@ function throwTheDate() {
 }
 
 // -------- Stops ----------
-function loadStops(stopId) {    
+function loadStops(stopId) {
     currentStopID = stopId;
     $("#appPage").load("/common/stops.html", function () { initializeStops(); });
 }
 function initializeStops() {
-    setHistory("stops");
+    //setHistory("stops");
    
-    geocode = new google.maps.Geocoder();
-    var MOAB = new google.maps.LatLng(48.786961, -122.447938);
-    var mapOptions = {
-        center: MOAB,
-        zoom: 16
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    panorama = map.getStreetView();
-    var panoOptions = {
-        position: MOAB,
-        pov: {
-            heading: 285,
-            pitch: 5
-        },
-        visible: true,
-    };
-    panorama.setOptions(panoOptions);
-    var streetviewService = new google.maps.StreetViewService();
-    var radius = 50;
+    //geocode = new google.maps.Geocoder();
+    //var MOAB = new google.maps.LatLng(48.786961, -122.447938);
+    //var mapOptions = {
+    //    center: MOAB,
+    //    zoom: 16
+    //};
+    //map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    //panorama = map.getStreetView();
+    //var panoOptions = {
+    //    position: MOAB,
+    //    pov: {
+    //        heading: 285,
+    //        pitch: 5
+    //    },
+    //    visible: true,
+    //};
+    //panorama.setOptions(panoOptions);
+    //var streetviewService = new google.maps.StreetViewService();
+    //var radius = 50;
 
     // Following code is from the fillStops function. Don't think we want to do this on load so commenting out for now.
     //stopIdVariable = window.location.search.substring(1, 5);
@@ -1038,11 +1048,11 @@ function clearStopsFilter() {
 
 
 // -------- Map ----------
-function loadMap() {
+function loadMap() { 
     $("#appPage").load("/common/map.html", function () { initializeMap(); });
 }
 function initializeMap() {
-    setHistory("map");
+    //setHistory("map");
 
     fillStopsMap();
     $('#searchStops').keypress(function (e) {
