@@ -506,7 +506,14 @@ function displaySelectedRoute() {
             var firstStopTimes = [];
             for (i = 0; i < continuingTrips.length; i++) {
                 var firstStopTime = $.grep(stop_times, function (a) {
-                    return continuingTrips[i].trip_id == a.trip_id && a.stop_sequence == 1;
+                    return continuingTrips[i].trip_id == a.trip_id;
+                });
+                firstStopTime.sort(function (a,b) {
+                    if (a.stop_sequence < b.stop_sequence) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 });
                 firstStopTimes.push(firstStopTime[0]);
             }
@@ -719,17 +726,28 @@ function loadStops(stopId) {
 }
 function initializeStops() {
     setHistory("stops");
-   
+    //Get the Lat/Lng of the StopId
+    var LatLng;
+    var panoLatLng;
+    var cameraHeading;
+    if (currentStopID == null) {
+        LatLng = new google.maps.LatLng(48.786961, -122.447938);
+        cameraHeading = 285;
+    } else {
+        var currentStopLatLng = $.grep(stops, function(a) {
+            return a.stop_code == currentStopID;
+        });
+        LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon);
+    }
     geocode = new google.maps.Geocoder();
-    var MOAB = new google.maps.LatLng(48.786961, -122.447938);
     var mapOptions = {
-        center: MOAB,
+        center: LatLng,
         zoom: 16
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     panorama = map.getStreetView();
     var panoOptions = {
-        position: MOAB,
+        position: LatLng,
         pov: {
             heading: 285,
             pitch: 5
@@ -737,8 +755,20 @@ function initializeStops() {
         visible: true,
     };
     panorama.setOptions(panoOptions);
+    
+    google.maps.event.addListener(panorama, 'position_changed', function() {
+        var lat = panorama.getPosition().k;
+        var lng = panorama.getPosition().D;
+        var panoLocation = new google.maps.LatLng(lat, lng);
+        var heading = google.maps.geometry.spherical.computeHeading(panoLocation,LatLng);
+        panorama.setPov({
+            heading: heading,
+            pitch:5
+        });
+    });
     var streetviewService = new google.maps.StreetViewService();
     var radius = 50;
+    
 
     // Following code is from the fillStops function. Don't think we want to do this on load so commenting out for now.
     //stopIdVariable = window.location.search.substring(1, 5);
@@ -802,7 +832,6 @@ function initializeStops() {
         selectedDay = selectedDay.split(',')[0];
         thisDayStops(selectedDay);
     });
-
     // Load stop if currently selected
     if (currentStopID) {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
@@ -811,7 +840,48 @@ function initializeStops() {
         $('#searchStops').addClass('pulse');
         setTimeout(function () { $('#searchStops').removeClass('pulse') }, 6500);
     }
-
+    if (currentStopID != null) {
+        panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
+        console.log(LatLng);
+        console.log(panoLatLng);
+        cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
+        console.log(cameraHeading);
+        panorama.setPov({
+            heading: cameraHeading,
+            pitch: 5
+        });
+    }
+}
+function SVpano() {
+    //Move the map the the new stop location
+    //Step 1- what's the stop_code?
+    //Step 2- what's this new stop's lat/lng?
+    var stopLatLng = $.grep(stops, function(a) {
+        return a.stop_code == currentStopID;
+    });
+    var stopPosition = new google.maps.LatLng(stopLatLng[0].stop_lat,stopLatLng[0].stop_lon);
+    //Step 3- set the map center there and move the pano there
+    map.setCenter(stopPosition);
+    panorama = map.getStreetView();
+    var panoOptions = {
+        position: stopPosition,
+        pov: {
+            heading: 285,
+            pitch: 5
+        },
+        visible: true,
+    };
+    panorama.setOptions(panoOptions);    
+    //Step 5- what's the SVpano's lat/lng?
+    var panoPosition = new google.maps.LatLng(map.streetView.position.k,map.streetView.position.D);
+    //Step 6- calculate the heading between the stop lat/lng and the pano lat/lng
+    var camHeading = google.maps.geometry.spherical.computeHeading(panoPosition,stopPosition)
+    //Step 7- setPov of pano to this calculated heading
+    panorama.setPov({
+        heading: camHeading,
+        pitch: 5
+    });
+    //Step 8- profit
 }
 function codeAddressStop() {
     var address = document.getElementById('address').value;
@@ -839,6 +909,7 @@ function directSearch() {
             stopIdVariable = stopCodeResult[0].stop_id;
             stopNameVariable = stopCodeResult[0].stop_name;
             displaySelectedStop(currentStopID, currentServiceID);
+            SVpano();
         } else {
             window.location.href = "#map?search=" + searchTerm;
         }
@@ -982,6 +1053,9 @@ function servingRoutes() {
         $('#stopTable').append('<tr id="' + finalTimeRoute[0].route_id + '"><td>' + currentTime + '</td><td>' + finalTimeRoute[0].route_short_name + ' ' + currentTimeRoute[0].trip_headsign + '</td></tr>');
     }
     selectedStopId = $('#selectedStopId')[0].innerHTML;
+    //set the pano
+    //move the map and pano
+    
 }
 function servingRoutesMap() {
     var servingStops = $.grep(stop_times, function (a) {
