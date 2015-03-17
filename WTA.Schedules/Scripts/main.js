@@ -769,6 +769,17 @@ function initializeStops() {
         visible: true,
     };
     panorama.setOptions(panoOptions);
+
+    google.maps.event.addListener(panorama, 'position_changed', function() {
+        var lat = panorama.getPosition().k;
+        var lng = panorama.getPosition().D;
+        var panoLocation = new google.maps.LatLng(lat, lng);
+        var heading = google.maps.geometry.spherical.computeHeading(panoLocation,LatLng);
+        panorama.setPov({
+            heading: heading,
+            pitch:5
+        });
+    });
     var streetviewService = new google.maps.StreetViewService();
     var radius = 50;
 
@@ -879,7 +890,7 @@ function SVpano() {
     //Step 5- what's the SVpano's lat/lng?
     var panoPosition = new google.maps.LatLng(map.streetView.position.k,map.streetView.position.D);
     //Step 6- calculate the heading between the stop lat/lng and the pano lat/lng
-    var camHeading = google.maps.geometry.spherical.computeHeading(panoPosition,stopPosition)
+    var camHeading = google.maps.geometry.spherical.computeHeading(panoPosition,stopPosition);
     //Step 7- setPov of pano to this calculated heading
     panorama.setPov({
         heading: camHeading,
