@@ -1,5 +1,5 @@
 ﻿// locals
-var currentRouteID, currentRouteNumber, currentStopID, currentAppPage, routeList, map,
+var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId,
     stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery;
@@ -9,11 +9,11 @@ var entryPanoId = null;
 var searchURL = "http://branding.marquamgroup.local/sites/search/pages/results.aspx?k=";
 
 $(document).ready(function () {    
-    loadMain();
     window.onpopstate = onPopState;
     $(window).on('hashchange', function () {
         loadPageContent();
     });
+    loadMain();
 });
 
 function getQueryParameterByName(name) {
@@ -33,7 +33,7 @@ function loadQueryParams() {
     }
     //StopId
     var s = getQueryParameterByName("stopId");
-    if (s && (s == parseInt(r))) {
+    if (s && (s == parseInt(s))) {
         currentStopID = s;
     }
     else {
@@ -88,7 +88,7 @@ function loadPageContent() {
 
 // ----------- History -------------------
 function setHistory(appPage) {
-    currentAppPage = appPage;
+    console.log("setHistory: " + appPage);
     var params = "";
     switch (appPage) {
         case "routes":
@@ -100,7 +100,7 @@ function setHistory(appPage) {
             break;
         case "map":
             if (stopQuery) { params = "?search=" + encodeURIComponent(stopQuery) }
-            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage);
+            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
             break;
         case "stops":
             if (currentStopID) { params = "?stopId=" + currentStopID }
@@ -168,6 +168,7 @@ function initializeSidebar() {
             loadStops($('#tbStop').val());
         }
     });
+    $('#findStop').click(onFindStopClick);
 
     // Notices
     var noticeList = $("#noticeList");
@@ -736,7 +737,21 @@ function loadStops(stopId) {
 }
 function initializeStops() {
     //setHistory("stops");
-   
+
+    //Get the Lat/Lng of the StopId 
+    var LatLng; 
+    var panoLatLng; 
+    var cameraHeading; 
+    if (currentStopID == null) { 
+        LatLng = new google.maps.LatLng(48.786961, -122.447938); 
+        cameraHeading = 285; 
+    } else { 
+        var currentStopLatLng = $.grep(stops, function(a) { 
+            return a.stop_code == currentStopID; 
+        }); 
+        LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon); 
+   } 
+
     geocode = new google.maps.Geocoder();
     var MOAB = new google.maps.LatLng(48.786961, -122.447938);
     var mapOptions = {
@@ -823,6 +838,7 @@ function initializeStops() {
     // Load stop if currently selected
     if (currentStopID) {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
+        $("#searchStops").val(currentStopID);
         displaySelectedStop(currentStopID, currentServiceID);
     } else {
         $('#searchStops').addClass('pulse');
@@ -897,7 +913,7 @@ function directSearch() {
             stopIdVariable = stopCodeResult[0].stop_id;
             stopNameVariable = stopCodeResult[0].stop_name;
             displaySelectedStop(currentStopID, currentServiceID);
-            SVpano();
+           
         } else {
             window.location.href = "#map?search=" + searchTerm;
         }
@@ -956,6 +972,7 @@ function displaySelectedStop(selectedStopId, service_id) {
         }
         $('#scheduleFor option:not(:first-child)').remove();
         $('#scheduleFor').append(option);
+        SVpano();
     }
     else {
         // TODO: add no stop information?
@@ -1004,10 +1021,12 @@ function servingRoutes() {
     for (i = 0; i < finalStops.length; i++) {
         if (i > 0) {
             //servedByRoutes += ', <a href="index.html?' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</a>';
-            servedByRoutes += ', <a href="javascript:loadRouteDetails(' + finalStops[i].route_id + ')">' + finalStops[i].route_short_name + '</a>';
+            //servedByRoutes += ', <a href="javascript:loadRouteDetails(' + finalStops[i].route_id + ')">' + finalStops[i].route_short_name + '</a>';
+            servedByRoutes += ', <a href="#route-details?routeId=' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</a>';
         } else {
             //servedByRoutes += '<a href="index.html?' + finalStops[i].route_id + '">' + finalStops[i].route_short_name; +'</a>';
-            servedByRoutes += '<a href="javascript:loadRouteDetails(' + finalStops[i].route_id + ')">' + finalStops[i].route_short_name; +'</a>';
+            //servedByRoutes += '<a href="javascript:loadRouteDetails(' + finalStops[i].route_id + ')">' + finalStops[i].route_short_name; +'</a>';
+            servedByRoutes += '<a href="#route-details?routeId=' + finalStops[i].route_id + '">' + finalStops[i].route_short_name; +'</a>';
         }
     }
     for (i = 0; i < servingStops.length; i++) {
@@ -1073,10 +1092,12 @@ function servingRoutesMap() {
     for (i = 0; i < finalStopsMap.length; i++) {
         if (i > 0) {
             //servedByRoutesMap += ', <a href="index.html?' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
-            servedByRoutesMap += ', <a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name + '</a>';
+            //servedByRoutesMap += ', <a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name + '</a>';
+            servedByRoutesMap += ', <a href="#route-details?routeId=' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
         } else {
             //servedByRoutesMap += ', <a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name + '</a>';
-            servedByRoutesMap += '<a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name; +'</a>';
+            //servedByRoutesMap += '<a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name; +'</a>';
+            servedByRoutesMap += '<a href="#route-details?routeId=' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name; +'</a>';
         }
     }
 }
@@ -1097,6 +1118,18 @@ function clearStopsFilter() {
     $('#noStops').remove();
     $('#stopTable tr:hidden').show();
 }
+function onFindStopClick(){
+    var searchTerm = $("#tbStop").val();
+
+    if (searchTerm){
+        if (searchTerm && (searchTerm == parseInt(searchTerm))) {
+            window.location.hash = "#stops?stopId=" + searchTerm;
+        } else {
+            window.location.hash = "#map?search=" + searchTerm;
+        }
+    }
+    
+}
 
 
 // -------- Map ----------
@@ -1106,7 +1139,6 @@ function loadMap() {
 function initializeMap() {
     //setHistory("map");
 
-    fillStopsMap();
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {
             codeAddressMap();
@@ -1169,9 +1201,12 @@ function initializeMap() {
         kmlStopCode = kmlStop[0].stop_code;
         kmlStopName = kmlStop[0].stop_name;
         e.featureData = {
-            'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="javascript:loadStops(' + kmlStopCode + ')">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
+            //'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="javascript:loadStops(' + kmlStopCode + ')">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
+            'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="#stops?stopId=' + kmlStopCode + '">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
         }
     });
+
+    fillStopsMap();
 }
 function showPosition(position) {
     mapOptions = {
@@ -1230,9 +1265,8 @@ function codeAddressMap() {
     }
 }
 function fillStopsMap() {
-    var searchTerm = window.location.search.substring(1).replace(/%20/g, " ");
-    if (searchTerm) {
-        $('#searchStops')[0].value = searchTerm;
+    if (stopQuery) {
+        $('#searchStops')[0].value = stopQuery;
         codeAddressMap();
     }
 }
