@@ -165,7 +165,7 @@ function initializeSidebar() {
     $("#findRoute").click(findRouteClick);
     $('#tbStop').keypress(function (e) {
         if (e.which == 13) {
-            loadStops($('#tbStop').val());
+            onFindStopClick();
         }
     });
     $('#findStop').click(onFindStopClick);
