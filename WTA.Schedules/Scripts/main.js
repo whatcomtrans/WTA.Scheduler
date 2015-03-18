@@ -173,12 +173,14 @@ function initializeSidebar() {
         selRoutes.append("<option value='" + routeList[i].route_id + "'>" + routeList[i].route_short_name + "</option>");
     }
     $("#findRoute").click(findRouteClick);
+    $('#findStop').click(onFindStopClick);
     $('#tbStop').keypress(function (e) {
         if (e.which == 13) {
-            onFindStopClick();
+            //onFindStopClick();
+            $('#findStop').trigger('click');
         }
     });
-    $('#findStop').click(onFindStopClick);
+    
 
     // Notices
     var noticeList = $("#noticeList");
@@ -1175,14 +1177,19 @@ function clearStopsFilter() {
     $('#noStops').remove();
     $('#stopTable tr:hidden').show();
 }
-function onFindStopClick(){
+function onFindStopClick(e){
     var searchTerm = $("#tbStop").val();
-
-    if (searchTerm){
-        if (searchTerm && (searchTerm == parseInt(searchTerm))) {
-            window.location.hash = "#stops?stopId=" + searchTerm;
-        } else {
-            window.location.hash = "#map?search=" + searchTerm;
+    if (searchTerm.length > 0) {
+        if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
+            if (validateStopId(searchTerm)) {
+                displaySelectedStop(currentStopID, currentServiceID);
+            }
+            else {
+                window.location.href = "#map?search=" + searchTerm;
+            }
+        }
+        else {
+            window.location.href = "#map?search=" + searchTerm;
         }
     }
     
