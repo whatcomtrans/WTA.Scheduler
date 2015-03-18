@@ -1193,7 +1193,8 @@ function onFindStopClick(e){
     if (searchTerm.length > 0) {
         if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
             if (validateStopId(searchTerm)) {
-                displaySelectedStop(currentStopID, currentServiceID);
+                //displaySelectedStop(currentStopID, currentServiceID);
+                window.location.href = "#stops?stopId=" + currentStopID;
             }
             else {
                 window.location.href = "#map?search=" + searchTerm;
