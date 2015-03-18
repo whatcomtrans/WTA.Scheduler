@@ -2,7 +2,7 @@
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId,
-    stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout;
+    stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $stickyRow, stickyRowTop;
 var currentDirectionID = 0;
 var currentServiceID = 1; // Weekdays
 var entryPanoId = null;
@@ -74,7 +74,7 @@ function loadPageContent() {
     var hash = window.location.hash.split("?")[0].replace("#","");
     switch (hash) {
         case "route-details":
-            loadRouteDetails(currentRouteID);            
+            loadRouteDetails(currentRouteID); 
             break;
         case "map":
             loadMap();
@@ -169,7 +169,7 @@ function initializeSidebar() {
         routeList = getRoutes();
     }  
     var selRoutes = $("#selRoutes");
-    for (i = 0; i < routeList.length; i += 2) {
+    for (i = 0; i < routeList.length; i ++) {
         selRoutes.append("<option value='" + routeList[i].route_id + "'>" + routeList[i].route_short_name + "</option>");
     }
     $("#findRoute").click(findRouteClick);
@@ -189,8 +189,8 @@ function initializeSidebar() {
     }
 }
 function showLoading() {
-    //$(".loader").show();
-    $("#appPage").load("/common/loading.html");
+    $(".loader").show();
+    //$("#appPage").load("/common/loading.html");
 }
 function hideLoading() {
     $(".loader").hide();
@@ -225,22 +225,6 @@ function initializeRouteDetails() {
     // Get main route info
     // If no route number selected go back to routes
     if (currentRouteID){
-        var route = getRoute(currentRouteID);
-        if (route) {
-            // populate heading
-            $("#routeNumber").html("Route " + route.route_short_name);
-            var directions = route.route_long_name.split("&harr;");
-            routeDir0 = directions[0];
-            routeDir1 = directions[1];
-            if (currentDirectionID == 0) {
-                $("#routeDir1").html(routeDir0);
-                $("#routeDir2").html(routeDir1);
-            }
-            else {
-                $("#routeDir1").html(routeDir1);
-                $("#routeDir2").html(routeDir0);
-            }
-        }
 
         $("#dayTabs").tabs({
             activate: function (event, ui) {
@@ -280,30 +264,25 @@ function initializeRouteDetails() {
                 buttonText: "<i class='fa fa-calendar'></i>"
             });
         });
-        //Fill the drop-down with existing route options from the routes.json file on load
-        //var option = '';
 
-        //for (i = 0; i < routes.length; i++) {
-        //    option += '<option value="' + routes[i].route_short_name + '" id="' + routes[i].route_id + '">' + routes[i].route_short_name + '</option>';
-        //}
-        //$('#routeList').append(option);
-        //if (routeVariable) {
-        //    $('#routeList option[id="' + routeVariable + '"]').attr('selected', 'selected');
-        //    displaySelectedRoute();
-        //    selectedRouteId = routeVariable;
-        //    currentRouteNumber = $('#routeList option[id="' + routeVariable + '"').attr('value');
-        //    // $('.routeNumber').empty();
-        //    // $('.routeNumber').append('Route ' + currentRouteNumber + ' to ' + trip_headsign);
-        //}
+        //Fill the drop-down with existing route options from the routes.json file on load
+        var option = '';
+        for (i = 0; i < routes.length; i++) {
+            option += '<option value="' + routes[i].route_short_name + '" id="' + routes[i].route_id + '">' + routes[i].route_short_name + '</option>';
+        }
+        $('#routeList').append(option);
+        if (currentRouteID) {
+            $('#routeList option[id="' + currentRouteID + '"]').attr('selected', 'selected');
+        }
         //Change the header of the page based on the selected route from the drop down
-        //$('#routeList').on('change', function () {
-        //    currentRouteNumber = this.value;
-        //    selectedRouteId = $(this).children(":selected").attr("id");
-        //    displaySelectedRoute();
-        //});
-        //$('#routeList').on('click', function () {
-        //    $(this).removeClass('highlight');
-        //});
+        $('#routeList').on('change', function () {
+            currentRouteNumber = this.value;
+            currentRouteID = $(this).children(":selected").attr("id");
+            displaySelectedRoute();
+        });
+        $('#routeList').on('click', function () {
+            $(this).removeClass('highlight');
+        });
 
         //Set paging button events
         $(".page-button.left").mousedown(function(){
@@ -342,6 +321,15 @@ function initializeRouteDetails() {
         });
 
         displaySelectedRoute();
+
+        // Set sticky header test
+        //$stickyRow = $("#stopNames");
+        //stickyRowTop = $stickyRow.offset().top;
+        //$(window).scroll(function () {
+        //    if ($stickyRow) {
+        //        $stickyRow.toggleClass('sticky-row', $(window).scrollTop() > stickyRowTop);
+        //    }
+        //});
     }
     else {
         loadRoutes();
@@ -399,8 +387,9 @@ function thisDay(day) {
     displaySelectedRoute();
 }
 function displaySelectedRouteAsync() {
-    $('#datePicker').after('<div class="spinner"></div>');
-    setTimeout(displaySelectedRoute);
+    //$('#datePicker').after('<div class="spinner"></div>');
+    showLoader();
+    setTimeout(displaySelectedRoute, 1000);
 }
 function displaySelectedRoute() {
 
@@ -408,6 +397,36 @@ function displaySelectedRoute() {
         $('#busTable').empty();
         $('.routeNumber').empty();
         $('#datePicker').after('<div class="spinner"></div>');
+
+        // populate heading
+        var route = getRoute(currentRouteID);
+        if (route) {            
+            $("#routeNumber").html("Route " + route.route_short_name);
+            var directions = route.route_long_name.split("&harr;");
+            routeDir0 = directions[0];
+            routeDir1 = directions[1];
+            if (currentDirectionID == 0) {
+                $("#routeDir1").html(routeDir0);
+                $("#routeDir2").html(routeDir1);
+            }
+            else {
+                $("#routeDir1").html(routeDir1);
+                $("#routeDir2").html(routeDir0);
+            }
+            // Set map image if we have one.
+            
+            var imgMap = document.createElement('img');
+            imgMap.onload = function () {
+                $("#routeMap img").remove();
+                $("#routeMap").prepend(imgMap);
+            }
+            imgMap.onerror = function () {
+                $("#routeMap").hide();
+            }
+            imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
+        }
+
+
         var tripsInRoute = [];
         var specialService = $.grep(calendar_dates, function (a) {
             return a.date == specialServiceDate;
@@ -1190,7 +1209,7 @@ function onFindStopClick(e){
         }
         else {
             window.location.href = "#map?search=" + searchTerm;
-        }
+        } 
     }
     
 }

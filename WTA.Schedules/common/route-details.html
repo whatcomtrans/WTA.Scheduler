@@ -14,11 +14,18 @@
         <span>Reverse<br />Direction</span>
     </div>
     <div id="routeMap" class="map-image normal">
-        <img alt="route map" src="/Images/maps/Map-14.png" />
+        <!--<img id="imgMap" alt="route map" src="" />-->
         <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search"></i></a>
         <div class="map-bottom-row"><span>System Map</span></div>
     </div>
+
     <div id="customizeRoute">
+        <div>
+            <h4>Choose a route:</h4>
+            <select id="routeList" class="highlight" name="routeList">
+                <option value="selectRoute" disabled>Select A Route</option>
+            </select>
+        </div>
         <h4>Customize Schedule</h4>
         <div class="locations">
             <fieldset>
