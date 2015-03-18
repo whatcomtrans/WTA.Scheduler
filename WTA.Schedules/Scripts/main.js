@@ -7,6 +7,7 @@ var currentDirectionID = 0;
 var currentServiceID = 1; // Weekdays
 var entryPanoId = null;
 var searchURL = "http://branding.marquamgroup.local/sites/search/pages/results.aspx?k=";
+var markers = [];
 
 $(document).ready(function () {    
     window.onpopstate = onPopState;
@@ -737,53 +738,47 @@ function loadStops(stopId) {
 }
 function initializeStops() {
     //setHistory("stops");
-
     //Get the Lat/Lng of the StopId 
     var LatLng; 
     var panoLatLng; 
     var cameraHeading; 
     if (currentStopID == null) { 
-        LatLng = new google.maps.LatLng(48.786961, -122.447938); 
-        cameraHeading = 285; 
+        LatLng = new google.maps.LatLng(48.750267, -122.476362); 
+        cameraHeading = 105; 
     } else { 
         var currentStopLatLng = $.grep(stops, function(a) { 
             return a.stop_code == currentStopID; 
         }); 
         LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon); 
    } 
-
     geocode = new google.maps.Geocoder();
-    var MOAB = new google.maps.LatLng(48.786961, -122.447938);
+    var BTS = new google.maps.LatLng(48.750267, -122.476362);
     var mapOptions = {
-        center: MOAB,
+        center: BTS,
         zoom: 16
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     panorama = map.getStreetView();
     var panoOptions = {
-        position: MOAB,
+        position: BTS,
         pov: {
-            heading: 285,
+            heading: 105,
             pitch: 5
         },
         visible: true,
     };
     panorama.setOptions(panoOptions);
-
-    google.maps.event.addListener(panorama, 'position_changed', function() {
-        var lat = panorama.getPosition().k;
-        var lng = panorama.getPosition().D;
-        var panoLocation = new google.maps.LatLng(lat, lng);
-        var heading = google.maps.geometry.spherical.computeHeading(panoLocation,LatLng);
-        panorama.setPov({
-            heading: heading,
-            pitch:5
-        });
-    });
+    // google.maps.event.addListener(panorama, 'position_changed', function() {
+    //     var lat = panorama.getPosition().k;
+    //     var lng = panorama.getPosition().D;
+    //     var panoLocation = new google.maps.LatLng(lat, lng);
+    //     var heading = google.maps.geometry.spherical.computeHeading(panoLocation,LatLng);
+    //     panorama.setPov({
+    //         heading: heading,
+    //         pitch:5
+    //     });
+    // });
     var streetviewService = new google.maps.StreetViewService();
-    var radius = 50;
-
-
     // Following code is from the fillStops function. Don't think we want to do this on load so commenting out for now.
     //stopIdVariable = window.location.search.substring(1, 5);
     //if (stopIdVariable < 1000) {
@@ -791,7 +786,6 @@ function initializeStops() {
     //}
     //stopVariable = parseInt(window.location.search.substring(5, 9));
     //stopNameVariable = (window.location.search.substring(9)).replace(/%20/g, " ");
-
     var day = new Date().getDay();
     var presentDate = new Date();
     var newDate = (presentDate.getDate()).toString();
@@ -812,7 +806,6 @@ function initializeStops() {
         $('#Sunday').addClass('selectedDay');
         currentServiceID = 3;
     }
-
     $("#dayTabs").tabs({
         activate: function (event, ui) {
             var active = $('#dayTabs').tabs('option', 'active');
@@ -846,7 +839,6 @@ function initializeStops() {
         selectedDay = selectedDay.split(',')[0];
         thisDayStops(selectedDay);
     });
-    // Load stop if currently selected
     if (currentStopID) {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
         $("#searchStops").val(currentStopID);
@@ -857,10 +849,7 @@ function initializeStops() {
     }
     if (currentStopID != null) {
         panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
-        console.log(LatLng);
-        console.log(panoLatLng);
         cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
-        console.log(cameraHeading);
         panorama.setPov({
             heading: cameraHeading,
             pitch: 5
@@ -868,35 +857,32 @@ function initializeStops() {
     }
 }
 function SVpano() {
-    //Move the map the the new stop location
-    //Step 1- what's the stop_code?
-    //Step 2- what's this new stop's lat/lng?
+    var distance = 50;
     var stopLatLng = $.grep(stops, function(a) {
         return a.stop_code == currentStopID;
     });
     var stopPosition = new google.maps.LatLng(stopLatLng[0].stop_lat,stopLatLng[0].stop_lon);
-    //Step 3- set the map center there and move the pano there
-    map.setCenter(stopPosition);
-    panorama = map.getStreetView();
-    var panoOptions = {
-        position: stopPosition,
-        pov: {
-            heading: 285,
-            pitch: 5
-        },
-        visible: true,
-    };
-    panorama.setOptions(panoOptions);    
-    //Step 5- what's the SVpano's lat/lng?
-    var panoPosition = new google.maps.LatLng(map.streetView.position.k,map.streetView.position.D);
-    //Step 6- calculate the heading between the stop lat/lng and the pano lat/lng
-    var camHeading = google.maps.geometry.spherical.computeHeading(panoPosition,stopPosition);
-    //Step 7- setPov of pano to this calculated heading
-    panorama.setPov({
-        heading: camHeading,
-        pitch: 5
+    var service = new google.maps.StreetViewService();
+    service.getPanoramaByLocation(stopPosition, distance, function(panoData) {
+        if (panoData) {
+            panoramaLatLng = panoData.location.latLng;
+            initStreetView(stopPosition, panoramaLatLng);
+        } else {
+            $('#map-canvas').children().hide();
+            $('#noSV').remove();
+            $('#map-canvas').append('<p id="noSV" style="text-align:center;display:block;line-height:400px;">Drat! There isn\'t a good shot of this bus stop.</p>');
+        }
     });
-    //Step 8- profit
+}
+function initStreetView(stopPosition, panoramaLatLng){
+    var panoramaOptions = {
+        position: stopPosition
+    };
+    var streetView = new google.maps.StreetViewPanorama(document.getElementById('map-canvas'),panoramaOptions);
+    var heading = google.maps.geometry.spherical.computeHeading(panoramaLatLng, stopPosition);
+    map.setStreetView(streetView);      
+    streetView.setPov({heading:heading, pitch:0});
+    streetView.setZoom(0);
 }
 function codeAddressStop() {
     var address = document.getElementById('address').value;
@@ -1200,6 +1186,7 @@ function initializeMap() {
         busLayer.setMap(map);
     }
     google.maps.event.addListener(busLayer, 'click', function (e) {
+        deleteMarkers();
         kmlStopId = (e.featureData.description).substring(9);
         stopIdVariable = kmlStopId;
         servingRoutesMap();
@@ -1252,10 +1239,25 @@ function codeAddressMap() {
             });
         } else {
             //grab the latlng from this stop and use it to center and zoom the map
+            stopIdVariable = stopCodeResult[0].stop_id;
+            kmlStopName = stopCodeResult[0].stop_name;
+            kmlStopCode = stopCodeResult[0].stop_code;
+            servingRoutesMap();
             var x = stopCodeResult[0].stop_lat;
             var y = stopCodeResult[0].stop_lon;
-            map.setCenter(new google.maps.LatLng(x, y));
+            var stopPos = new google.maps.LatLng(x, y);
+            map.setCenter(stopPos);
             map.setZoom(17);
+            var infoWindow = new google.maps.InfoWindow({
+                content: '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="#stops?stopId=' + kmlStopCode + '">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
+            });
+            var marker = new google.maps.Marker({
+                position: stopPos,
+                map: map,
+                visible: false
+            });
+            infoWindow.open(map, marker);
+            markers.push(marker);
         }
     } else {
         geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
@@ -1274,6 +1276,18 @@ function codeAddressMap() {
             }
         });
     }
+}
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+function clearMarkers() {
+  setAllMap(null);
+}
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
 }
 function fillStopsMap() {
     if (stopQuery) {
