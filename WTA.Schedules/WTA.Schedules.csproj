@@ -91,6 +91,7 @@
     <Content Include="common\footer.html" />
     <Content Include="common\header.html" />
     <Content Include="common\left-nav.html" />
+    <Content Include="common\loading.html" />
     <Content Include="common\map.html" />
     <Content Include="common\route-details.html" />
     <Content Include="common\routes.html" />

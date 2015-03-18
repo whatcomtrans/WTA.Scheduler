@@ -102,17 +102,17 @@ hr {
 /*************************************** Main Elements End ***************************************/
 
 /*************************************** Main body Start ***************************************/
-#loader{
-    display:none;
-    width:200px;
-    height:100px;
+.loader{
     background: #ffffff url('../Images/wta-loader.gif') center center no-repeat;
-    position:absolute;
+    width:100%;
+    height:100%;   
+    min-height:100px;
+    /*position:absolute;
     left:50%;
     top:50%;
     z-index:1000;
     border:1px solid #D1D1D1;
-    border-radius:5px;
+    border-radius:5px;*/
 }
 A.ms-signInLink {
 	display:none!important; /* Hide sign in link */
@@ -166,7 +166,22 @@ input[type=button]{
     background-color:#203A8B;
     color:#ffffff;
 }
-
+input[type=time],
+input[type=text],
+input[type=date],
+ select,
+ label{
+    line-height:14px;
+}
+.ui-datepicker-trigger{
+    border:none;
+    background-color:transparent;
+    background-image:none;
+    font-size:18px;
+}
+.ui-tabs .ui-tabs-panel{
+    padding:0;
+}
 /*************************************** Main body End ***************************************/
 
 /* App pages start */
@@ -262,22 +277,7 @@ input[type=button]{
 }
 .route-details #schedule{
     overflow-x:scroll;
-}
-input[type=time],
-input[type=text],
-input[type=date],
- select,
- label{
-    line-height:14px;
-}
-.ui-datepicker-trigger{
-    border:none;
-    background-color:transparent;
-    background-image:none;
-    font-size:18px;
-}
-.ui-tabs-panel{
-    padding:0;
+    clear:both;
 }
 .route-details .button-row{
     height:40px;
@@ -310,6 +310,7 @@ input[type=date],
 .route-details .map-image{
     min-width:200px;
     margin:10px 20px 10px 0px;
+    position:relative;
 }
 .route-details .map-image.normal{
     width:20%;
@@ -324,12 +325,36 @@ input[type=date],
 .route-details #customizeRoute{
     display:inline-block;    
 }
-.route-details .map-image .map-bottom-row a{
-    float:right;
+.route-details .map-image .map-bottom-row{
+    text-align:center;
+}
+.route-details .map-image #btnResize{
+    position:absolute;
+    top:0;
+    right:0;
+    padding:8px;
+    background-color:rgba(10,10,10,.7);
+    color:#ffffff;
 }
 .route-details #customizeRoute{
     vertical-align:bottom;
 }
+.route-details #mainSchedule .paging{
+    height:20px;
+    width:100%;
+}
+.route-details #mainSchedule .page-button{
+    padding:5px 20px;
+    color:#008472;
+    cursor:pointer;
+}
+.route-details #mainSchedule .page-button.left{
+    float:left;  
+}
+.route-details #mainSchedule .page-button.right{
+    float:right;    
+}
+
 
 #searchStops,
 #datepicker{
