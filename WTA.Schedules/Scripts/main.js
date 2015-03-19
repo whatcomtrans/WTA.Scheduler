@@ -5,6 +5,7 @@ var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $stickyRow, stickyRowTop;
 var currentDirectionID = 0;
 var currentServiceID = 1; // Weekdays
+var currentDate = new Date();
 var entryPanoId = null;
 var searchURL = "http://branding.marquamgroup.local/sites/search/pages/results.aspx?k=";
 var markers = [];
@@ -303,9 +304,9 @@ function initializeRouteDetails() {
 
         $('#datepicker').on('change', function () {
             //figure out what the day is and call thisDay(day)
-            var selectedDay = $(this)[0].value;
-            selectedDay = selectedDay.split(',')[0];
-            thisDay(selectedDay);
+            currentDate = $(this)[0].value;
+            currentDate = currentDate.split(',')[0];
+            thisDay(currentDate);
         });
         $('#stopListStart').on('change', function () {
             $('#stopListEnd').empty();
@@ -384,7 +385,7 @@ function thisDay(day) {
         currentServiceID = 3;
         $("#dayTabs").tabs("option", "active", 2);
     }
-    //throwTheDate();
+    throwTheDate();
     displaySelectedRoute();
 }
 function displaySelectedRouteAsync() {
@@ -744,7 +745,8 @@ function throwTheDate() {
     var next = selectedDate;
     if (currentServiceID == 1) {
         if (!(previousDay > 0 && previousDay < 6)) {
-            next = selectedDate + (8 - previousDay);
+            //next = selectedDate + (8 - previousDay);
+            next = selectedDate - (8 - previousDay);
             if (next > daysInSelectedMonth) {
                 next = next - daysInSelectedMonth;
                 var prevMonth = prevMonth + 1;
@@ -780,11 +782,12 @@ function throwTheDate() {
         }
     }
     var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-    var d = new Date(prevYear, prevMonth, next).toLocaleDateString('en-US', dateConfig);
+    //var d = new Date(prevYear, prevMonth, next).toLocaleDateString('en-US', dateConfig);
+    var d = new Date(prevYear, prevMonth, next);
     $('#datepicker').attr('value', d);
-    $(function () {
-        $('#datepicker').datepicker({ dateFormat: 'DD, MM d, yy' });
+    $(function () {        
         $('#datepicker').datepicker('setDate', d);
+        $('#datepicker').datepicker("option", "dateFormat", "DD, MM d, yy" );
     });
     var formattedPrevMonth = (prevMonth + 1).toString();
     if (formattedPrevMonth.length < 2) { formattedPrevMonth = '0' + formattedPrevMonth };
@@ -905,21 +908,21 @@ function initializeStops() {
         });
     });
     $('#datepicker').on('change', function () {
-        var selectedDay = $(this)[0].value;
-        selectedDay = selectedDay.split(',')[0];
-        thisDayStops(selectedDay);
+        currentDate = $(this)[0].value;
+        currentDate = currentDate.split(',')[0];
+        thisDayStops(currentDate);
     });
     if (currentStopID) {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
         $("#searchStops").val(currentStopID);
-        displaySelectedStop(currentStopID, currentServiceID);
+        displaySelectedStop();
     } else {
         $('#searchStops').addClass('pulse');
         setTimeout(function () { $('#searchStops').removeClass('pulse') }, 6500);
     }
     if (currentStopID != null) {
 
-        displaySelectedStop(currentStopID, currentServiceID);
+        displaySelectedStop();
 
         panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
         cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
@@ -977,7 +980,7 @@ function directSearch() {
     if (searchTerm.length > 0) {
         if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
             if (validateStopId(searchTerm)) {
-                displaySelectedStop(currentStopID, currentServiceID);
+                displaySelectedStop();
             }
             else {
                 window.location.href = "#map?search=" + searchTerm;
@@ -1019,12 +1022,12 @@ function thisDayStops(day) {
         $('#map-canvas').show();
         panorama.setVisible(true);
     }
-    //throwTheDate();
-    displaySelectedStop(selectedStopId, currentServiceID);
+    throwTheDate();
+    displaySelectedStop();
 }
-function displaySelectedStop(selectedStopId, service_id) {
+function displaySelectedStop() {
     // get Stop info and populate header if found
-    var stop = getStop(selectedStopId);
+    var stop = getStop(currentStopID);
 
     if (stop) {
         stopIdVariable = stop.stop_id;
@@ -1033,7 +1036,7 @@ function displaySelectedStop(selectedStopId, service_id) {
         $('#stopTable').empty();
         $('#stopTable').append('<tr><th>Time</th><th>Route</th></tr>');
         $('#stopNameHeader')[0].innerHTML = stop.stop_name;
-        $('#selectedStopId')[0].innerHTML = selectedStopId;
+        $('#selectedStopId')[0].innerHTML = currentStopID;
         servingRoutes();
         $('#servedByRoutes')[0].innerHTML = servedByRoutes;
         var option = '';
@@ -1193,7 +1196,6 @@ function onFindStopClick(e){
     if (searchTerm.length > 0) {
         if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
             if (validateStopId(searchTerm)) {
-                //displaySelectedStop(currentStopID, currentServiceID);
                 window.location.href = "#stops?stopId=" + currentStopID;
             }
             else {
@@ -1448,29 +1450,36 @@ function getRoute(routeID) {
 }
 
 function getStop(stopId) {
-    var stop = Enumerable.From(stops)
-        .Where("$.stop_code == " + stopId)
-        .ToArray();
-    if (stop) {
-        stop = stop[0]
+    var stop = null;
+    if (stopId) {
+        var stop = Enumerable.From(stops)
+            .Where("$.stop_code == " + stopId)
+            .ToArray();
+        if (stop) {
+            stop = stop[0]
+        }
     }
     return stop;
 }
 function validateStopId(stopId) {
     // Technically we're validating stop_code since that's what we're passing around.
     // If stopId is found set local vars.
-    var stop = getStop(stopId);
-    if (stop) {
-        currentStopID = stop.stop_code;
-        stopIdVariable = stop.stop_id;
-        stopNameVariable = stop.stop_name;
-        return true;
-    } else {
-        currentStopID = null;
-        stopIdVariable = null;
-        stopNameVariable = null;
-        return false;
+    var valid = false;
+    if (stopId) {
+        var stop = getStop(stopId);
+        if (stop) {
+            currentStopID = stop.stop_code;
+            stopIdVariable = stop.stop_id;
+            stopNameVariable = stop.stop_name;
+            valid = true;
+        } else {
+            currentStopID = null;
+            stopIdVariable = null;
+            stopNameVariable = null;
+            valid = false;
+        }
     }
+    return valid;
 }
 function validateRouteId(routeId) {
     // If routeId is found set local vars.
