@@ -191,11 +191,11 @@ function initializeSidebar() {
     }
 }
 function showLoading() {
-    $(".loader").show();
+    $(".spinner").show();
     //$("#appPage").load("/common/loading.html");
 }
 function hideLoading() {
-    $(".loader").hide();
+    $(".spinner").hide();
 }
 
 // -------- Routes ----------
@@ -342,12 +342,16 @@ function swapMapSize() {
     if (rMap.hasClass("normal")) {
         rMap.animate({ width: "100%" }, "slow");
         rMap.removeClass("normal");
+        $("i", rMap).removeClass("fa-search-plus");
+        $("i", rMap).addClass("fa-search-minus");
         rMap.addClass("full");        
         //$(".map-image a").html("Shrink >>");
     } else {
         var offset = rMap.offset();
         rMap.removeClass("full");
         rMap.addClass("normal");
+        $("i", rMap).removeClass("fa-search-minus");
+        $("i", rMap).addClass("fa-search-plus");
         rMap.animate({ width: "25%" }, "slow");
         //$(".map-image a").html("Expand >>");
         //$('html, body').animate({
@@ -1091,6 +1095,15 @@ function servingRoutes() {
         return true;
     });
     servedByRoutes = '';
+
+    // Sort
+    finalStops.sort(function (a, b) {
+        a = Number(String(a.route_short_name).replace(/\D/g, ''));
+        b = Number(String(b.route_short_name).replace(/\D/g, ''));
+        var a1 = typeof a, b1 = typeof b;
+        return a1 < b1 ? -1 : a1 > b1 ? 1 : a < b ? -1 : a > b ? 1 : 0;
+    });
+
     for (i = 0; i < finalStops.length; i++) {
         if (i > 0) {
             //servedByRoutes += ', <a href="index.html?' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</a>';

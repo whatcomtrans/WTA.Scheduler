@@ -66,7 +66,7 @@ a:hover {
 h3{
     color:#008472;
     text-transform:uppercase;
-    margin-top:8px;
+    margin-top:8px;   
 }
 h4{
     color:#0f457a;
@@ -99,6 +99,9 @@ hr {
     padding:8px;
     box-sizing: border-box;
 }
+.container-pad{
+    padding:8px;
+}
 .left{
     float:left;  
 }
@@ -109,7 +112,13 @@ hr {
 
 /*************************************** Main body Start ***************************************/
 
-
+h3 .fa,
+h3 span{
+    display:table-cell;
+}
+h3 .fa{
+    padding-right:10px;
+}
 
 .loader{
     background: #ffffff url('../Images/wta-loader.gif') center center no-repeat;
@@ -199,6 +208,30 @@ input[type=date],
 .ui-tabs .ui-tabs-panel{
     padding:0;
 }
+fieldset{
+    height:40px;
+    margin-right:20px;
+}
+fieldset label,
+fieldset select{
+    display:block;
+}
+fieldset select{
+    max-width:250px;
+}
+.circle-background{
+    background-color:#8E8E8E;
+    border-radius:50%;
+    border-width:0;
+    color:#ffffff;
+    width:24px;
+    height:24px;
+    line-height:24px;
+    text-align:center;
+    vertical-align:middle;
+}.circle-background:hover{
+    background-color:#008472;
+}
 /*************************************** Main body End ***************************************/
 
 /* App pages start */
@@ -244,6 +277,9 @@ input[type=date],
 #google-transit-maps #ftime{
     width:29%;
 }
+#google-transit-submit{
+    margin:0;
+}
 .route-num{
     display:inline-block;
     width:45px;
@@ -257,20 +293,13 @@ input[type=date],
     padding:0;
     vertical-align:middle;
 }
+.direction-row h3{
+    font-size:20px;
+}
 .direction-row #routeDir2{
     color:#000000;
 }
-.direction-row #flipRoute{
-    background-color:#8E8E8E;
-    border-radius:50%;
-    border-width:0;
-    color:#ffffff;
-    width:24px;
-    height:24px;
-    line-height:24px;
-    text-align:center;
-    vertical-align:middle;
-}
+
 .direction-row #flipRoute .fa{
     width:24px;
     height:24px;
@@ -288,74 +317,71 @@ input[type=date],
     font-size:12px;
     line-height:14px;
 }
-.route-details #schedule{
+#route-details h3{
+     word-break:break-all;
+}
+#route-details #schedule{
     overflow-x:scroll;
     clear:both;
 }
-.route-details .button-row{
+#route-details .button-row{
     height:auto;
     font-size:14px;
     line-height:20px;
     padding:8px 0px;
 }
-.route-details .locations,
-.route-details .times{
+#route-details .locations,
+#route-details .times{
     display:inline-block;
     vertical-align:top;
 }
-.route-details fieldset{
-    height:40px;
-    margin-right:20px;
-}
-.route-details fieldset label,
-.route-details fieldset select{
-    display:block;
-}
-.route-details fieldset select{
-    max-width:250px;
-}
-.route-details #datePicker{
+#route-details #datePicker{
     margin:5px;
 }
-.route-details .map-image{
+#route-details .map-image{
     min-width:200px;
     margin:10px 20px 10px 0px;
     position:relative;
 }
-.route-details .map-image.normal{
+#route-details .map-image.normal{
     width:20%;
 }
-.route-details .map-image.full{
-    
-}
-.route-details .map-image img {
+#route-details .map-image img {
     width:100%;
 }
-.route-details .map-image,
-.route-details #customizeRoute{
+#route-details .map-image,
+#route-details #customizeRoute{
     display:inline-block;    
 }
-.route-details .map-image .map-bottom-row{
+#route-details .map-image .map-bottom-row{
     text-align:center;
 }
-.route-details .map-image #btnResize{
+#route-details .map-image #btnResize{
     position:absolute;
     top:0;
     right:0;
     padding:8px;
-    background-color:rgba(10,10,10,.7);
-    color:#ffffff;
+    *background-color:rgba(10,10,10,.7);
+    color:#008472;
+    font-size:1.5em;
 }
-.route-details #customizeRoute{
+#route-details .map-image #btnResize:hover{
+    color:#D04145;
+}
+#route-details .map-image.full #btnResize{
+    font-size:3em;
+    right:25px;
+}
+#route-details #customizeRoute{
     vertical-align:bottom;
 }
-.route-details #mainSchedule .paging{
+#route-details #mainSchedule .paging{
     height:20px;
     width:100%;
 }
-.route-details #mainSchedule .page-button{
-    padding:5px 20px;
-    color:#008472;
+#route-details #mainSchedule .page-button{
+    *padding:5px 20px;
+    margin:3px;    
     cursor:pointer;
 }
 .sticky-row{
@@ -1370,6 +1396,10 @@ Menu shrinks to dropdown at this point
 	}
 }
 @media (max-width:530px) {
+    .content-main{
+        padding-left:2px;
+        padding-right:2px;
+    }
 	.ms-srch-sb > input {
 		width:100px;
 	}
@@ -1391,6 +1421,46 @@ Menu shrinks to dropdown at this point
         border:1px solid #D1D1D1;
         border-radius:5px;
     }
+    fieldset {
+        margin-right:0;
+    }
+    select,
+    input[type=time],
+    fieldset select,
+    .locations,
+    .times{
+        width:100%;
+        max-width:none;
+    }
+    .locations{
+        margin-bottom:10px;
+    }
+    input[value=Print]{
+        display:none;
+    }
+    /*route-details*/
+    #btnResize{
+        display:none;
+    }
+    #route-details .map-image.normal{
+        width:100%;       
+        margin-right:0;
+    }
+    #route-details .button-row{
+        text-align:center;
+    }
+    #datePicker input{
+        min-width:inherit;
+        width:80%;
+    }
+    #datePicker button{
+        width:10%;
+    }
+    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {        
+        padding: .3em .3em;
+    }
+
+
 }
 @media (max-width:280px) {
 	#SocialShare img {

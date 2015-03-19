@@ -1,10 +1,10 @@
 ﻿
-<div class="trip-planner">
+<div class="trip-planner container-pad">
     <h3>Trip Planner</h3>
     <div class="">
         <form id="google-transit-maps" action=http://google.com/transit>
             <p>
-                <input id="tbStartLocation" name="saddr" title="Enter the Start Address" type="text" placeholder="Start"  maxlength="2048">
+                <input id="tbStartLocation" name="saddr" title="Enter the Start Address" type="text" placeholder="Start" maxlength="2048">
                 <input id=google-transit-submit type=submit value="Plan Trip">
                 <br />
                 <a class="usecurrent" href="javascript:useCurrentStart()">use my current location</a>
@@ -19,40 +19,38 @@
             </p>
             <p>
                 <input type="radio" name="ttype" value="dep" checked /> Departing
-                <input type="radio" name="ttype" value="arr" /> Arriving                
+                <input type="radio" name="ttype" value="arr" /> Arriving
             </p>
         </form>
     </div>
 </div>
 
-<div class="route-selector">
+<div class="route-selector container-pad">
     <h3>Routes</h3>
-    <div class="">
-        <select id="selRoutes" >
+    <div>
+        <select id="selRoutes">
             <option class="option" value="selectRoute">Select A Route</option>
-        </select>
+        </select>        
         <input id="findRoute" type=submit value="Find">
     </div>
 </div>
 
-<div class="stop-selector">
+<div class="stop-selector container-pad">
     <h3>My Stop</h3>
-    <div class="">
+    <div>
         <input id="tbStop" title="Enter the Stop ID" type="text" placeholder="Enter Stop Id, Address or Intersection" maxlength="2048">
-        <input id="findStop" type=submit value="Find" >
+        <input id="findStop" type=submit value="Find">
     </div>
 </div>
 
-<div class="notices">
+<div class="notices container-pad">
     <h3>Notices</h3>
     <div class="drop-shadow">
-        <ul id="noticeList">
-
-        </ul>
+        <ul id="noticeList"></ul>
     </div>
 </div>
 
-<div class="twitter-feed">
+<div class="twitter-feed container-pad">
     <h3>Tweets</h3>
     <div id="tweets" class="drop-shadow">
         <a class="twitter-timeline" href="https://twitter.com/ridewta" data-widget-id="539932276482527232" data-chrome="transparent noheader nofooter" width="600px" height="350px">Tweets by @ridewta</a>

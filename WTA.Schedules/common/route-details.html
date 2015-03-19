@@ -1,21 +1,21 @@
 ﻿
-<div class="route-details drop-shadow">
+<div id="route-details" class="drop-shadow">
     <h3 id="routeNumber"></h3>
     <div class="direction-row">
         <h3 id="routeDir1"></h3>
         <i class="fa fa-arrows-h"></i>
         <h3 id="routeDir2"></h3>
         <!--<input type="button" class="fa fa-refresh" name="flipRoute" id="flipRoute" onclick="flipRoute();">-->
-        
-        <div  id="flipRoute" onclick="flipRoute();">
+
+        <div id="flipRoute" class="circle-background" onclick="flipRoute();">
             <i class="fa fa-refresh"></i>
         </div>
-      
+
         <span>Reverse<br />Direction</span>
     </div>
     <div id="routeMap" class="map-image normal">
         <!--<img id="imgMap" alt="route map" src="" />-->
-        <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search"></i></a>
+        <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search-plus"></i></a>
         <div class="map-bottom-row"><span>System Map</span></div>
     </div>
 
@@ -55,7 +55,7 @@
         <div class="button-row">
             <input type="button" name="applyFilter" id="applyFilter" value="Apply Filter" onclick="applyFilter();">
             <input type="button" name="clearFilter" id="clearFilter" value="Clear Filter" onclick="clearFilter();">
-            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('schedule');">
+            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('route-details');">
         </div>
     </div>
 
@@ -66,15 +66,16 @@
                 <li><a href="javascript:thisDay('Weekday')">Weekday</a></li>
                 <li><a href="javascript:thisDay('Saturday')">Saturday</a></li>
                 <li><a href="javascript:thisDay('Sunday');">Sunday</a></li>
-            </ul>
+            </ul>           
             <div id="datePicker">
-                Schedule for: <input type="text" name="datepicker" id="datepicker" value="" onclick="">
+                <label>Schedule for:</label>
+                <input type="text" name="datepicker" id="datepicker" value="" onclick="">
             </div>
             <div class="paging">
-                <div class="page-button left" onclick="pageLeft()">
+                <div class="page-button left circle-background" onclick="pageLeft()">
                     <i class="fa fa-arrow-left"></i>
                 </div>
-                <div class="page-button right" onclick="pageRight()">
+                <div class="page-button right circle-background" onclick="pageRight()">
                     <i class="fa fa-arrow-right"></i>
                 </div>
             </div>
