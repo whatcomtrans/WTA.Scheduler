@@ -328,7 +328,7 @@ function initializeRouteDetails() {
             var selectedIndex = $('#stopListStart option:selected').index();
             var selectedStop = this.value;
             var selectedStopId = $(this).children(":selected").attr("id");
-            var availableStopsEnd = $('#busTable tr:eq(' + 0 + ') td a');
+            var availableStopsEnd = $('#busTable tr:eq(' + 0 + ') td span.top');
             var endingOptions = '';
             for (i = selectedIndex; i < availableStopsEnd.length; i++) {
                 //endingOptions += '<option value="' + availableStopsEnd[i].innerHTML + '" id="' + availableStopsEnd[i].id + '">' + availableStopsEnd[i].innerHTML + '</option>';
@@ -354,8 +354,13 @@ function setStickyHeader() {
     // Set sticky table header
     $tableHeader = $("#stopNames");
     $tableHeaderClone = $("#stopNames").clone();
-    var tdWidth = $("td:last", $tableHeader).width();
-    $("td:last .continuesOnAs", $tableHeaderClone).width(tdWidth);
+    // Need to set each table header cells' width or they don't line up correctly
+    var tds = $('TD div', $tableHeader);
+    var tdsClone = $('TD div', $tableHeaderClone);
+    for (var i = 0; i < tds.length; i++) {
+        var w = $(tds[i]).width()
+        $(tdsClone[i]).width(w);
+    }
 
     tableHeaderTop = $tableHeader.offset().top;
     $tableContainer = $("#schedule");
@@ -366,7 +371,7 @@ function setStickyHeader() {
             $tableHeaderClone.width($tableContainer.width() );
         }
     });
-
+        
     $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
     $(window).scroll(function () {
         if ($tableHeader) {
@@ -552,7 +557,9 @@ function displaySelectedRoute() {
         $('#busTable').append('<tr id="stopNames"></tr>');
         for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
             //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '">' + uniqueStopNamesInRoute[i].stop_name + '</td>');
-            $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></td>');
+            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></div</td>');
+            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' <span>(' + uniqueStopNamesInRoute[i].stop_code + ')</span></a></div</td>');
+            $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + ' </span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
         }
         for (i = 0; i < tripsInRoute.length; i++) {
             $('#busTable').append('<tr class="tripTimes" id="trip' + tripsInRoute[i].trip_id + '"></tr>');
@@ -727,7 +734,7 @@ function displaySelectedRoute() {
 function customizeStopListStart() {
     $('#stopListStart').empty();
     $('#stopListStart').append('<option value="selectStopListStart" disabled>Starting Bus Stop</option>');
-    var availableStops = $('#busTable tr:eq(' + 0 + ') td a');
+    var availableStops = $('#busTable tr:eq(' + 0 + ') td span.top');
     if (availableStops.length > 0) {
         var startingOptions = '';
         for (i = 0; i < availableStops.length; i++) {
@@ -780,11 +787,13 @@ function applyFilter() {
         $('#stopNames').hide();
         $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>')
     }
+    setStickyHeader();
 }
 function clearFilter() {
     $('#noStops').remove();
     $('#busTable tr:hidden').show();
     $('#busTable td:hidden').show();
+    setStickyHeader();
 }
 function printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
@@ -983,7 +992,7 @@ function initializeStops() {
     if (currentStopID != null) {
 
         displaySelectedStop();
-
+        scrollContentTop();
         panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
         cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
         panorama.setPov({
@@ -1355,6 +1364,7 @@ function initializeMap() {
     });
 
     fillStopsMap();
+    scrollContentTop();
 }
 function showPosition(position) {
     mapOptions = {

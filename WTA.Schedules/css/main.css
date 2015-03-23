@@ -376,11 +376,37 @@ fieldset select{
     margin:3px;    
     cursor:pointer;
 }
-.sticky-row{
-    position: fixed;
-    top: 0;
+#stopNames td{
+    text-align:center;    
+    height:1px;
 }
-
+#stopNames td a,
+#stopNames td div {
+    height:100%;
+    display:block;
+}
+#stopNames td span{
+    display:block;
+    width:100%;
+}
+#stopNames td div{
+    position:relative;
+}
+#stopNames td .bottom{
+    position:absolute;
+    bottom:0;
+    text-align:center;
+}
+.fixedHeader{
+    position:fixed;
+    top:0;
+    overflow-y:hidden !important;
+    overflow-x:hidden !important;
+    margin-left:-1px;
+}
+.hiddenHeader{
+    visibility:hidden;
+}
 
 #searchStops,
 #datepicker{
@@ -1468,18 +1494,4 @@ Menu shrinks to dropdown at this point
 /*************************************** Responsive End ***************************************/
 
 
-/* Test code for table header freeze */
 
-.fixedHeader{
-    position:fixed;
-    top:0;
-    overflow-y:hidden !important;
-    overflow-x:hidden !important;
-    margin-left:-1px;
-}
-.hiddenHeader{
-    visibility:hidden;
-}
-.continuesOnAs{
-    display:block;
-}
