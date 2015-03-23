@@ -2,11 +2,12 @@
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId,
-    stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $stickyRow, stickyRowTop;
+    stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $tableHeader, $tableHeaderClone, tableHeaderTop, $tableContainer, $table;
 var currentDirectionID = 0;
 var currentServiceID = 1; // Weekdays
 var currentDate = new Date();
 var entryPanoId = null;
+var scrollToTop = false;
 var searchURL = "http://branding.marquamgroup.local/sites/search/pages/results.aspx?k=";
 var markers = [];
 
@@ -96,53 +97,53 @@ function loadPageContent() {
 // ----------- History -------------------
 function setHistory(appPage) {
     
-    var params = "";
-    switch (appPage) {
-        case "routes":
-            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage);
-            console.log("setHistory: " + appPage);
-            break;
-        case "route-details":
-            if (currentRouteID) { params = "?routeId=" + currentRouteID }
-            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
-            console.log("setHistory: " + appPage);
-            break;
-        case "map":
-            if (stopQuery) { params = "?search=" + encodeURIComponent(stopQuery) }
-            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
-            console.log("setHistory: " + appPage);
-            break;
-        case "stops":
-            if (currentStopID) { params = "?stopId=" + currentStopID }
-            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
-            console.log("setHistory: " + appPage);
-            break;
-        default:
-            history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage);
-            console.log("setHistory: " + appPage);
-            break;
-    }
+    //var params = "";
+    //switch (appPage) {
+    //    case "routes":
+    //        history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage);
+    //        console.log("setHistory: " + appPage);
+    //        break;
+    //    case "route-details":
+    //        if (currentRouteID) { params = "?routeId=" + currentRouteID }
+    //        history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
+    //        console.log("setHistory: " + appPage);
+    //        break;
+    //    case "map":
+    //        if (stopQuery) { params = "?search=" + encodeURIComponent(stopQuery) }
+    //        history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
+    //        console.log("setHistory: " + appPage);
+    //        break;
+    //    case "stops":
+    //        if (currentStopID) { params = "?stopId=" + currentStopID }
+    //        history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage + params);
+    //        console.log("setHistory: " + appPage);
+    //        break;
+    //    default:
+    //        history.pushState({ page: appPage, currentRouteID: currentRouteID, currentStopID: currentStopID }, appPage, "#" + appPage);
+    //        console.log("setHistory: " + appPage);
+    //        break;
+    //}
 }
 function onPopState(event) {
-    console.log("popState: " + event.state)
-    if (event.state) {        
-        switch (event.state.page) {
-            case "routes":
-                loadRoutes();
-                break;
-            case "route-details":
-                if (event.state.currentRouteID) { currentRouteID = event.state.currentRouteID; }
-                loadRouteDetails(currentRouteID);
-                break;
-            case "map":
-                loadMap();
-                break;
-            case "stops":
-                if (event.state.currentStopID) { currentStopID = event.state.currentStopID; }
-                loadStops();
-                break;
-        }
-    }
+    //console.log("popState: " + event.state)
+    //if (event.state) {        
+    //    switch (event.state.page) {
+    //        case "routes":
+    //            loadRoutes();
+    //            break;
+    //        case "route-details":
+    //            if (event.state.currentRouteID) { currentRouteID = event.state.currentRouteID; }
+    //            loadRouteDetails(currentRouteID);
+    //            break;
+    //        case "map":
+    //            loadMap();
+    //            break;
+    //        case "stops":
+    //            if (event.state.currentStopID) { currentStopID = event.state.currentStopID; }
+    //            loadStops();
+    //            break;
+    //    }
+    //}
 };
 
 // Route search to SharePoint
@@ -196,6 +197,20 @@ function showLoading() {
 }
 function hideLoading() {
     $(".spinner").hide();
+}
+function scrollContentTop() {
+    if(isElementInViewport($("#appPage")) == false){
+        $('html,body').animate({
+            scrollTop: $("#appPage").offset().top
+        }, 'fast');
+    }
+}
+function isElementInViewport(content) {
+    if (typeof jQuery === "function" && content instanceof jQuery) {
+        content = content[0];
+    }
+    var rect = content.getBoundingClientRect();
+    return ( rect.top >= 0 );
 }
 
 // -------- Routes ----------
@@ -323,20 +338,50 @@ function initializeRouteDetails() {
         });
 
         displaySelectedRoute();
+        scrollContentTop();
 
-        // Set sticky header test
-        //$stickyRow = $("#stopNames");
-        //stickyRowTop = $stickyRow.offset().top;
-        //$(window).scroll(function () {
-        //    if ($stickyRow) {
-        //        $stickyRow.toggleClass('sticky-row', $(window).scrollTop() > stickyRowTop);
-        //    }
-        //});
+        // Set sticky table header
+        $tableHeader = $("#stopNames");
+        $tableHeaderClone = $("#stopNames").clone();
+        tableHeaderTop = $tableHeader.offset().top;
+        $tableContainer = $("#mainSchedule");
+        $table = $('table', $tableContainer);
+        // Resize clone when user resizes window.
+        $(window).resize(function () {
+            if ($tableHeader) {
+                $tableHeaderClone.width($tableContainer.width()-10);
+            }
+        });
+
+        $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
+        $(window).scroll(function () {
+            if ($tableHeader) {
+                if ($(window).scrollTop() > $tableHeader.offset().top
+                    && $(window).scrollTop() < ($table.offset().top + $table.height())) {
+                    $tableHeader.addClass("hiddenHeader");
+                    $("#busTable").prepend($tableHeaderClone);
+                    $tableHeaderClone.addClass('fixedHeader');
+                }
+                else {
+                    $tableHeader.removeClass("hiddenHeader");
+                    $tableHeaderClone.remove();
+                    $tableHeaderClone.removeClass('fixedHeader');
+                }
+            }
+        });
+        // Sync horizontal scrolling
+        $("#schedule").on("scroll",sync)
     }
     else {
         loadRoutes();
     }
 }
+
+var sync = function(){
+    var percentage = this.scrollLeft / (this.scrollWidth - this.offsetWidth);
+    $tableHeaderClone.scrollLeft(this.scrollLeft);
+}
+
 function swapMapSize() {
     var rMap = $("#routeMap");
     if (rMap.hasClass("normal")) {
@@ -998,9 +1043,9 @@ function directSearch() {
 function directMap() {
     var stopCode = document.getElementById('selectedStopId').innerHTML;
     if (stopCode.length == 4) {
-        window.location.href = "map.html?" + stopCode;
+        window.location.href = "#map?search=" + stopCode;
     } else {
-        window.location.href = "map.html";
+        window.location.href = "#map";
     }
 }
 function thisDayStops(day) {

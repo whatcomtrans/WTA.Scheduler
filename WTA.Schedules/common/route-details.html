@@ -7,8 +7,11 @@
         <h3 id="routeDir2"></h3>
         <!--<input type="button" class="fa fa-refresh" name="flipRoute" id="flipRoute" onclick="flipRoute();">-->
 
-        <div id="flipRoute" class="circle-background" onclick="flipRoute();">
-            <i class="fa fa-refresh"></i>
+        <div id="flipRoute"  onclick="flipRoute();">
+            <span class="circle-icon fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-refresh fa-stack-1x icon"></i>
+            </span>
         </div>
 
         <span>Reverse<br />Direction</span>
@@ -72,11 +75,17 @@
                 <input type="text" name="datepicker" id="datepicker" value="" onclick="">
             </div>
             <div class="paging">
-                <div class="page-button left circle-background" onclick="pageLeft()">
-                    <i class="fa fa-arrow-left"></i>
+                <div class="page-button left" onclick="pageLeft()">         
+                    <span class="circle-icon fa-stack fa-2x">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="fa fa-arrow-left fa-stack-1x icon"></i>
+                    </span>
                 </div>
-                <div class="page-button right circle-background" onclick="pageRight()">
-                    <i class="fa fa-arrow-right"></i>
+                <div class="page-button right" onclick="pageRight()">
+                    <span class="circle-icon fa-stack fa-2x">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="fa fa-arrow-right fa-stack-1x icon"></i>
+                    </span>
                 </div>
             </div>
             <div id="schedule">

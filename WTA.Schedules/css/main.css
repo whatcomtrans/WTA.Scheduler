@@ -189,6 +189,12 @@ input[type=submit]:hover,
 input[type=button]:hover {
     background-color:#008472;
 }
+input[type=time]
+{
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    height:16px;
+}
 input[type=time],
 input[type=text],
 input[type=date],
@@ -196,6 +202,7 @@ input[type=date],
 {
     line-height:14px;
 }
+
  label{
     line-height:18px;
  }
@@ -211,6 +218,7 @@ input[type=date],
 fieldset{
     height:40px;
     margin-right:20px;
+    margin-bottom:10px;
 }
 fieldset label,
 fieldset select{
@@ -219,19 +227,20 @@ fieldset select{
 fieldset select{
     max-width:250px;
 }
-.circle-background{
-    background-color:#8E8E8E;
-    border-radius:50%;
-    border-width:0;
-    color:#ffffff;
-    width:24px;
-    height:24px;
-    line-height:24px;
-    text-align:center;
-    vertical-align:middle;
-}.circle-background:hover{
-    background-color:#008472;
+.circle-icon{
+    font-size:14px;
 }
+.circle-icon{
+    color:#8e8e8e;
+}
+.circle-icon:hover {
+    color:#008472;
+    cursor:pointer;
+}
+.circle-icon .icon{
+      color:#fff;
+}
+
 /*************************************** Main body End ***************************************/
 
 /* App pages start */
@@ -300,23 +309,6 @@ fieldset select{
     color:#000000;
 }
 
-.direction-row #flipRoute .fa{
-    width:24px;
-    height:24px;
-    line-height:24px;
-}
-.direction-row #flipRoute:hover{
-    background-color:#008472;
-    border-collapse:collapse;
-    border-width:0;
-    transform:none;
-    cursor:pointer;
-}
-.direction-row span{
-    color:#8E8E8E;
-    font-size:12px;
-    line-height:14px;
-}
 #route-details h3{
      word-break:break-all;
 }
@@ -1426,12 +1418,17 @@ Menu shrinks to dropdown at this point
     }
     select,
     input[type=time],
-    fieldset select,
+    .times input,
+    fieldset select
+    {
+        width:95%;
+        max-width:none;
+    }
     .locations,
     .times{
         width:100%;
-        max-width:none;
-    }
+     }
+
     .locations{
         margin-bottom:10px;
     }
@@ -1451,10 +1448,10 @@ Menu shrinks to dropdown at this point
     }
     #datePicker input{
         min-width:inherit;
-        width:80%;
+        width:75%;
     }
     #datePicker button{
-        width:10%;
+        width:8%;
     }
     .ui-tabs .ui-tabs-nav .ui-tabs-anchor {        
         padding: .3em .3em;
@@ -1471,3 +1468,15 @@ Menu shrinks to dropdown at this point
 /*************************************** Responsive End ***************************************/
 
 
+/* Test code for table header freeze */
+
+.fixedHeader{
+    position:fixed;
+    top:0;
+    overflow-y:hidden !important;
+    overflow-x:hidden !important;
+    margin-left:-1px;
+}
+.hiddenHeader{
+    visibility:hidden;
+}
