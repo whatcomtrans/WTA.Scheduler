@@ -1480,3 +1480,6 @@ Menu shrinks to dropdown at this point
 .hiddenHeader{
     visibility:hidden;
 }
+.continuesOnAs{
+    display:block;
+}

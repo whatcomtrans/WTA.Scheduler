@@ -340,37 +340,7 @@ function initializeRouteDetails() {
         displaySelectedRoute();
         scrollContentTop();
 
-        // Set sticky table header
-        $tableHeader = $("#stopNames");
-        $tableHeaderClone = $("#stopNames").clone();
-        tableHeaderTop = $tableHeader.offset().top;
-        $tableContainer = $("#mainSchedule");
-        $table = $('table', $tableContainer);
-        // Resize clone when user resizes window.
-        $(window).resize(function () {
-            if ($tableHeader) {
-                $tableHeaderClone.width($tableContainer.width()-10);
-            }
-        });
 
-        $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
-        $(window).scroll(function () {
-            if ($tableHeader) {
-                if ($(window).scrollTop() > $tableHeader.offset().top
-                    && $(window).scrollTop() < ($table.offset().top + $table.height())) {
-                    $tableHeader.addClass("hiddenHeader");
-                    $("#busTable").prepend($tableHeaderClone);
-                    $tableHeaderClone.addClass('fixedHeader');
-                }
-                else {
-                    $tableHeader.removeClass("hiddenHeader");
-                    $tableHeaderClone.remove();
-                    $tableHeaderClone.removeClass('fixedHeader');
-                }
-            }
-        });
-        // Sync horizontal scrolling
-        $("#schedule").on("scroll",sync)
     }
     else {
         loadRoutes();
@@ -378,8 +348,47 @@ function initializeRouteDetails() {
 }
 
 var sync = function(){
-    var percentage = this.scrollLeft / (this.scrollWidth - this.offsetWidth);
     $tableHeaderClone.scrollLeft(this.scrollLeft);
+}
+function setStickyHeader() {
+    // Set sticky table header
+    $tableHeader = $("#stopNames");
+    $tableHeaderClone = $("#stopNames").clone();
+    var tdWidth = $("td:last", $tableHeader).width();
+    $("td:last .continuesOnAs", $tableHeaderClone).width(tdWidth);
+
+    tableHeaderTop = $tableHeader.offset().top;
+    $tableContainer = $("#schedule");
+    $table = $('table', $tableContainer);
+    // Resize clone when user resizes window.
+    $(window).resize(function () {
+        if ($tableHeader) {
+            $tableHeaderClone.width($tableContainer.width() );
+        }
+    });
+
+    $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
+    $(window).scroll(function () {
+        if ($tableHeader) {
+            if ($(window).scrollTop() > $tableHeader.offset().top
+                && $(window).scrollTop() < ($table.offset().top + $table.height())) {
+                if ($tableHeader.hasClass("hiddenHeader") == false) {
+                    $tableHeader.addClass("hiddenHeader");
+                    $("#busTable").prepend($tableHeaderClone);
+                    $tableHeaderClone.addClass('fixedHeader');
+                    var scrollPos = $tableContainer.scrollLeft();
+                    $tableHeaderClone.scrollLeft(scrollPos);
+                }
+            }
+            else {
+                $tableHeader.removeClass("hiddenHeader");
+                $tableHeaderClone.remove();
+                $tableHeaderClone.removeClass('fixedHeader');
+            }
+        }
+    });
+    // Sync horizontal scrolling
+    $tableContainer.on("scroll", sync)
 }
 
 function swapMapSize() {
@@ -686,8 +695,10 @@ function displaySelectedRoute() {
                     $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '">' + continuesOnAs + '</a></td>');
                 }
             });
+            // Reset vars for sticky table header
+            setStickyHeader();
         }
-        setTimeout(processContinuing, 0);
+        setTimeout(processContinuing, 100);
         selectedRoute = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
         if (trip_headsign === -1) {
             if (isHoliday.length > 0) {
@@ -697,9 +708,9 @@ function displaySelectedRoute() {
             }
         } else {
             $('.routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
-            $('#stopNames').append('<td>Continues On As</td>');
+            $('#stopNames').append('<td><div class="continuesOnAs">Continues On As</div></td>');
         }
-        //$('.spinner').remove();
+        
     } catch (e) { }
     finally {
         $('.spinner').remove();
