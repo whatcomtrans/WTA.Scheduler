@@ -925,9 +925,6 @@ function initializeStops() {
     // });
     var streetviewService = new google.maps.StreetViewService();
 
-
-
-
     var day = new Date().getDay();
     var presentDate = new Date();
     var newDate = (presentDate.getDate()).toString();
@@ -1101,6 +1098,29 @@ function displaySelectedStop() {
     if (stop) {
         stopIdVariable = stop.stop_id;
         stopNameVariable = stop.stop_name;
+
+        //Add the city/zip info below the stop name
+        var currentStopLatLng = $.grep(stops, function(a) { 
+            return a.stop_code == currentStopID; 
+        }); 
+        var LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon);
+
+        geocode.geocode({ 'latLng': LatLng  }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+
+                var city;
+                var zip;
+                for (i=0;i<results[1].address_components.length;i++) {
+                    if (results[1].address_components[i].types[0] == "locality") {
+                        city = results[1].address_components[i].long_name;
+                    }
+                    if (results[1].address_components[i].types[0] == "postal_code") {
+                        zip = results[1].address_components[i].long_name;
+                    }
+                }
+                $('#cityZip').text(city + ', ' + zip);
+            }
+        });
 
         $('#stopTable').empty();
         $('#stopTable').append('<tr><th>Time</th><th>Route</th></tr>');
