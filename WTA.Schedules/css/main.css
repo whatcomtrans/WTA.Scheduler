@@ -1495,6 +1495,8 @@ Menu shrinks to dropdown at this point
 	}
 }
 /*************************************** Responsive End ***************************************/
-
+td {
+    text-align: center;
+}
 
 
