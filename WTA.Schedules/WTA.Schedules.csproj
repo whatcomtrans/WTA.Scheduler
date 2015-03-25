@@ -97,7 +97,6 @@
     <Content Include="common\routes.html" />
     <Content Include="common\sidebar.html" />
     <Content Include="common\stops.html" />
-    <Content Include="css\app.css" />
     <Content Include="css\bootstrap-custom.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />

@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-# v1 2015-03-17
+# v1 2015-03-25
 
 common/footer.html
 common/left-nav.html
@@ -9,37 +9,28 @@ common/map.html
 common/routes.html
 common/route-details.html
 common/stops.html
-
 schedules.html
 
-fonts/fontawesome-webfont.eot
-fonts/fontawesome-webfont.svg
-fonts/fontawesome-webfont.ttf
-fonts/fontawesome-webfont.woff
-fonts/FontAwesome.otf
-
+css/bootstrap-custom.css
 css/bootstrap-theme.min.css
 css/bootstrap.min.css
 css/font-awesome.min.css
-css/main.css
 css/jquery-ui.min.css
-css/scheduler.css
+css/main.css
 
 data/calendar.js
 data/calendar_dates.js
-data/frequencies.js
 data/routes.js
 data/stop_times.min.js
 data/stops.js
 data/trips.js
 data/notices.js
 
-Scripts/jquery-1.9.0.min.js
-Scripts/jquery-ui.min.js
-Scripts/bootstrap.min.js
-Scripts/linq.min.js
-Scripts/main.js
-
+fonts/fontawesome-webfont.eot
+fonts/fontawesome-webfont.svg
+fonts/fontawesome-webfont.ttf
+fonts/fontawesome-webfont.woff
+fonts/FontAwesome.otf
 
 images/EmailIcon.png
 images/EmailIconSM.png
@@ -52,7 +43,12 @@ images/LogoBannerMd.jpg
 images/TwitterIcon.png
 images/TwitterIconSM.png
 images/wta-loader.gif
-images/maps/Map-14.png
+
+Scripts/bootstrap.min.js
+Scripts/jquery-1.9.0.min.js
+Scripts/jquery-ui.min.js
+Scripts/linq.min.js
+Scripts/main.js
 
 
 # Use from network if available

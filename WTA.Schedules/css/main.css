@@ -79,6 +79,10 @@ hr {
 	background-color:transparent;
 	margin:0px;	
 }
+td,th {
+    text-align: center;
+}
+
 .link-item,
 .link-item a,
 .link-item a:link {
@@ -191,8 +195,8 @@ input[type=button]:hover {
 }
 input[type=time]
 {
-    -webkit-appearance:none;
-    -moz-appearance: none;
+    /*-webkit-appearance:none;
+    -moz-appearance: none;*/
     height:16px;
 }
 input[type=time],
@@ -308,7 +312,9 @@ fieldset select{
 .direction-row #routeDir2{
     color:#000000;
 }
-
+.direction-row .reverse{
+    line-height:normal;
+}
 #route-details h3{
      word-break:break-all;
 }
@@ -330,25 +336,25 @@ fieldset select{
 #route-details #datePicker{
     margin:5px;
 }
-#route-details .map-image{
+.map-image{
     min-width:200px;
     margin:10px 20px 10px 0px;
     position:relative;
 }
-#route-details .map-image.normal{
+.map-image.normal{
     width:20%;
 }
-#route-details .map-image img {
+.map-image img {
     width:100%;
 }
-#route-details .map-image,
+.map-image,
 #route-details #customizeRoute{
     display:inline-block;    
 }
-#route-details .map-image .map-bottom-row{
+.map-image .map-bottom-row{
     text-align:center;
 }
-#route-details .map-image #btnResize{
+.map-image #btnResize{
     position:absolute;
     top:0;
     right:0;
@@ -357,10 +363,10 @@ fieldset select{
     color:#008472;
     font-size:1.5em;
 }
-#route-details .map-image #btnResize:hover{
+.map-image #btnResize:hover{
     color:#D04145;
 }
-#route-details .map-image.full #btnResize{
+.map-image.full #btnResize{
     font-size:3em;
     right:25px;
 }
@@ -410,14 +416,37 @@ fieldset select{
 .hiddenHeader{
     visibility:hidden;
 }
-
-#searchStops,
-#datepicker{
+#datepicker,
+select{
     min-width:250px;
 }
 .stops #mainSchedule,
 .map #map-canvas{
     margin-top:10px;
+}
+.stops #datePicker{
+    float:left;
+}
+
+.selection{
+   display:table;
+   width:100%;
+   margin:8px 0;
+   max-width:350px;
+}
+.selection input,
+.selection button,
+.selection span{
+   display:table-cell;
+   margin:0;
+   vertical-align:middle;
+}
+.selection span{
+    padding:0 10px;
+}
+.selection input[type=text]{
+  width:100%;
+  margin-right:10px;
 }
 
 
@@ -1452,6 +1481,7 @@ Menu shrinks to dropdown at this point
     {
         width:95%;
         max-width:none;
+        min-width:0;
     }
     .locations,
     .times{
@@ -1485,8 +1515,23 @@ Menu shrinks to dropdown at this point
     .ui-tabs .ui-tabs-nav .ui-tabs-anchor {        
         padding: .3em .3em;
     }
-
-
+}
+@media (max-width:370px){
+    #dayTabs li:nth-child(1) a {
+        width: 55px;
+    }
+    #dayTabs li:nth-child(2) a,
+    #dayTabs li:nth-child(3) a{
+        width:40px;
+    }
+    #dayTabs li:nth-child(4) a{
+        width:55px;
+    }
+    #dayTabs li a{        
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;        
+    }
 }
 @media (max-width:280px) {
 	#SocialShare img {
@@ -1495,8 +1540,12 @@ Menu shrinks to dropdown at this point
 	}
 }
 /*************************************** Responsive End ***************************************/
-td {
-    text-align: center;
+
+
+/* Print CSS */
+@media print {
+    #customizeRoute,
+    .paging,
+    #btnResize,
+    #flipRoute{display:none;}
 }
-
-
