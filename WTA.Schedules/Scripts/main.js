@@ -276,9 +276,11 @@ function initializeRouteDetails() {
         var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
         var d = new Date().toLocaleDateString('en-US', dateConfig);
         $('#datepicker').attr('value', d);
+        var todaysDate = new Date();
         $(function () {
             $('#datepicker').datepicker({
                 dateFormat: 'DD, MM d, yy',
+                minDate: todaysDate,
                 showOn: "both",
                 buttonText: "<i class='fa fa-calendar'></i>"
             });
@@ -580,7 +582,7 @@ function displaySelectedRoute() {
             var j = 0;
            
             for (k = 0; k < uniqueStopNamesInRoute.length; k++) {  
-                var columnId = parseInt($('#stopNames td:nth-child(' + (k + 1) + ')').attr('id')); // This line is failing on iPad: Mike 3-24                
+                var columnId = parseInt($('#stopNames td:nth-child(' + (k + 1) + ')').attr('id')); // This line is failing on iPad: Mike 3-24              
                 if (stopTimesInTrip[j] == undefined) {
                     $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
                 } else if (stopTimesInTrip[j].stop_id == parseInt($('#stopNames td:nth-child(' + (k) + ')').attr('id'))) {
