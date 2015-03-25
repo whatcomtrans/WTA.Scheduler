@@ -378,7 +378,7 @@ fieldset select{
 }
 #stopNames td{
     text-align:center;    
-    height:1px;
+    *height:1px;
 }
 #stopNames td a,
 #stopNames td div {
@@ -395,6 +395,9 @@ fieldset select{
 #stopNames td .bottom{
     position:absolute;
     bottom:0;
+    text-align:center;
+}
+.tripTimes td{
     text-align:center;
 }
 .fixedHeader{

@@ -243,12 +243,14 @@ function initializeRouteDetails() {
     // If no route number selected go back to routes
     if (currentRouteID){
 
-        $("#dayTabs").tabs({
-            activate: function (event, ui) {
-                var active = $('#dayTabs').tabs('option', 'active');
-                thisDay($("#dayTabs ul>li a").eq(active).html());
-            }
-        });
+        //$("#dayTabs").tabs({
+        //    activate: function (event, ui) {
+        //        var active = $('#dayTabs').tabs('option', 'active');
+        //        thisDay($("#dayTabs ul>li a").eq(active).html());
+        //    }
+        //});
+        $("#dayTabs").tabs({ activate: onRouteTabChanged });
+
         //Select the current day tab on load
         var day = new Date().getDay();
         var presentDate = new Date();
@@ -316,13 +318,9 @@ function initializeRouteDetails() {
             clearInterval(pagerTimeout);
             return false;
         });
+        
+        $('#datepicker').on('change', onRouteDatepickerChanged);
 
-        $('#datepicker').on('change', function () {
-            //figure out what the day is and call thisDay(day)
-            currentDate = $(this)[0].value;
-            currentDate = currentDate.split(',')[0];
-            thisDay(currentDate);
-        });
         $('#stopListStart').on('change', function () {
             $('#stopListEnd').empty();
             var selectedIndex = $('#stopListStart option:selected').index();
@@ -339,14 +337,21 @@ function initializeRouteDetails() {
 
         displaySelectedRoute();
         scrollContentTop();
-
-
     }
     else {
         loadRoutes();
     }
 }
-
+function onRouteDatepickerChanged(e) {
+    currentDate = e.target.value;
+    currentDate = currentDate.split(',')[0];
+    thisDay(currentDate);
+}
+function onRouteTabChanged(event, ui) {
+    var day = ui.newTab[0].textContent;
+    thisDay(day);
+}
+ 
 var sync = function(){
     $tableHeaderClone.scrollLeft(this.scrollLeft);
 }
@@ -438,6 +443,7 @@ function flipRoute() {
     $("#routeDir2").html(dir1);
 }
 function thisDay(day) {
+    $("#dayTabs").tabs({ activate: null });
     if (day == 'Weekday' || day == 'Monday' || day == 'Tuesday' || day == 'Wednesday' || day == 'Thursday' || day == 'Friday') {        
         currentServiceID = 1;
         $("#dayTabs").tabs("option", "active", 0);
@@ -448,6 +454,7 @@ function thisDay(day) {
         currentServiceID = 3;
         $("#dayTabs").tabs("option", "active", 2);
     }
+    $("#dayTabs").tabs({ activate: onRouteTabChanged });
     throwTheDate();
     displaySelectedRoute();
 }
@@ -556,11 +563,11 @@ function displaySelectedRoute() {
         }
         $('#busTable').append('<tr id="stopNames"></tr>');
         for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
-            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '">' + uniqueStopNamesInRoute[i].stop_name + '</td>');
+           // $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '">' + uniqueStopNamesInRoute[i].stop_name + '</td>');
             //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></div</td>');
             //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' <span>(' + uniqueStopNamesInRoute[i].stop_code + ')</span></a></div</td>');
-            $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + ' </span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
-        }
+            $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + '</span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
+        } 
         for (i = 0; i < tripsInRoute.length; i++) {
             $('#busTable').append('<tr class="tripTimes" id="trip' + tripsInRoute[i].trip_id + '"></tr>');
             var tripId = document.getElementById('trip' + tripsInRoute[i].trip_id);
@@ -571,8 +578,9 @@ function displaySelectedRoute() {
                 return new Date('1970/01/01 ' + a.departure_time) - new Date('1970/01/01 ' + b.departure_time);
             });
             var j = 0;
-            for (k = 0; k < uniqueStopNamesInRoute.length; k++) {
-                var columnId = parseInt($('#stopNames td:nth-child(' + (k + 1) + ')').attr('id'));
+           
+            for (k = 0; k < uniqueStopNamesInRoute.length; k++) {  
+                var columnId = parseInt($('#stopNames td:nth-child(' + (k + 1) + ')').attr('id')); // This line is failing on iPad: Mike 3-24                
                 if (stopTimesInTrip[j] == undefined) {
                     $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
                 } else if (stopTimesInTrip[j].stop_id == parseInt($('#stopNames td:nth-child(' + (k) + ')').attr('id'))) {
@@ -718,7 +726,7 @@ function displaySelectedRoute() {
             $('#stopNames').append('<td><div class="continuesOnAs">Continues On As</div></td>');
         }
         
-    } catch (e) { }
+    } catch (e) { alert(e.message);}
     finally {
         $('.spinner').remove();
     }
@@ -948,12 +956,8 @@ function initializeStops() {
         $('#Sunday').addClass('selectedDay');
         currentServiceID = 3;
     }
-    $("#dayTabs").tabs({
-        activate: function (event, ui) {
-            var active = $('#dayTabs').tabs('option', 'active');
-            thisDayStops($("#dayTabs ul>li a").eq(active).html());
-        }
-    });
+    $("#dayTabs").tabs({ activate: onStopTabChanged });
+
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {
             directSearch();
@@ -976,11 +980,9 @@ function initializeStops() {
             buttonText: "<i class='fa fa-calendar'></i>"
         });
     });
-    $('#datepicker').on('change', function () {
-        currentDate = $(this)[0].value;
-        currentDate = currentDate.split(',')[0];
-        thisDayStops(currentDate);
-    });
+
+    $('#datepicker').on('change', onStopDatepickerChanged);
+
     if (currentStopID) {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
         $("#searchStops").val(currentStopID);
@@ -1000,6 +1002,15 @@ function initializeStops() {
             pitch: 5
         });
     }
+}
+function onStopDatepickerChanged(e) {
+    currentDate = e.target.value;
+    currentDate = currentDate.split(',')[0];
+    thisDayStops(currentDate);
+}
+function onStopTabChanged(event, ui) {
+    var day = ui.newTab[0].textContent;
+    thisDayStops(day);
 }
 
 function SVpano() {
@@ -1069,28 +1080,34 @@ function directMap() {
     }
 }
 function thisDayStops(day) {
+    $("#dayTabs").tabs({ activate: null });
     $('#dayTabs div').removeClass('selectedDay');
     if (day == 'Weekday' || day == 'Monday' || day == 'Tuesday' || day == 'Wednesday' || day == 'Thursday' || day == 'Friday') {
         currentServiceID = 1;
         $('#Weekday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
+        $("#dayTabs").tabs("option", "active", 0);
     } else if (day == 'Saturday') {
         currentServiceID = 2;
         $('#Saturday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
+        $("#dayTabs").tabs("option", "active", 1);
     } else if (day == 'Sunday') {
         currentServiceID = 3;
         $('#Sunday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
+        $("#dayTabs").tabs("option", "active", 2);
     } else if (day == 'Street View') {
         $('#StreetView').addClass('selectedDay');
         $('#printThis').hide();
         $('#map-canvas').show();
+        $("#dayTabs").tabs("option", "active", 3);
         panorama.setVisible(true);
     }
+    $("#dayTabs").tabs({ activate: onStopTabChanged });
     throwTheDate();
     displaySelectedStop();
 }
@@ -1240,6 +1257,14 @@ function servingRoutesMap() {
         return true;
     });
     servedByRoutesMap = '';
+    // Sort
+    finalStopsMap.sort(function (a, b) {
+        a = Number(String(a.route_short_name).replace(/\D/g, ''));
+        b = Number(String(b.route_short_name).replace(/\D/g, ''));
+        var a1 = typeof a, b1 = typeof b;
+        return a1 < b1 ? -1 : a1 > b1 ? 1 : a < b ? -1 : a > b ? 1 : 0;
+    });
+
     for (i = 0; i < finalStopsMap.length; i++) {
         if (i > 0) {
             //servedByRoutesMap += ', <a href="index.html?' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
