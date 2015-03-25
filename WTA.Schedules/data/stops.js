@@ -1,5 +1,5 @@
 var stops = [
-{"stop_id":208,"stop_code":2001,"stop_name":"Bellingham Station","stop_desc":"","stop_lat":48.750172,"stop_lon":-122.47536,"zone_id":1,"stop_url":"","location_type":"","parent_station":"","stop_timezone":"","wheelchair_boarding":0},
+{"stop_id":208,"stop_code":2001,"stop_name":"Bellingham Station","stop_desc":"","stop_lat":48.750144,"stop_lon":-122.476179,"zone_id":1,"stop_url":"","location_type":"","parent_station":"","stop_timezone":"","wheelchair_boarding":0},
 {"stop_id":209,"stop_code":3131,"stop_name":"Eldridge Ave at Walnut St","stop_desc":"","stop_lat":48.757977,"stop_lon":-122.4921,"zone_id":1,"stop_url":"","location_type":"","parent_station":"","stop_timezone":"","wheelchair_boarding":0},
 {"stop_id":210,"stop_code":2966,"stop_name":"Lindbergh Ave at Tech College","stop_desc":"","stop_lat":48.764854,"stop_lon":-122.51044,"zone_id":1,"stop_url":"","location_type":"","parent_station":"","stop_timezone":"","wheelchair_boarding":0},
 {"stop_id":211,"stop_code":5555,"stop_name":"Bakerview Rd at Fred Meyer","stop_desc":"","stop_lat":48.789631,"stop_lon":-122.51099,"zone_id":1,"stop_url":"","location_type":"","parent_station":"","stop_timezone":"","wheelchair_boarding":0},
