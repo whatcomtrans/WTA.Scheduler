@@ -276,9 +276,11 @@ function initializeRouteDetails() {
         var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
         var d = new Date().toLocaleDateString('en-US', dateConfig);
         $('#datepicker').attr('value', d);
+        var todaysDate = new Date();
         $(function () {
             $('#datepicker').datepicker({
                 dateFormat: 'DD, MM d, yy',
+                minDate: todaysDate,
                 showOn: "both",
                 buttonText: "<i class='fa fa-calendar'></i>"
             });
