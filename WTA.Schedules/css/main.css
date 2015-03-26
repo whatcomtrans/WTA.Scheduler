@@ -603,6 +603,7 @@ to {transform: rotate(359deg);}
     font-size:16px;
     cursor:pointer;
     width:100%;
+    line-height:inherit;
 }
 
 /*************************************** Search End ***************************************/

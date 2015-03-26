@@ -52,8 +52,8 @@ Scripts/main.js
 
 
 # Use from network if available
-NETWORK:
+#NETWORK:
 
 
 # Fallback content
-FALLBACK:
+#FALLBACK:
