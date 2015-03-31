@@ -8,7 +8,7 @@ var currentServiceID = 1; // Weekdays
 var currentDate = new Date();
 var entryPanoId = null;
 var scrollToTop = false;
-var searchURL = "http://branding.marquamgroup.local/sites/search/pages/results.aspx?k=";
+var searchURL = "http://test.ridewta.com/search/pages/results.aspx?k=";
 var markers = [];
 
 $(document).ready(function () {    
@@ -18,6 +18,9 @@ $(document).ready(function () {
     });
     loadMain();
 });
+
+
+
 
 function getQueryParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -93,7 +96,10 @@ function loadPageContent() {
     }
     setHistory(hash);
 }
-
+function setLeftnav(item) {
+    $("#leftNav ul li").removeClass("selected");
+    $(item).addClass("selected");
+}
 // ----------- History -------------------
 function setHistory(appPage) {
     
@@ -191,6 +197,7 @@ function initializeSidebar() {
         noticeList.append("<li>" + notices[i].title + "</li>");
     }
 }
+
 function showLoading() {
     $(".spinner").show();
     //$("#appPage").load("/common/loading.html");
@@ -216,6 +223,7 @@ function isElementInViewport(content) {
 // -------- Routes ----------
 function loadRoutes() {
     $("#appPage").load("/common/routes.html", function () { initializeRoutes(); });
+    setLeftnav("#lnavRoutes");
 }
 function initializeRoutes() {
     //setHistory("routes");
@@ -233,9 +241,8 @@ function initializeRoutes() {
 // -------- Route Details ----------
 function loadRouteDetails(route_id) {
     currentRouteID = route_id;
-    $("#appPage").load("/common/route-details.html", function () {
-         initializeRouteDetails();
-    });    
+    $("#appPage").load("/common/route-details.html", function () { initializeRouteDetails(); });
+    setLeftnav("#lnavRouteDetails");
 }
 function initializeRouteDetails() {
     //setHistory("route-details")
@@ -890,6 +897,7 @@ function pageRight() {
 function loadStops(stopId) {    
     currentStopID = stopId;
     $("#appPage").load("/common/stops.html", function () { initializeStops(); });
+    setLeftnav("#lnavStops");
 }
 function initializeStops() {
     //setHistory("stops");
@@ -1338,6 +1346,7 @@ function onFindStopClick(e){
 // -------- Map ----------
 function loadMap() {
     $("#appPage").load("/common/map.html", function () { initializeMap(); });
+    setLeftnav("#lnavMap");
 }
 function initializeMap() {
     //setHistory("map");

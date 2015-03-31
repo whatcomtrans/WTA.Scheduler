@@ -1,11 +1,10 @@
-﻿
-<div class="trip-planner container-pad">
+﻿<div class="trip-planner container-pad">
     <h3>Trip Planner</h3>
     <div class="">
-        <form id="google-transit-maps" action=http://google.com/transit>
+        <form id="google-transit-maps" action="http://google.com/transit">
             <p>
                 <input id="tbStartLocation" name="saddr" title="Enter the Start Address" type="text" placeholder="Start" maxlength="2048">
-                <input id=google-transit-submit type=submit value="Plan Trip">
+                <input id=google-transit-submit type="submit" value="Plan Trip" >
                 <br />
                 <a class="usecurrent" href="javascript:useCurrentStart()">use my current location</a>
             </p>
@@ -25,13 +24,15 @@
     </div>
 </div>
 
+
+
 <div class="route-selector container-pad">
     <h3>Routes</h3>
     <div>
         <select id="selRoutes">
             <option class="option" value="selectRoute">Select A Route</option>
         </select>        
-        <input id="findRoute" type=submit value="Find">
+        <input id="findRoute" type="button" value="Find">
     </div>
 </div>
 
@@ -39,7 +40,7 @@
     <h3>My Stop</h3>
     <div>
         <input id="tbStop" title="Enter the Stop ID" type="text" placeholder="Enter Stop Id, Address or Intersection" maxlength="2048">
-        <input id="findStop" type=submit value="Find">
+        <input id="findStop" type="button" value="Find">
     </div>
 </div>
 
