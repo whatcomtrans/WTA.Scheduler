@@ -964,6 +964,7 @@ function initializeStops() {
         currentServiceID = 3;
     }
     $("#dayTabs").tabs({ activate: onStopTabChanged });
+    
 
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {

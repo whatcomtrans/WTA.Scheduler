@@ -32,19 +32,32 @@ http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.eot
 http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.svg
 http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.ttf
 http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.woff
-http://mg-wk-dev.azurewebsites.net/fonts/FontAwesome.otf
 
-http://mg-wk-dev.azurewebsites.net/images/EmailIcon.png
-http://mg-wk-dev.azurewebsites.net/images/EmailIconSM.png
-http://mg-wk-dev.azurewebsites.net/images/FacebookIcon.png
-http://mg-wk-dev.azurewebsites.net/images/FacebookIconSM.png
-http://mg-wk-dev.azurewebsites.net/images/GlobalNavChild.png
-http://mg-wk-dev.azurewebsites.net/images/GlobalNavDown.png
-http://mg-wk-dev.azurewebsites.net/images/LogoBanner.jpg
-http://mg-wk-dev.azurewebsites.net/images/LogoBannerMd.jpg
-http://mg-wk-dev.azurewebsites.net/images/TwitterIcon.png
-http://mg-wk-dev.azurewebsites.net/images/TwitterIconSM.png
-http://mg-wk-dev.azurewebsites.net/images/wta-loader.gif
+http://mg-wk-dev.azurewebsites.net/Images/EmailIcon.png
+http://mg-wk-dev.azurewebsites.net/Images/EmailIconSM.png
+http://mg-wk-dev.azurewebsites.net/Images/FacebookIcon.png
+http://mg-wk-dev.azurewebsites.net/Images/FacebookIconSM.png
+http://mg-wk-dev.azurewebsites.net/Images/GlobalNavChild.png
+http://mg-wk-dev.azurewebsites.net/Images/GlobalNavDown.png
+http://mg-wk-dev.azurewebsites.net/Images/LogoBanner.jpg
+http://mg-wk-dev.azurewebsites.net/Images/LogoBannerMd.jpg
+http://mg-wk-dev.azurewebsites.net/Images/TwitterIcon.png
+http://mg-wk-dev.azurewebsites.net/Images/TwitterIconSM.png
+
+http://static.addtoany.com/buttons/share_save_256_24.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_flat_0_aaaaaa_40x100.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_flat_75_ffffff_40x100.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_55_fbf9ee_1x400.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_65_ffffff_1x400.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_75_dadada_1x400.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_75_e6e6e6_1x400.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_95_fef1ec_1x400.png
+http://mg-wk-dev.azurewebsites.net/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+http://mg-wk-dev.azurewebsites.net/images/ui-icons_222222_256x240.png
+http://mg-wk-dev.azurewebsites.net/images/ui-icons_2e83ff_256x240.png
+http://mg-wk-dev.azurewebsites.net/images/ui-icons_454545_256x240.png
+http://mg-wk-dev.azurewebsites.net/images/ui-icons_888888_256x240.png
+http://mg-wk-dev.azurewebsites.net/images/ui-icons_cd0a0a_256x240.png
 
 http://mg-wk-dev.azurewebsites.net/Scripts/bootstrap.min.js
 http://mg-wk-dev.azurewebsites.net/Scripts/jquery-1.9.0.min.js
@@ -56,6 +69,8 @@ http://mg-wk-dev.azurewebsites.net/Scripts/main.js
 # Use from network if available
 #NETWORK:
 
+https://maps.googleapis.com/maps/api/js?key=AIzaSyCpB0PKqugX5QGSqRcAkrm4v1vL91Vi6GY&libraries=geometry
+http://platform.twitter.com/widgets.js
 
 # Fallback content
 #FALLBACK:

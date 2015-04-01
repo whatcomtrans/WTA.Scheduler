@@ -196,12 +196,10 @@
     <Content Include="Scripts\scheduler-OLD.js" />
     <Content Include="Scripts\scheduler-v1.js" />
     <Content Include="Scripts\scheduler.js" />
-    <Content Include="test.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="wta.appcache" />
-    <None Include="wta.manifest" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
