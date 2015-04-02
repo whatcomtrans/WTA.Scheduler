@@ -67,10 +67,8 @@ http://mg-wk-dev.azurewebsites.net/Scripts/main.js
 
 
 # Use from network if available
-#NETWORK:
-
-https://maps.googleapis.com/maps/api/js?key=AIzaSyCpB0PKqugX5QGSqRcAkrm4v1vL91Vi6GY&libraries=geometry
-http://platform.twitter.com/widgets.js
+NETWORK:
+*
 
 # Fallback content
 #FALLBACK:
