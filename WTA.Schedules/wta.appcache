@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-# v1 2015-03-25
+# v1 2015-04-02
 
 CACHE:
 http://mg-wk-dev.azurewebsites.net/schedules.html
@@ -66,11 +66,10 @@ http://mg-wk-dev.azurewebsites.net/Scripts/linq.min.js
 http://mg-wk-dev.azurewebsites.net/Scripts/main.js
 
 
-# Use from network if available
-#NETWORK:
+# Give permission to use anything from the network if it isn't already in cache
+NETWORK:
+*
 
-https://maps.googleapis.com/maps/api/js?key=AIzaSyCpB0PKqugX5QGSqRcAkrm4v1vL91Vi6GY&libraries=geometry
-http://platform.twitter.com/widgets.js
 
 # Fallback content
 #FALLBACK:
