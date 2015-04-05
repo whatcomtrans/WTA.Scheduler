@@ -1,4 +1,4 @@
-﻿// locals
+// locals
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId,
@@ -722,6 +722,9 @@ function displaySelectedRoute() {
             // Reset vars for sticky table header
             setStickyHeader();
         }
+        //Convert from military time right here
+        //Step1- select all the td cells that's parent hasClass of tripTimes
+        convertToStandard();
         setTimeout(processContinuing, 100);
         selectedRoute = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
         if (trip_headsign === -1) {
@@ -789,6 +792,7 @@ function applyFilter() {
     });
     cellsRemaining.splice(0, 1)
     cellsRemaining.splice(0, 1)
+    convertToMilitary();
     $.each(cellsRemaining, function () {
         if ($(this)[0].innerHTML == '--') {
             $(this).parent().hide();
@@ -797,6 +801,7 @@ function applyFilter() {
             $(this).hide();
         }
     });
+    convertToStandard();
     var noRows = $('.tripTimes').is(':visible');
     if (noRows == false) {
         var startingStop = $('#stopListStart option:selected')[0].innerHTML;
@@ -805,6 +810,62 @@ function applyFilter() {
         $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>')
     }
     setStickyHeader();
+}
+function convertToMilitary() {
+    var allTD = $('#busTable tr.tripTimes td');
+    $.each(allTD, function() {
+        if (($(this)[0].innerHTML.substr(-2) == 'am') && ($(this)[0].innerHTML.length == 7)) {
+            //AM values between 1 and 9 don't change except for adding a leading 0 and removing the ' am'
+            var time = $(this)[0].innerHTML.slice(0,4);
+            $(this)[0].innerHTML = '0'+time;
+        } else if (($(this)[0].innerHTML.substr(-2) == 'am') && ($(this)[0].innerHTML.length == 8) && ($(this)[0].innerHTML.slice(0,2) == '12')) { 
+            //12AM values, needs '00:'+minutes
+            var minutes = $(this)[0].innerHTML.slice(3,5);
+            $(this)[0].innerHTML = '00:'+minutes;
+        } else if (($(this)[0].innerHTML.substr(-2) == 'am') && ($(this)[0].innerHTML.length == 8)) {
+            //AM values between 10 and 11 don't change except for remove the ' am'
+            $(this)[0].innerHTML = $(this)[0].innerHTML.slice(0,5);
+        } else if (($(this)[0].innerHTML.substr(-2) == 'pm') && ($(this)[0].innerHTML.length == 7)) {
+            //PM values between 1 and 9 remove the ' pm', convert the first character to an int and add 12
+            var minutes = $(this)[0].innerHTML.slice(2,4);
+            var hourPlus12 = parseInt($(this)[0].innerHTML.slice(0,1))+12;
+            $(this)[0].innerHTML = hourPlus12+':'+minutes;
+        } else if (($(this)[0].innerHTML.substr(-2) == 'pm') && ($(this)[0].innerHTML.length == 8) && ($(this)[0].innerHTML.slice(0,2) == '12')) {
+            //12PM values, just remove the PM
+            $(this)[0].innerHTML = $(this)[0].innerHTML.slice(0,5);
+        } else if (($(this)[0].innerHTML.substr(-2) == 'pm') && ($(this)[0].innerHTML.length == 8)) {
+            //PM values between 10 and 12 remove the ' pm', convert the first 2 characters to an int and add 12
+            var minutes = $(this)[0].innerHTML.slice(3,5);
+            var hourPlus12 = parseInt($(this)[0].innerHTML.slice(0,2))+12;
+            $(this)[0].innerHTML = hourPlus12+':'+minutes;
+        }
+    });
+}
+function convertToStandard() {
+    //Step2- for each of them, check if they begin with a 0--if so, remove the 0 and append am to the end
+    var allTD = $('#busTable tr.tripTimes td');
+    $.each(allTD, function() {
+        //0:00 through 0:59
+        if ($(this)[0].innerHTML.slice(0,2) == '00') {
+            var minutes = $(this)[0].innerHTML.slice(3,5);
+            $(this)[0].innerHTML = '12:'+minutes+' am';
+        } else if ($(this)[0].innerHTML.slice(0,1) == '0') {
+        //1:00AM through 9:59AM
+            $(this)[0].innerHTML = $(this)[0].innerHTML.slice(1,5)+' am';
+        } else if ($(this)[0].innerHTML.slice(0,2) == '10' || $(this)[0].innerHTML.slice(0,2) == '11') {
+        //10:00 through 11:59
+            $(this)[0].innerHTML = $(this)[0].innerHTML+' am';
+        } else if ($(this)[0].innerHTML.slice(0,2) == '12') {
+        //12:00 through 12:59
+            var minutes = $(this)[0].innerHTML.slice(3,5);
+            $(this)[0].innerHTML = '12:'+minutes+' pm';
+        } else {
+        //13:00 through 23:59 -- need to set a variable equal to the first two characters in the string, converted to an int and subtract 12
+            var hourMinus12 = parseInt($(this)[0].innerHTML.slice(0,2))-12;
+            var minutes = $(this)[0].innerHTML.slice(3,5);
+            $(this)[0].innerHTML = hourMinus12 + ':' + minutes + ' pm';
+        }
+    });
 }
 function clearFilter() {
     $('#noStops').remove();
