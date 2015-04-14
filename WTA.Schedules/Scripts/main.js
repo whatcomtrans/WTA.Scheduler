@@ -724,7 +724,8 @@ function displaySelectedRoute() {
         }
         //Convert from military time right here
         //Step1- select all the td cells that's parent hasClass of tripTimes
-        convertToStandard();
+        var cells = $('#busTable tr.tripTimes td');
+        convertToStandard(cells);
         setTimeout(processContinuing, 100);
         selectedRoute = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
         if (trip_headsign === -1) {
@@ -790,9 +791,10 @@ function applyFilter() {
     var cellsRemaining = $('#busTable td').filter(function () {
         return $(this).is(':visible');
     });
-    cellsRemaining.splice(0, 1)
-    cellsRemaining.splice(0, 1)
-    convertToMilitary();
+    cellsRemaining.splice(0, 1);
+    cellsRemaining.splice(0, 1);
+    var cells = $('#busTable tr.tripTimes td');
+    convertToMilitary(cells);
     $.each(cellsRemaining, function () {
         if ($(this)[0].innerHTML == '--') {
             $(this).parent().hide();
@@ -801,7 +803,8 @@ function applyFilter() {
             $(this).hide();
         }
     });
-    convertToStandard();
+    var cells = $('#busTable tr.tripTimes td');
+    convertToStandard(cells);
     var noRows = $('.tripTimes').is(':visible');
     if (noRows == false) {
         var startingStop = $('#stopListStart option:selected')[0].innerHTML;
@@ -811,9 +814,8 @@ function applyFilter() {
     }
     setStickyHeader();
 }
-function convertToMilitary() {
-    var allTD = $('#busTable tr.tripTimes td');
-    $.each(allTD, function() {
+function convertToMilitary(cells) {
+    $.each(cells, function() {
         if (($(this)[0].innerHTML.substr(-2) == 'am') && ($(this)[0].innerHTML.length == 7)) {
             //AM values between 1 and 9 don't change except for adding a leading 0 and removing the ' am'
             var time = $(this)[0].innerHTML.slice(0,4);
@@ -841,10 +843,10 @@ function convertToMilitary() {
         }
     });
 }
-function convertToStandard() {
+function convertToStandard(cells) {
     //Step2- for each of them, check if they begin with a 0--if so, remove the 0 and append am to the end
-    var allTD = $('#busTable tr.tripTimes td');
-    $.each(allTD, function() {
+    
+    $.each(cells, function() {
         //0:00 through 0:59
         if ($(this)[0].innerHTML.slice(0,2) == '00') {
             var minutes = $(this)[0].innerHTML.slice(3,5);
@@ -1309,6 +1311,10 @@ function servingRoutes() {
     for (i = 0; i < servingToday.length; i++) {
         var finalTimeRoute;
         var currentTime = servingToday[i].departure_time.slice(0, -3);
+        //Add leading 0 to AM times
+        if (currentTime.length == 4) {
+            currentTime = '0' + currentTime;
+        }
         var currentTimeRoute = $.grep(trips, function (a) {
             return a.trip_id == servingToday[i].trip_id;
         });
@@ -1319,6 +1325,10 @@ function servingRoutes() {
         }
         $('#stopTable').append('<tr id="' + finalTimeRoute[0].route_id + '"><td>' + currentTime + '</td><td>' + finalTimeRoute[0].route_short_name + ' ' + currentTimeRoute[0].trip_headsign + '</td></tr>');
     }
+    //convert the times to standard format here 
+    var cells = $('#stopTable tr td:nth-child(1)');
+    convertToStandard(cells);
+    
     selectedStopId = $('#selectedStopId')[0].innerHTML;
     //set the pano
     //move the map and pano
