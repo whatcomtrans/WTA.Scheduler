@@ -1,7 +1,7 @@
 // locals
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
-    map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId,
+    map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId, chosenRoute, chosenRouteId,
     stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $tableHeader, $tableHeaderClone, tableHeaderTop, $tableContainer, $table;
 var currentDirectionID = 0;
 var currentServiceID = 1; // Weekdays
@@ -1038,9 +1038,9 @@ function initializeStops() {
         $(this).removeClass('pulse');
     });
     $('#scheduleFor').on('change', function () {
-        var chosenRoute = this.value;
-        var chosenRouteId = $(this).children(":selected").attr("id");
-        filterStops(chosenRouteId);
+        chosenRoute = this.value;
+        chosenRouteId = $(this).children(":selected").attr("id");
+        //filterStops(chosenRouteId);
     });
     var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
     var d = new Date().toLocaleDateString('en-US', dateConfig);
@@ -1311,7 +1311,7 @@ function servingRoutes() {
     for (i = 0; i < servingToday.length; i++) {
         var finalTimeRoute;
         var currentTime = servingToday[i].departure_time.slice(0, -3);
-        //Add leading 0 to AM times
+        //Add leading 0 to 4 digit times
         if (currentTime.length == 4) {
             currentTime = '0' + currentTime;
         }
@@ -1328,7 +1328,7 @@ function servingRoutes() {
     //convert the times to standard format here 
     var cells = $('#stopTable tr td:nth-child(1)');
     convertToStandard(cells);
-    
+
     selectedStopId = $('#selectedStopId')[0].innerHTML;
     //set the pano
     //move the map and pano
