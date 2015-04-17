@@ -13,19 +13,21 @@ http://mg-wk-dev.azurewebsites.net/common/route-details.html
 http://mg-wk-dev.azurewebsites.net/common/stops.html
 
 
-http://mg-wk-dev.azurewebsites.net/css/bootstrap-custom.css
-http://mg-wk-dev.azurewebsites.net/css/bootstrap-theme.min.css
-http://mg-wk-dev.azurewebsites.net/css/bootstrap.min.css
-http://mg-wk-dev.azurewebsites.net/css/font-awesome.min.css
-http://mg-wk-dev.azurewebsites.net/css/jquery-ui.min.css
-http://mg-wk-dev.azurewebsites.net/css/main.css
+#http://mg-wk-dev.azurewebsites.net/css/bootstrap-custom.css
+#http://mg-wk-dev.azurewebsites.net/css/bootstrap-theme.min.css
+#http://mg-wk-dev.azurewebsites.net/css/bootstrap.min.css
+#http://mg-wk-dev.azurewebsites.net/css/font-awesome.min.css
+#http://mg-wk-dev.azurewebsites.net/css/jquery-ui.min.css
+#http://mg-wk-dev.azurewebsites.net/css/main.css
+http://mg-wk-dev.azurewebsites.net/css/css
 
-http://mg-wk-dev.azurewebsites.net/data/calendar.js
-http://mg-wk-dev.azurewebsites.net/data/calendar_dates.js
-http://mg-wk-dev.azurewebsites.net/data/routes.js
-http://mg-wk-dev.azurewebsites.net/data/stop_times.min.js
-http://mg-wk-dev.azurewebsites.net/data/stops.js
-http://mg-wk-dev.azurewebsites.net/data/trips.js
+#http://mg-wk-dev.azurewebsites.net/data/calendar.js
+#http://mg-wk-dev.azurewebsites.net/data/calendar_dates.js
+#http://mg-wk-dev.azurewebsites.net/data/routes.js
+#http://mg-wk-dev.azurewebsites.net/data/stop_times.min.js
+#http://mg-wk-dev.azurewebsites.net/data/stops.js
+#http://mg-wk-dev.azurewebsites.net/data/trips.js
+#http://mg-wk-dev.azurewebsites.net/data/data
 http://mg-wk-dev.azurewebsites.net/data/notices.js
 
 http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.eot
@@ -45,19 +47,19 @@ http://mg-wk-dev.azurewebsites.net/Images/TwitterIcon.png
 http://mg-wk-dev.azurewebsites.net/Images/TwitterIconSM.png
 
 http://static.addtoany.com/buttons/share_save_256_24.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_flat_0_aaaaaa_40x100.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_flat_75_ffffff_40x100.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_55_fbf9ee_1x400.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-bg_flat_0_aaaaaa_40x100.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-bg_flat_75_ffffff_40x100.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_55_fbf9ee_1x400.png
 http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_65_ffffff_1x400.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_75_dadada_1x400.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_75_e6e6e6_1x400.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_95_fef1ec_1x400.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_75_dadada_1x400.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_75_e6e6e6_1x400.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_95_fef1ec_1x400.png
 http://mg-wk-dev.azurewebsites.net/images/ui-bg_highlight-soft_75_cccccc_1x100.png
 http://mg-wk-dev.azurewebsites.net/images/ui-icons_222222_256x240.png
-http://mg-wk-dev.azurewebsites.net/images/ui-icons_2e83ff_256x240.png
-http://mg-wk-dev.azurewebsites.net/images/ui-icons_454545_256x240.png
-http://mg-wk-dev.azurewebsites.net/images/ui-icons_888888_256x240.png
-http://mg-wk-dev.azurewebsites.net/images/ui-icons_cd0a0a_256x240.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-icons_2e83ff_256x240.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-icons_454545_256x240.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-icons_888888_256x240.png
+#http://mg-wk-dev.azurewebsites.net/images/ui-icons_cd0a0a_256x240.png
 
 http://mg-wk-dev.azurewebsites.net/Scripts/bootstrap.min.js
 http://mg-wk-dev.azurewebsites.net/Scripts/jquery-1.9.0.min.js

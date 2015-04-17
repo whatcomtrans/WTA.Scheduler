@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
-
+using System.Web.Optimization;
 
 namespace WTA.Schedules
 {
@@ -13,6 +13,7 @@ namespace WTA.Schedules
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }
