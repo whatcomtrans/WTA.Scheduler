@@ -337,7 +337,7 @@ fieldset select{
     margin:5px;
 }
 .map-image{
-    min-width:200px;
+    *min-width:200px;
     margin:10px 20px 10px 0px;
     position:relative;
 }
@@ -346,6 +346,8 @@ fieldset select{
 }
 .map-image img {
     width:100%;
+    max-width:100%;
+    height:auto;
 }
 .map-image,
 #route-details #customizeRoute{
@@ -560,7 +562,9 @@ to {transform: rotate(359deg);}
 	background-color:transparent;
 	width:230px;
 	height:230px;
+    z-index:1100;
 }
+
 .masthead .siteicon-div {
 	margin-left:5px;
 }
@@ -615,12 +619,13 @@ to {transform: rotate(359deg);}
 	margin-top:0px;
 }
 .navbar {
-	margin-bottom:0px;
-	margin-left: 0px;
-   margin-right:5px;
-	border-radius:0px;
-	border:none;
-	min-height:33px!important;
+    margin-bottom:0px;
+    margin-left: 0px;
+    margin-right:5px;
+    border-radius:0px;
+    border:none;
+    min-height:33px!important;
+    clear:both;
 }
 .navbar-collapse {
 	padding-right:0px;
@@ -772,8 +777,7 @@ Margin padding resets
 /*************************************** Left Nav Start ***************************************/
 
 #leftNav{
-    min-width:200px;
-    *max-width:200px;
+   
 }
 .left-nav ul{
     padding-left:10px;
@@ -961,10 +965,20 @@ Margin padding resets
 
 /*************************************** Responsive Start ***************************************/
 
-@media(min-width:1200px){
+@media(min-width:1400px){
     #leftNav{
         width:15%;
-    }
+        max-width:200px;
+    }     
+}
+@media(max-width:1399px){
+    #leftNav{
+        width:15%;
+        min-width:0;
+    }     
+}
+@media(min-width:1200px){
+
     #appPage{
         width:58%;
         margin-left:1%;
@@ -1520,6 +1534,10 @@ Menu shrinks to dropdown at this point
     #route-details .map-image.normal{
         width:100%;       
         margin-right:0;
+    }
+    route-details .map-image img{
+        max-height:100%;
+        height:auto;
     }
     #route-details .button-row{
         text-align:center;

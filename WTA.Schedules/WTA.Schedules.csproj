@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="browserconfig.xml" />
     <Content Include="common\footer.html" />
     <Content Include="common\header.html" />
     <Content Include="common\left-nav.html" />
@@ -112,6 +113,32 @@
     <Content Include="Images\FacebookIconSM.png" />
     <Content Include="Images\GlobalNavChild.png" />
     <Content Include="Images\GlobalNavDown.png" />
+    <Content Include="android-chrome-144x144.png" />
+    <Content Include="android-chrome-192x192.png" />
+    <Content Include="android-chrome-36x36.png" />
+    <Content Include="android-chrome-48x48.png" />
+    <Content Include="android-chrome-72x72.png" />
+    <Content Include="android-chrome-96x96.png" />
+    <Content Include="apple-touch-icon-114x114.png" />
+    <Content Include="apple-touch-icon-120x120.png" />
+    <Content Include="apple-touch-icon-144x144.png" />
+    <Content Include="apple-touch-icon-152x152.png" />
+    <Content Include="apple-touch-icon-180x180.png" />
+    <Content Include="apple-touch-icon-57x57.png" />
+    <Content Include="apple-touch-icon-60x60.png" />
+    <Content Include="apple-touch-icon-72x72.png" />
+    <Content Include="apple-touch-icon-76x76.png" />
+    <Content Include="apple-touch-icon-precomposed.png" />
+    <Content Include="apple-touch-icon.png" />
+    <Content Include="favicon-16x16.png" />
+    <Content Include="favicon-32x32.png" />
+    <Content Include="favicon-96x96.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="mstile-144x144.png" />
+    <Content Include="mstile-150x150.png" />
+    <Content Include="mstile-310x150.png" />
+    <Content Include="mstile-310x310.png" />
+    <Content Include="mstile-70x70.png" />
     <Content Include="Images\LogoBanner.jpg" />
     <Content Include="Images\LogoBannerMd.jpg" />
     <Content Include="Images\maps\105.png" />
@@ -184,6 +211,7 @@
     <Content Include="data\stop_times.js" />
     <Content Include="data\transfers.js" />
     <Content Include="data\trips.js" />
+    <Content Include="manifest.json" />
     <None Include="Properties\PublishProfiles\MG-WK-Dev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\MG-WK-Dev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
