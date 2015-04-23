@@ -147,12 +147,19 @@ function processRequests(){
                 polylineOptions: {
                     strokeWeight: 4,
                     strokeOpacity: 0.8,
-                    strokeColor: colourArray[i]
+                    strokeColor: 'black'//colourArray[i]
                 },
                 markerOptions:{
                     visible: false
                 }
             });
+            if (requestArray[i].route == "Route 331") {
+              renderArray[i].setOptions({
+                polylineOptions: {
+                  strokeColor: 'gold'
+                }
+              });
+            }
             // Use this new renderer with the result
             renderArray[i].setDirections(result);
             // and start the next request
@@ -178,7 +185,7 @@ generateRequests();
 
 
 
-//Old Loop Method with polylines-- Doesn't work with Async like this. Would prefer to use these, as they are easier to manipulate.
+//Old Loop Method with polylines-- Preferred method as they polylines are easier to manipulate after rendered.
 var BTS = new google.maps.LatLng(48.750172,-122.47536);
 var LCPR = new google.maps.LatLng(48.734558,-122.46602);
 var APR = new google.maps.LatLng(48.619778,-122.35496);
@@ -202,7 +209,6 @@ path80x.push(LCPR);
 path80x.push(APR);
 path80x.push(CPR);
 path80x.push(SS);
-
 
 // Route 71x
 var DS71x = new google.maps.DirectionsService();
@@ -242,58 +248,135 @@ var allRoutes = [{
   path: path80x,
   route: route80x,
   poly: poly80x,
-  ds: DS80x
+  ds: DS80x,
+  stops: [BTS, LCPR, APR, CPR, SS]
 },
 {
   name: "71x",
   path: path71x,
   route: route71x,
   poly: poly71x,
-  ds: DS71x
+  ds: DS71x,
+  stops: [BTS, CTS, GMTM, CAFS]
 },
 {
   name: "331",
   path: path331,
   route: route331,
   poly: poly331,
-  ds: DS331
+  ds: DS331,
+  stops: [BTS, CATS, WAMS, CTS]
 },
 {
   name: "43",
   path: path43,
   route: route43,
   poly: poly43,
-  ds: DS43
+  ds: DS43,
+  stops: [BTS, LDLS, OLXS, SWAY]
 }];
 
-
-setTimeout(function() {
-  for (var x=0;x<allRoutes.length;x++) {
-    var DS = allRoutes[x].ds;
-    console.log('x = ' + x);
-    for (var i=1;i<allRoutes[x].path.length;i++) {
-      console.log('i = ' + i);
-      DS.route({
-        origin: allRoutes[x].path.getAt(i-1),
-        destination: allRoutes[x].path.getAt(i),
-        travelMode: google.maps.DirectionsTravelMode.DRIVING
-      }, function(result, status) {
-        if (status==google.maps.DirectionsStatus.OK) {
-          console.log(result + ' ' + x);
-          for (var k=0, len=result.routes[0].overview_path.length;k<len;k++) {
-            console.log('k = ' + k);
-            console.log('x = ' + x);
-            console.log(allRoutes[x]);
-            console.log(result);
-            allRoutes[x].route.push(result.routes[0].overview_path[k]);
-          }
-        }
+function generateRequests() {
+  requestArray = [];
+  for (var route in allRoutes) {
+    var DS = allRoutes[route].ds;
+    var waypts = [];
+    // 'start' and 'finish' will be the routes origin and destination
+    var start, finish;
+    // lastpoint is used to ensure that duplicate waypoints are stripped
+    var lastpoint;
+    data = allRoutes[route].stops;
+    limit = data.length;
+    for (var waypoint = 0; waypoint < limit; waypoint++) {
+      if (data[waypoint] === lastpoint){
+        // Duplicate of of the last waypoint - don't bother
+        continue;
+      } 
+      // Prepare the lastpoint for the next loop
+      lastpoint = data[waypoint]
+      // Add this to waypoint to the array for making the request
+      waypts.push({
+        location: data[waypoint],
+        stopover: true
       });
     }
-    allRoutes[x].poly.setPath(allRoutes[x].route);
+    // Grab the first waypoint for the 'start' location
+    start = (waypts.shift()).location;
+    // Grab the last waypoint for use as a 'finish' location
+    finish = waypts.pop();
+    if(finish === undefined){
+      // Unless there was no finish location for some reason?
+      finish = start;
+    } else {
+      finish = finish.location;
+    }
+    var request = [];
+    var pathLength = allRoutes[route].path.length;
+    for (var i=1;i<pathLength;i++) {
+      request.push({
+        origin: start,
+        destination: finish,
+        waypoints: waypts,
+        travelMode: google.maps.TravelMode.DRIVING
+      }); 
+    }
+    requestArray.push({"route": allRoutes[route], "request": request, "DS": DS});
   }
-},2000);
+  processRequests();
+}
 
+function processRequests() {
+  var i=0;
+  function submitRequest() {
+    requestArray[i].DS.route(requestArray[i].request[0], directionResults);
+  }
+  function directionResults(result, status) {
+    if (status ==  google.maps.DirectionsStatus.OK) {
+      for (var k=0, len=result.routes[0].overview_path.length;k<len;k++) {
+        allRoutes[i].route.push(result.routes[0].overview_path[k]);
+      }
+      allRoutes[i].poly.setPath(allRoutes[i].route);
+      //GO Line color options set here
+      if (allRoutes[i].name === '331') {
+        poly331.setOptions({
+          strokeColor: 'gold'
+        });
+      }
+      nextRequest();
+    }
+  }
+  function nextRequest() {
+    i++;
+    if(i >= requestArray.length){
+        return;
+    }
+    submitRequest();
+  }
+  submitRequest();
+}
+generateRequests();
+
+
+
+
+
+// for (var x=0;x<allRoutes.length;x++) {
+//   var DS = allRoutes[x].ds;
+//   for (var i=1;i<allRoutes[x].path.length;i++) {
+//     DS.route({
+//       origin: allRoutes[x].path.getAt(i-1),
+//       destination: allRoutes[x].path.getAt(i),
+//       travelMode: google.maps.DirectionsTravelMode.DRIVING
+//     }, function(result, status) {
+//       if (status==google.maps.DirectionsStatus.OK) {
+//         for (var k=0, len=result.routes[0].overview_path.length;k<len;k++) {
+//           allRoutes[x].route.push(result.routes[0].overview_path[k]);
+//         }
+//       }
+//     });
+//   }
+//   allRoutes[x].poly.setPath(allRoutes[x].route);
+// }
 
 //user click event listener option
 google.maps.event.addListener(map, "click", function(evt) {
