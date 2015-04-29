@@ -182,8 +182,33 @@ function processRequests(){
 }
 generateRequests();
 
+//Generate a LatLng object for each stop in stops arracy
+for (i=0;i<stops.length;i++) {
+  //How can I assign a new name to a variable based on its stop_code each time?
+  var stops[i].stop_code = new google.maps.LatLng(stops[i].stop_lat,stops[i].stop_lon);
+}
 
+//
+//Generate the allRoutes prototype object
+var allRoutes = [];
+//For each route, generate a DS, poly, and route object and push these into the allRoutes object
+for (i=0;i<routes.length;i++) {
+  var thing = {
+    name: routes[i].route_short_name,
+    route: "route"+routes[i].route_short_name,
+    poly: "poly"+routes[i].route_short_name,
+    ds: "ds"+routes[i].route_short_name,
+    stops: []
+  }
+  //push the applicable stops into the stops array for the thing object
+  for (j=0;j<SOMETHING.length;j++) {
+    things.stops.push([j]);
+  }
+  thing.stops.push();
 
+  //push the thing object into the allRoutes array
+  allRoutes.push(thing);
+}
 
 //Old Loop Method with polylines-- Preferred method as they polylines are easier to manipulate after rendered.
 var BTS = new google.maps.LatLng(48.750172,-122.47536);
@@ -201,51 +226,51 @@ var OLXS = new google.maps.LatLng(48.744087,-122.44357);
 var SWAY = new google.maps.LatLng(48.706554,-122.44554);
 // Route 80X
 var DS80x = new google.maps.DirectionsService();
-var path80x = new google.maps.MVCArray();
+// var path80x = new google.maps.MVCArray();
 var poly80x = new google.maps.Polyline({map:map});
 var route80x = new google.maps.MVCArray();
-path80x.push(BTS);
-path80x.push(LCPR);
-path80x.push(APR);
-path80x.push(CPR);
-path80x.push(SS);
+// path80x.push(BTS);
+// path80x.push(LCPR);
+// path80x.push(APR);
+// path80x.push(CPR);
+// path80x.push(SS);
 
 // Route 71x
 var DS71x = new google.maps.DirectionsService();
-var path71x = new google.maps.MVCArray();
+// var path71x = new google.maps.MVCArray();
 var poly71x = new google.maps.Polyline({map:map});
 var route71x = new google.maps.MVCArray();
 
-path71x.push(BTS);
-path71x.push(CTS);
-path71x.push(GMTM);
-path71x.push(CAFS);
+// path71x.push(BTS);
+// path71x.push(CTS);
+// path71x.push(GMTM);
+// path71x.push(CAFS);
 
 // Route 331
 var DS331 = new google.maps.DirectionsService();
-var path331 = new google.maps.MVCArray();
+// var path331 = new google.maps.MVCArray();
 var poly331 = new google.maps.Polyline({map:map});
 var route331 = new google.maps.MVCArray();
 
-path331.push(BTS);
-path331.push(CATS);
-path331.push(WAMS);
-path331.push(CTS);
+// path331.push(BTS);
+// path331.push(CATS);
+// path331.push(WAMS);
+// path331.push(CTS);
 
 // Route 43
 var DS43 = new google.maps.DirectionsService();
-var path43 = new google.maps.MVCArray();
+// var path43 = new google.maps.MVCArray();
 var poly43 = new google.maps.Polyline({map:map});
 var route43 = new google.maps.MVCArray();
 
-path43.push(BTS);
-path43.push(LDLS);
-path43.push(OLXS);
-path43.push(SWAY);
+// path43.push(BTS);
+// path43.push(LDLS);
+// path43.push(OLXS);
+// path43.push(SWAY);
 
 var allRoutes = [{
   name: "80x",
-  path: path80x,
+  // path: path80x,
   route: route80x,
   poly: poly80x,
   ds: DS80x,
@@ -253,7 +278,7 @@ var allRoutes = [{
 },
 {
   name: "71x",
-  path: path71x,
+  // path: path71x,
   route: route71x,
   poly: poly71x,
   ds: DS71x,
@@ -261,7 +286,7 @@ var allRoutes = [{
 },
 {
   name: "331",
-  path: path331,
+  // path: path331,
   route: route331,
   poly: poly331,
   ds: DS331,
@@ -269,7 +294,7 @@ var allRoutes = [{
 },
 {
   name: "43",
-  path: path43,
+  // path: path43,
   route: route43,
   poly: poly43,
   ds: DS43,
@@ -311,7 +336,7 @@ function generateRequests() {
       finish = finish.location;
     }
     var request = [];
-    var pathLength = allRoutes[route].path.length;
+    var pathLength = allRoutes[route].stops.length;// used to be path.length
     for (var i=1;i<pathLength;i++) {
       request.push({
         origin: start,
@@ -356,7 +381,8 @@ function processRequests() {
 }
 generateRequests();
 
-
+// How to detect if polylines intersect given 2 sets of points
+poly80x.getPath()
 
 
 

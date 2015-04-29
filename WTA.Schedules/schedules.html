@@ -87,6 +87,21 @@
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpB0PKqugX5QGSqRcAkrm4v1vL91Vi6GY&libraries=geometry"></script>
 
-
+    <script type="text/javascript">
+        function downloadJSAtOnload() {
+            var element = document.createElement("script");
+            //We bundle all of the js that is not necessary for initial page load into this file- defer.js (or whatever name)
+            //It will only be loaded AFTER the onload event has fired
+            element.src = "defer.js";
+            document.body.appendChild(element);
+        }
+        if (window.addEventListener) {
+            window.addEventListener("load", downloadJSAtOnload, false);
+        }    
+        else if (window.attachEvent) {
+            window.attachEvent("onload", downloadJSAtOnload);
+        }
+        else window.onload = downloadJSAtOnload;
+    </script>
 </body>
 </html>
