@@ -507,7 +507,6 @@ function displaySelectedRoute() {
             imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
         }
 
-
         var tripsInRoute = [];
         var specialService = $.grep(calendar_dates, function (a) {
             return a.date == specialServiceDate;
@@ -744,14 +743,73 @@ function displaySelectedRoute() {
         $('.spinner').remove();
     }
 }
-//function continuingRoute(continuesOnAsRouteId, service_id, continuesOnAsDirection, continuesOnAsHeadsignVar) {
-//    currentRouteID = continuesOnAsRouteId;
-//    currentDirectionID = continuesOnAsDirection;
-//    trip_headsign = continuesOnAsHeadsignVar;
-//    $('#routeList option[id="' + currentRouteID + '"]').attr('selected', 'selected');
-//    currentRouteNumber = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
-//    displaySelectedRoute();
-//}
+
+function uniqueStops(currentRouteID) {
+    var tripsInRoute = [];
+    var specialService = $.grep(calendar_dates, function (a) {
+        return a.date == specialServiceDate;
+    });
+    var isHoliday = $.grep(specialService, function (a) {
+        return a.exception_type == 2;//magic number based on data for now
+    });
+    if (isHoliday.length > 0) {
+    } else if (specialService.length > 0) {
+        var specialServiceDate_id = specialService[0].service_id;
+        if (specialServiceDate == specialService[0].date) {
+            for (i = 0; i < trips.length; i++) {
+                if (trips[i].route_id == currentRouteID && trips[i].direction_id == currentDirectionID && (trips[i].service_id == currentServiceID || trips[i].service_id == specialServiceDate_id)) {
+                    tripsInRoute.push(trips[i]);
+                }
+            }
+        }
+    } else {
+        for (i = 0; i < trips.length; i++) {
+            if (trips[i].route_id == currentRouteID && trips[i].direction_id == currentDirectionID && trips[i].service_id == currentServiceID) {
+                tripsInRoute.push(trips[i]);
+            }
+        }
+    }
+    if (tripsInRoute == 0) {
+        trip_headsign = -1;
+    } else {
+        trip_headsign = tripsInRoute[0].trip_headsign; //currently using the first trip's trip_headsign for the entire route
+    }
+    var stopTimesInRoute = [];
+    for (i = 0; i < tripsInRoute.length; i++) {
+        tripStopArray = $.grep(stop_times, function (d) {
+            return d.trip_id == tripsInRoute[i].trip_id;
+        });
+        for (j = 0; j < tripStopArray.length; j++) {
+            stopTimesInRoute.push(tripStopArray[j]);
+        }
+    }
+    var flags = {};
+    var uniqueStopTimesInRoute = stopTimesInRoute.filter(function (entry) {
+        if (flags[entry.stop_id]) {
+            return false;
+        }
+        flags[entry.stop_id] = true;
+        return true;
+    });
+    uniqueStopTimesInRoute.sort(function compare(a, b) {
+        if (a.stop_sequence < b.stop_sequence)
+            return -1;
+        if (a.stop_sequence > b.stop_sequence)
+            return 1;
+        return 0;
+    });
+    var uniqueStopNamesInRoute = [];
+    for (i = 0; i < uniqueStopTimesInRoute.length; i++) {
+        var grepArray = $.grep(stops, function (a) {
+            return a.stop_id == uniqueStopTimesInRoute[i].stop_id;
+        });
+        for (j = 0; j < grepArray.length; j++) {
+            uniqueStopNamesInRoute.push(grepArray[j]);
+        }
+    }
+    return uniqueStopNamesInRoute;
+}
+
 function customizeStopListStart() {
     $('#stopListStart').empty();
     $('#stopListStart').append('<option value="selectStopListStart" disabled>Starting Bus Stop</option>');
@@ -1422,7 +1480,7 @@ function loadMap() {
 }
 function initializeMap() {
     //setHistory("map");
-
+    directionsDisplay = new google.maps.DirectionsRenderer();
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {
             codeAddressMap();
@@ -1439,23 +1497,36 @@ function initializeMap() {
         }
     ];
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-        if (mapOptions == undefined) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             mapOptions = {
-                center: { lat: 48.755893, lng: -122.520776 },
-                zoom: 12,
-                styles: mapStyles
+                center: { lat: position.coords.latitude, lng: position.coords.longitude },
+                zoom: 16,
+                styles: mapStyles,
+                zoomControl: false,
+                scrollwheel: true,
+                draggable: true,
+                keyboardShortcuts: true
             };
-        }
+            finishInit();
+        });
     } else {
         mapOptions = {
-            center: { lat: 48.755893, lng: -122.520776 },
+            center: { lat: 48.750057, lng: -122.476085 },
             zoom: 12,
-            styles: mapStyles
+            styles: mapStyles,
+            zoomControl: false,
+            scrollwheel: true,
+            draggable: true,
+            keyboardShortcuts: true
         };
+        finishInit();
     }
+}
+function finishInit() {
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     busLayer = new google.maps.KmlLayer({
         url: 'http://www.ridewta.com/files/file/maps/2015/Stops.kml',
         preserveViewport: true
@@ -1466,6 +1537,14 @@ function initializeMap() {
         } else {
             busLayer.setMap(map);
         }
+    });
+    google.maps.event.addListenerOnce(map, 'idle', function(){
+    // do something only the first time the map is loaded
+    //@mapCopyright - gets the google copyright tags
+        var mapCopyright=document.getElementById('map-canvas').getElementsByTagName("a");   
+        $(mapCopyright).click(function(){
+            return false;
+        });
     });
     if (map.zoom < 15) {
         busLayer.setMap(null)
@@ -1515,7 +1594,7 @@ function codeAddressMap() {
             geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
                 center = results[0].geometry.location;
                 if (status == google.maps.GeocoderStatus.OK) {
-                    if (center.k < 49.004438 && center.k > 48.410863 && center.D < -121.595991 && center.D > -122.904638) {
+                    if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
                         map.setCenter(results[0].geometry.location);
                         map.setZoom(17);
                     } else {
@@ -1551,7 +1630,7 @@ function codeAddressMap() {
         geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
             center = results[0].geometry.location;
             if (status == google.maps.GeocoderStatus.OK) {
-                if (center.k < 49.004438 && center.k > 48.410863 && center.D < -121.595991 && center.D > -122.904638) {
+                if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
                     //we are within the bounds, go ahead and display
                     map.setCenter(results[0].geometry.location);
                     map.setZoom(17);
