@@ -1490,11 +1490,20 @@ function initializeMap() {
     geocoder = new google.maps.Geocoder();
     mapStyles = [
         {
-            featureType: "transit.station.bus",
-            stylers: [
-                  { visibility: "off" }
+            "featureType": "transit.station.bus",
+            "stylers": [
+                  { "visibility": "off" }
             ]
-        }
+        },
+        {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#A8A8A8"
+            }
+        ]
+    }
     ];
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
