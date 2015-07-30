@@ -12,13 +12,13 @@ CACHE:
 /common/route-details.html
 /common/stops.html
 
-#http://mg-wk-dev.azurewebsites.net/css/bootstrap-custom.css
-#http://mg-wk-dev.azurewebsites.net/css/bootstrap-theme.min.css
-#http://mg-wk-dev.azurewebsites.net/css/bootstrap.min.css
-#http://mg-wk-dev.azurewebsites.net/css/font-awesome.min.css
-#http://mg-wk-dev.azurewebsites.net/css/jquery-ui.min.css
-#http://mg-wk-dev.azurewebsites.net/css/main.css
-http://mg-wk-dev.azurewebsites.net/css/css
+/css/bootstrap-custom.css
+/css/bootstrap-theme.min.css
+/css/bootstrap.min.css
+/css/font-awesome.min.css
+/css/jquery-ui.min.css
+/css/main.css
+
 
 /Scripts/app.min.js
 
