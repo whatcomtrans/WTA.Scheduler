@@ -1,16 +1,16 @@
 ﻿CACHE MANIFEST
-# v1 2015-04-20
+# v0.7 2015-07-03
 
 CACHE:
-http://mg-wk-dev.azurewebsites.net/schedules.html
-http://mg-wk-dev.azurewebsites.net/common/footer.html
-http://mg-wk-dev.azurewebsites.net/common/left-nav.html
-http://mg-wk-dev.azurewebsites.net/common/sidebar.html
-http://mg-wk-dev.azurewebsites.net/common/header.html
-http://mg-wk-dev.azurewebsites.net/common/map.html
-http://mg-wk-dev.azurewebsites.net/common/routes.html
-http://mg-wk-dev.azurewebsites.net/common/route-details.html
-http://mg-wk-dev.azurewebsites.net/common/stops.html
+/schedules.html
+/common/footer.html
+/common/left-nav.html
+/common/sidebar.html
+/common/header.html
+/common/map.html
+/common/routes.html
+/common/route-details.html
+/common/stops.html
 
 #http://mg-wk-dev.azurewebsites.net/css/bootstrap-custom.css
 #http://mg-wk-dev.azurewebsites.net/css/bootstrap-theme.min.css
@@ -20,41 +20,30 @@ http://mg-wk-dev.azurewebsites.net/common/stops.html
 #http://mg-wk-dev.azurewebsites.net/css/main.css
 http://mg-wk-dev.azurewebsites.net/css/css
 
-#http://mg-wk-dev.azurewebsites.net/Scripts/bootstrap.min.js
-#http://mg-wk-dev.azurewebsites.net/Scripts/jquery-1.9.0.min.js
-#http://mg-wk-dev.azurewebsites.net/Scripts/jquery-ui.min.js
-#http://mg-wk-dev.azurewebsites.net/Scripts/linq.min.js
-#http://mg-wk-dev.azurewebsites.net/Scripts/main.js
-http://mg-wk-dev.azurewebsites.net/Scripts/core
+/Scripts/app.min.js
 
-#http://mg-wk-dev.azurewebsites.net/data/calendar.js
-#http://mg-wk-dev.azurewebsites.net/data/calendar_dates.js
-#http://mg-wk-dev.azurewebsites.net/data/routes.js
-#http://mg-wk-dev.azurewebsites.net/data/stop_times.min.js
-#http://mg-wk-dev.azurewebsites.net/data/stops.js
-#http://mg-wk-dev.azurewebsites.net/data/trips.js
-#http://mg-wk-dev.azurewebsites.net/data/notices.js
-http://mg-wk-dev.azurewebsites.net/data/data
+/data/data_routes.js
+/data/data_trips.js
 
-http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.eot
-http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.svg
-http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.ttf
-http://mg-wk-dev.azurewebsites.net/fonts/fontawesome-webfont.woff
+/fonts/fontawesome-webfont.eot
+/fonts/fontawesome-webfont.svg
+/fonts/fontawesome-webfont.ttf
+/fonts/fontawesome-webfont.woff
 
-http://mg-wk-dev.azurewebsites.net/Images/EmailIcon.png
-http://mg-wk-dev.azurewebsites.net/Images/EmailIconSM.png
-http://mg-wk-dev.azurewebsites.net/Images/FacebookIcon.png
-http://mg-wk-dev.azurewebsites.net/Images/FacebookIconSM.png
-http://mg-wk-dev.azurewebsites.net/Images/GlobalNavChild.png
-http://mg-wk-dev.azurewebsites.net/Images/GlobalNavDown.png
-http://mg-wk-dev.azurewebsites.net/Images/LogoBanner.jpg
-http://mg-wk-dev.azurewebsites.net/Images/LogoBannerMd.jpg
-http://mg-wk-dev.azurewebsites.net/Images/TwitterIcon.png
-http://mg-wk-dev.azurewebsites.net/Images/TwitterIconSM.png
+/Images/EmailIcon.png
+/EmailIconSM.png
+/Images/FacebookIcon.png
+/Images/FacebookIconSM.png
+/Images/GlobalNavChild.png
+/Images/GlobalNavDown.png
+/Images/LogoBanner.jpg
+/Images/LogoBannerMd.jpg
+/Images/TwitterIcon.png
+/Images/TwitterIconSM.png
 http://static.addtoany.com/buttons/share_save_256_24.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_glass_65_ffffff_1x400.png
-http://mg-wk-dev.azurewebsites.net/images/ui-bg_highlight-soft_75_cccccc_1x100.png
-http://mg-wk-dev.azurewebsites.net/images/ui-icons_222222_256x240.png
+/images/ui-bg_glass_65_ffffff_1x400.png
+/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+/images/ui-icons_222222_256x240.png
 
 
 

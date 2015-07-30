@@ -1,6 +1,6 @@
 body,html {
     width: 100%;
-    height: 100%;    
+    height: 100%;
 }
 body,h1,h2,h3,h4,h5,h6 {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -66,7 +66,7 @@ a:hover {
 h3{
     color:#008472;
     text-transform:uppercase;
-    margin-top:8px;   
+    margin-top:8px;
 }
 h4{
     color:#0f457a;
@@ -77,7 +77,7 @@ hr {
 	height:0px;
 	color:#FFFFFF;
 	background-color:transparent;
-	margin:0px;	
+	margin:0px;
 }
 td,th {
     text-align: center;
@@ -108,10 +108,10 @@ td,th {
     padding:8px;
 }
 .left{
-    float:left;  
+    float:left;
 }
 .right{
-    float:right;    
+    float:right;
 }
 /*************************************** Main Elements End ***************************************/
 
@@ -128,7 +128,7 @@ h3 .fa{
 .loader{
     background: #ffffff url('../Images/wta-loader.gif') center center no-repeat;
     width:150px;
-    height:90px;   
+    height:90px;
     min-height:100px;
     position:absolute;
     left:50%;
@@ -167,14 +167,14 @@ A.ms-signInLink {
    color: #D1D1D1;
 }
 :-moz-placeholder { /* Firefox 18- */
-   color: #D1D1D1;  
+   color: #D1D1D1;
 }
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: #D1D1D1; 
+   color: #D1D1D1;
 }
 :-ms-input-placeholder,
-option[disabled] {  
-   color: #D1D1D1 !important;  
+option[disabled] {
+   color: #D1D1D1 !important;
 }
 input[type=text],
 select{
@@ -185,7 +185,7 @@ select{
 input[type=submit],
 input[type=button]{
     border:3px solid #D1D1D1;
-    border-radius:5px; 
+    border-radius:5px;
     background-color:#203A8B;
     color:#ffffff;
     margin:5px;
@@ -351,7 +351,7 @@ fieldset select{
 }
 .map-image,
 #route-details #customizeRoute{
-    display:inline-block;    
+    display:inline-block;
 }
 .map-image .map-bottom-row{
     text-align:center;
@@ -381,11 +381,14 @@ fieldset select{
 }
 #route-details #mainSchedule .page-button{
     *padding:5px 20px;
-    margin:3px;    
+    margin:3px;
     cursor:pointer;
 }
+#busTable td {
+  min-width: 5em;
+}
 #stopNames td{
-    text-align:center;    
+    text-align:center;
     *height:1px;
 }
 #stopNames td a,
@@ -593,7 +596,7 @@ to {transform: rotate(359deg);}
 	padding-right:12px;
     z-index:90;
 }
-.header #SearchBox {	
+.header #SearchBox {
 	background-color:#FFFFFF;
 }
 #SearchBox .ms-srch-sb-border,
@@ -641,7 +644,7 @@ to {transform: rotate(359deg);}
 .navbar-default {
 	background-color:transparent;
 }
-.container > .navbar-header, 
+.container > .navbar-header,
 .container > .navbar-collapse {
     margin-right:0px;
     padding:0px;
@@ -653,7 +656,7 @@ to {transform: rotate(359deg);}
 /***************************************
 Margin padding resets
 ***************************************/
-#topnavbar .ms-core-listMenu-horizontalBox ul, 
+#topnavbar .ms-core-listMenu-horizontalBox ul,
 #topnavbar .ms-core-listMenu-horizontalBox li  {
     margin:0px;
     padding:0px;
@@ -665,16 +668,16 @@ Margin padding resets
 #topnavbar .nav ul.static {
     float: right;
 }
-#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a, 
+#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a,
 #topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span,
 #topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span.dynamic-children  {
-    padding:0px;			
+    padding:0px;
 }
 #topnavbar ul.root li.static > .menu-item,
 #topnavbar ul.root li.static > .menu-item.dynamic-children {
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:13px;	
-	color:#000000;	
+	font-size:13px;
+	color:#000000;
 	text-transform:uppercase;
 	background-color:transparent;
     padding:10px;
@@ -686,15 +689,15 @@ Margin padding resets
     margin-right:5px;
 }
 #topnavbar ul.root li.static > .menu-item:hover {
-	box-shadow:inset 0px 5px 0px 0px #008472; 
+	box-shadow:inset 0px 5px 0px 0px #008472;
     text-decoration:none !important;
 }
 #topnavbar ul.root li.static > .menu-item.selected {
 	box-shadow:inset 0px 5px 0px 0px #008472;
 }
-/*************************************** Root Level End ***************************************/	
+/*************************************** Root Level End ***************************************/
 
-/*************************************** First/Second Level Drop Down Start ***************************************/	
+/*************************************** First/Second Level Drop Down Start ***************************************/
 /* Start Mega Menu Code */
 
 #topnavbar ul.dynamic > li {
@@ -722,7 +725,7 @@ Margin padding resets
 }
 #topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL {
     display:block !important;
-    width:auto;                        
+    width:auto;
     left:0px !important;
 }
 #topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL > LI {
@@ -769,8 +772,8 @@ Margin padding resets
 }
 #topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A {
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:13px;	
-	color:#000000;	
+	font-size:13px;
+	color:#000000;
 	background-color:transparent;
     padding:10px;
 }
@@ -785,13 +788,13 @@ Margin padding resets
 /*************************************** Left Nav Start ***************************************/
 
 #leftNav{
-   
+
 }
 .left-nav ul{
     padding-left:10px;
 }
 .left-nav ul li{
-    list-style:none;    
+    list-style:none;
     font-weight:normal;
     line-height:1.5em;
 }
@@ -826,7 +829,7 @@ Margin padding resets
 .mastfooter .col-md-12 {
 	min-height:50px;
 	vertical-align:middle;
-	display:table;	
+	display:table;
 	width:100%;
 	text-align:left;
 	margin-top:20px;
@@ -930,29 +933,29 @@ Margin padding resets
 .footer-nav UL.root > LI > SPAN {
 	display:none;
 }
-.footer-nav UL.root {    
+.footer-nav UL.root {
 	-webkit-columns:6; /* Chrome, Safari, Opera */
 	-webkit-column-width:auto;
 	-webkit-column-gap:0px;
-	    
+
 	/* Firefox */
 	/*-moz-columns:2;
 	-moz-column-width:auto;
 	-moz-column-gap:0px;
-	                
+
 	columns:2;
 	column-width:auto;
 	column-gap:0px;*/
 }
 .footer-nav UL.root > UL 	{
-	margin-bottom:10px;     
+	margin-bottom:10px;
 }
 .footer-nav UL.root UL,
 .footer-nav UL.root LI 	{
 	display:block;
 	padding:0;
-	break-inside:avoid;        
-	page-break-inside:avoid;               
+	break-inside:avoid;
+	page-break-inside:avoid;
 }
 .footer-nav UL.root > LI > UL > LI 	{
 	font-size:14px;
@@ -977,13 +980,13 @@ Margin padding resets
     #leftNav{
         width:15%;
         max-width:200px;
-    }     
+    }
 }
 @media(max-width:1399px){
     #leftNav{
         width:15%;
         min-width:0;
-    }     
+    }
 }
 @media(min-width:1200px){
 
@@ -1255,41 +1258,41 @@ Margin padding resets
 	.ms-core-listMenu-horizontalBox ul {
 		display:inline-block;
 	}
-		.footer-nav UL.root {    
+		.footer-nav UL.root {
 	    -webkit-columns:4; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
 	    -webkit-column-gap:0px;
-	    
+
 	    -moz-columns:4; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
-	                
+
 	    columns:4;
 	    column-width:auto;
 	    column-gap:0px;
 	}
 }
 @media (max-width:775px) {
-		.footer-nav UL.root {          
+		.footer-nav UL.root {
  	    -webkit-columns:3; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
 	    -webkit-column-gap:0px;
-  	
+
 	   	-moz-columns:3; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
- 
+
 	    columns:3;
 	    column-width:auto;
 	    column-gap:0px;
 	}
 }
 @media (max-width:480px) {
-		.footer-nav UL.root {          
+		.footer-nav UL.root {
    	    -webkit-columns:2; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
-	    -webkit-column-gap:0px; 
-   	    
+	    -webkit-column-gap:0px;
+
    	    -moz-columns:2; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
@@ -1334,7 +1337,7 @@ Menu shrinks to dropdown at this point
 	li.s4-breadcrumbRootNode,
 	ul.s4-breadcrumb,
 	ul.s4-breadcrumb ul {
-		display:none;			
+		display:none;
 	}
 	#topnavbar {
 		width:auto;
@@ -1359,7 +1362,7 @@ Menu shrinks to dropdown at this point
 	.nav .ms-core-listMenu-horizontalBox UL.root {
 		background-color:#FFFFFF;
 		padding:5px;
-		border:0px solid #E0E0E0;		
+		border:0px solid #E0E0E0;
 	}
 	.nav .ms-core-listMenu-horizontalBox
 	{
@@ -1372,7 +1375,7 @@ Menu shrinks to dropdown at this point
 		line-height:26px;
         padding:5px 8px;
 	}
-    .navbar-default .navbar-toggle:hover, 
+    .navbar-default .navbar-toggle:hover,
     .navbar-default .navbar-toggle:focus {
         background-color: #8E8E8E;
     }
@@ -1396,12 +1399,12 @@ Menu shrinks to dropdown at this point
 		padding:0px;
 	}
 	#topnavbar ul.dynamic > li {
-	    border:none;	    
+	    border:none;
 	}
 	#topnavbar ul.dynamic {
 	    border:0px solid #D1D1D1;
 	    background-color:transparent;
-	}	
+	}
 	#topnavbar ul.root li.static .menu-item:hover {
 		color:#008472;
 	}
@@ -1444,14 +1447,14 @@ Menu shrinks to dropdown at this point
 	    left: auto !important;
 	    top: auto !important;
 	    padding-right: 5%;
-	    margin-right: 5%;		
+	    margin-right: 5%;
 	    margin-left:10px;
 	    border-bottom:1px solid #d1d1d1;
-	}	
+	}
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > UL.dynamic
 	{
 		background-color:#fff;
-	}	 
+	}
 	#topnavbar ul.root li.static > .menu-item,
 	#topnavbar ul.root li.static > .dynamic-children.menu-item {
 	    font-size:1.2em;
@@ -1459,16 +1462,16 @@ Menu shrinks to dropdown at this point
 	    padding:10px 30px 5px 15px;
 	    margin:0px;
 		line-height:normal;
-	    height: auto;	    
+	    height: auto;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.static > ul.dynamic {
 		border:none;
-	}	
+	}
 }
 @media (max-width:680px) {
 	.WTA-main .col1,
 	.WTA-main .col2 {
-		float:none;	
+		float:none;
 	}
 	.WTA-main .col1 {
 		width:100%;
@@ -1540,7 +1543,7 @@ Menu shrinks to dropdown at this point
         display:none;
     }
     #route-details .map-image.normal{
-        width:100%;       
+        width:100%;
         margin-right:0;
     }
     route-details .map-image img{
@@ -1557,7 +1560,7 @@ Menu shrinks to dropdown at this point
     #datePicker button{
         width:8%;
     }
-    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {        
+    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
         padding: .3em .3em;
     }
 }
@@ -1572,10 +1575,10 @@ Menu shrinks to dropdown at this point
     #dayTabs li:nth-child(4) a{
         width:55px;
     }
-    #dayTabs li a{        
+    #dayTabs li a{
         white-space:nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;        
+        text-overflow: ellipsis;
     }
 }
 @media (max-width:280px) {

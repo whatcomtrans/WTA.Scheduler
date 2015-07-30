@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<!--<html lang="en" manifest="wta.appcache">-->
+<html lang="en" manifest="wta.appcache">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,14 +31,16 @@
 
     <title>Routes - WTA Schedules</title>
 
-    <!-- Uncomment these for debugging and comment out /css line below.
+    <!-- Uncomment these for debugging and comment out /css line below.  -->
+    <!--
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-custom.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/jquery-ui.min.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet">
     -->
-    <link href="css/css" rel="stylesheet" />
+
+    <link href="css/combined.css" rel="stylesheet" />
 
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -63,26 +65,36 @@
     <!-- Footer -->
     <div id="footer"></div>
     <div class="spinner"></div>
-    
-    <!-- Uncomment these for debugging and comment out /core and /data below
-    <script src="Scripts/jquery-1.9.0.min.js"></script>
+
+    <!-- Uncomment these for debugging and comment out /core and /data below  -->
+    <!-- <script src="Scripts/jquery-1.9.0.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+    <!--
     <script src="Scripts/jquery-ui.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/linq.min.js"></script>
-    <script src="Scripts/main.js"></script>   
+    <script src="Scripts/main.js"></script>
+  -->
+    <script src="Scripts/app.min.js"></script>
+
+    <!--
     <script src="data/routes.js"></script>
     <script src="data/calendar.js"></script>
     <script src="data/calendar_dates.js"></script>
     <script src="data/stops.js"></script>
     <script src="data/trips.js"></script>
     <script src="data/stop_times.min.js"></script>
+  -->
+    <script src="data/data_routes.js"></script>
+    <script src="data/data_trips.js"></script>
     <script src="data/notices.js"></script>
+
+    <!--
+    <script src="Scripts/core"></script>
+    <script src="data/data"></script>
     -->
 
-    <script src="Scripts/core"></script> 
-    <script src="data/data"></script>
-     
-    
 
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpB0PKqugX5QGSqRcAkrm4v1vL91Vi6GY&libraries=geometry"></script>
@@ -97,7 +109,7 @@
         }
         if (window.addEventListener) {
             window.addEventListener("load", downloadJSAtOnload, false);
-        }    
+        }
         else if (window.attachEvent) {
             window.attachEvent("onload", downloadJSAtOnload);
         }
