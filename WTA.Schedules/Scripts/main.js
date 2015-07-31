@@ -1424,7 +1424,6 @@ function servingRoutesMap() {
         var a1 = typeof a, b1 = typeof b;
         return a1 < b1 ? -1 : a1 > b1 ? 1 : a < b ? -1 : a > b ? 1 : 0;
     });
-
     for (i = 0; i < finalStopsMap.length; i++) {
         if (i > 0) {
             //servedByRoutesMap += ', <a href="index.html?' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
@@ -1433,7 +1432,7 @@ function servingRoutesMap() {
         } else {
             //servedByRoutesMap += ', <a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name + '</a>';
             //servedByRoutesMap += '<a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name; +'</a>';
-            servedByRoutesMap += '<a href="#route-details?routeId=' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name; +'</a>';
+            servedByRoutesMap += '<a href="#route-details?routeId=' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name; +'</a>';
         }
     }
 }
