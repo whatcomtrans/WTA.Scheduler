@@ -473,7 +473,7 @@ function displaySelectedRouteAsync() {
     setTimeout(displaySelectedRoute, 1000);
 }
 function displaySelectedRoute() {
-
+    $('#noService').empty();
     try{
         $('#busTable').empty();
         $('.routeNumber').empty();
@@ -729,12 +729,12 @@ function displaySelectedRoute() {
         selectedRoute = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
         if (trip_headsign === -1) {
             if (isHoliday.length > 0) {
-                $('.routeNumber').append('There is no service during the holiday.');
+                $('#noService').append('There is no service during the holiday.');
             } else {
-                $('.routeNumber').append('There is no service for the specified route and time.');
+                $('#noService').append('There is no service for the specified route and time.');
             }
         } else {
-            $('.routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
+            //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
             $('#stopNames').append('<td><div class="continuesOnAs">Continues On As</div></td>');
         }
         
