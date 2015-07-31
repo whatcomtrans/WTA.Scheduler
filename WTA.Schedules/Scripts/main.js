@@ -905,8 +905,10 @@ function convertToStandard(cells) {
     //Step2- for each of them, check if they begin with a 0--if so, remove the 0 and append am to the end
     
     $.each(cells, function() {
+        if (($(this)[0].innerHTML) == '--') {
+        //do nothing
+        } else if ($(this)[0].innerHTML.slice(0,2) == '00') {
         //0:00 through 0:59
-        if ($(this)[0].innerHTML.slice(0,2) == '00') {
             var minutes = $(this)[0].innerHTML.slice(3,5);
             $(this)[0].innerHTML = '12:'+minutes+' am';
         } else if ($(this)[0].innerHTML.slice(0,1) == '0') {
