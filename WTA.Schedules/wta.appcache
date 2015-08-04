@@ -29,6 +29,9 @@ CACHE:
 /fonts/fontawesome-webfont.svg
 /fonts/fontawesome-webfont.ttf
 /fonts/fontawesome-webfont.woff
+/fonts/Open-Sans-regular.woff2
+/fonts/Open-Sans-regular.woff
+/fonts/Open-Sans-regular.ttf
 
 /Images/EmailIcon.png
 /EmailIconSM.png
@@ -44,6 +47,7 @@ http://static.addtoany.com/buttons/share_save_256_24.png
 /images/ui-bg_glass_65_ffffff_1x400.png
 /images/ui-bg_highlight-soft_75_cccccc_1x100.png
 /images/ui-icons_222222_256x240.png
+/images/InteriorHeader_4.jpg
 
 
 

@@ -115,10 +115,13 @@
     <Content Include="css\bootstrap-custom.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\combined.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\jquery-ui.min.css" />
     <Content Include="css\main.css" />
     <Content Include="css\scheduler.css" />
+    <Content Include="data\data_routes.js" />
+    <Content Include="data\data_trips.js" />
     <Content Include="data\notices.js" />
     <Content Include="data\stop_times.min.js" />
     <Content Include="Images\EmailIcon.png" />
@@ -148,6 +151,7 @@
     <Content Include="favicon-32x32.png" />
     <Content Include="favicon-96x96.png" />
     <Content Include="favicon.ico" />
+    <Content Include="Images\InteriorHeader_4.jpg" />
     <Content Include="mstile-144x144.png" />
     <Content Include="mstile-150x150.png" />
     <Content Include="mstile-310x150.png" />
@@ -226,6 +230,9 @@
     <Content Include="data\transfers.js" />
     <Content Include="data\trips.js" />
     <Content Include="manifest.json" />
+    <Content Include="fonts\Open-Sans-regular.ttf" />
+    <Content Include="fonts\Open-Sans-regular.woff" />
+    <Content Include="fonts\Open-Sans-regular.woff2" />
     <None Include="Properties\PublishProfiles\MG-WK-Dev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\MG-WK-Dev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />

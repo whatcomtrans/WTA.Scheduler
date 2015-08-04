@@ -1,10 +1,21 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  font-style: normal;
+  src:  url('../fonts/Open-Sans-regular.woff2') format('woff2'),
+        url('../fonts/Open-Sans-regular.woff') format('woff'),
+        url('../fonts/Open-Sans-regular.ttf') format('trutype');
+}
+
+
 body,html {
     width: 100%;
     height: 100%;
 }
 body,h1,h2,h3,h4,h5,h6 {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-family:"Open Sans", sans-serif;
     font-weight: normal;
+    margin-top:0;
 }
 
 /* Allow Font Awesome Icons in lieu of jQuery UI and only apply when using a FA icon */
@@ -37,9 +48,9 @@ body, .ui-widget {
     font-size:14px;
 }
 body {
-	background-color:#F2F2F2;
-	color:#3D3D3D;
-	font-family:Arial, Helvetica, sans-serif;
+	background-color:#ffffff;
+	color:#000000;
+	font-family:"Open Sans", sans-serif;
 }
 .ms-TPBody a:link,
 .ms-TPBody a:visited,
@@ -52,33 +63,60 @@ body {
 a,
 a:focus,
 a:link {
-	color:#008472;
-	text-decoration:none;
+	color:#0099cc;
+	text-decoration:none;	
 }
 a:visited {
-	color:#008472;
+	color:#0099cc;
 	text-decoration:none;
 }
 a:hover {
+	color:#0099cc;
+	text-decoration:none;
+}
+.page-content a{
+	font-weight:bold;
+}
+
+h1,
+.h1{
+	font-size: 25px;
+	color:#006699;
+    font-weight:bold;
+}
+h2,
+.h2{
+	font-size: 19px;
+	color:#666666;
+    font-weight:bold;
+}
+h3,
+.h3 {
+	font-size: 15px;
 	color:#008472;
-	text-decoration:underline;
 }
-h3{
-    color:#008472;
-    text-transform:uppercase;
-    margin-top:8px;
+h4,
+.h4 {
+	font-size: 15px;
+	color:#006699;
+	margin-bottom:6px;
 }
-h4{
-    color:#0f457a;
-    text-transform:uppercase;
-    margin-top:8px;
+h5,
+.h5 {
+	font-size: 12px;
 }
+h6,
+.h6 {
+	font-size: 12px;
+}
+
 hr {
 	height:0px;
 	color:#FFFFFF;
 	background-color:transparent;
-	margin:0px;
+	margin:0px;	
 }
+
 td,th {
     text-align: center;
 }
@@ -86,7 +124,7 @@ td,th {
 .link-item,
 .link-item a,
 .link-item a:link {
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:"Open Sans", sans-serif;
     font-size:16px;
     color:#008472;
     text-decoration:none;
@@ -156,11 +194,13 @@ A.ms-signInLink {
 	margin-bottom:10px;
 }
 .content-main{
-    padding:10px;
+    padding:0;
 }
 
 #leftNav,#appPage,#sidebar{
     float:left;
+    padding-top:10px;
+    box-sizing:border-box;
 }
 
 ::-webkit-input-placeholder {
@@ -280,19 +320,6 @@ fieldset select{
     padding-left:10px;
 }
 /* Trip Planner */
-#google-transit-maps #tbStartLocation,
-#google-transit-maps #tbEndLocation,
-#selRoutes,
-#tbStop{
-    width:60%;
-}
-#google-transit-maps #fdate,
-#google-transit-maps #ftime{
-    width:29%;
-}
-#google-transit-submit{
-    margin:0;
-}
 .route-num{
     display:inline-block;
     width:45px;
@@ -536,19 +563,8 @@ to {transform: rotate(359deg);}
 
 
 /************************************ Social Share Buttons Start ***************************************/
-#SocialShare {
-	background-color:#F2F2F2;
-	height:auto;
-	text-align:right;
-}
-#Spanish {
-	font-size:20px;
-	font-weight:bold;
-	color:#008472;
-}
-#Spanish a {
-	text-decoration:underline;
-}
+
+
 /************************************ Social Share Buttons End ***************************************/
 
 /*************************************** Header Start ***************************************/
@@ -563,19 +579,31 @@ to {transform: rotate(359deg);}
 .header {
 	margin-top:0px;
 	padding-top:0px;
-	background:#005E82 url('../Images/LogoBanner.jpg') no-repeat;
-	height:300px;
+	background:#005E82 url('../Images/InteriorHeader_4.jpg') no-repeat;
+	height:201px;
+}
+.header .language.social{
+	float:right;	
+	font-size:14px;
+	margin-top:32px;
+	vertical-align:bottom;
+	margin-right:30px;
+}
+.header .language.social .fa{
+	font-size:20px;
+	margin-left:8px;
+	vertical-align:bottom;
+}
+.header .language.social a{
+	color:#ffffff;
+	padding-right:30px;
 }
 #DeltaSiteLogo {
 	float:left;
-	margin-top:0px;
+	margin:15px;
 	padding:0px;
 	background-color:transparent;
-	width:230px;
-	height:230px;
-    z-index:1100;
 }
-
 .masthead .siteicon-div {
 	margin-left:5px;
 }
@@ -589,206 +617,410 @@ to {transform: rotate(359deg);}
 	padding-right:0px;
 }
 
+
 /*************************************** Search Start ***************************************/
-.header .searchbox {
-	position:relative;
-	top:200px;
-	padding-right:12px;
-    z-index:90;
-}
+
+
 .header #SearchBox {
-	background-color:#FFFFFF;
-}
-#SearchBox .ms-srch-sb-border,
-#SearchBox .ms-srch-sb-borderFocused {
-	-webkit-box-shadow: 5px 5px 5px 0 rgba(5,5,5,5);
-	box-shadow: 5px 5px 5px 0 rgba(5,5,5,5);
+	background-color:transparent;
 }
 #SearchBox .ms-srch-sb > input {
 	background-color:#FFFFFF;
 	color:#008472;
 	font-size:12px;
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:"Open Sans", sans-serif;
     font-weight:normal;
-	padding:5px;
-    border:0;
+	*padding:5px;
+    border:none;
 }
-#SearchBox .ms-srch-sb-searchLink{
+/*#SearchBox .ms-srch-sb-searchLink{
     padding:3px 5px;
     font-size:16px;
     cursor:pointer;
     width:100%;
     line-height:inherit;
 }
+ Old Code end*/
+/* Search Box (begin) */
+.masthead .searchbox{
+	margin-top:25px;
+	margin-right:15px;
+	width:333px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+#SearchBox,
+.ms-srch-sb > input,
+.ms-srch-sb-border,
+.ms-srch-sb-borderFocused{
+	 width:100%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+#SearchBox .ms-srch-sb > input,
+#SearchBox .ms-srch-sbLarge > input{
+	height:28px;
+	color:#666666;
+	font-size:14px;
+	*display:table-cell;
+}
+#SearchBox .ms-srch-sb > input.ms-helperText{
+	color:#b8b8b8;	
+}
+#SearchBox .ms-srch-sb-border,
+#SearchBox .ms-srch-sb-borderFocused{
+	border:1px solid #8B8D8E;
+	border-radius:6px;
+	padding:2px 6px;
+	display:table;
+	background-color:#ffffff;
+}
+
+#SearchBox .ms-srch-sb-searchLink,
+#SearchBox .ms-srch-sb-searchLink:hover{
+	height:auto;
+	display:table-cell;
+	text-align:center;
+	padding:3px 3px 0 2px;	
+}
+#SearchBox .ms-srch-sb-searchLink,
+#SearchBox .ms-srch-sb-searchLink:hover{
+	background:none;
+	border:none;
+}
+#SearchBox .ms-srch-sb-searchLink:before{
+	color:#666666;
+	font-size:18px;
+}
+
+
+/* Add icon to Go anchor */
+#SearchBox .ms-srch-sb-searchLink:before{
+    content: '\f002';
+    font-family: FontAwesome;
+    font-size: 14px;
+    line-height:18px;
+    color: #666666;
+    font-variant: normal;
+    text-transform: none;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+    
+}
+/* Alter icon on hover */
+#SearchBox .ms-srch-sb-searchLink:hover:before,
+#SearchBox .ms-srch-sb-navLink:hover:before{
+    color: #0099cc;  /* Color of icon on hover */
+    background-color:transparent;
+}
+
+/* Search Box (begin) */
+
+
 
 /*************************************** Search End ***************************************/
 /*************************************** Header End ***************************************/
 
 /*************************************** Global Nav Start ***************************************/
-@media (min-width:768px) {
 .nav {
 	margin-top:0px;
+	background-color:#4d4d4d;
 }
+.navbar#topnavbar {
+    z-index:auto;
+}
+
+#topnavbar a.wta-alert{
+	float:left;
+	color:#ffffff;
+	line-height:17px;
+	font-size:17px;
+	font-weight:bold;
+	padding:10px 15px;
+	position:absolute;
+	left:0px;
+}
+	#topnavbar .ms-core-navigation {
+		font-family:"open Sans", sans-serif;
+	}
 .navbar {
-    margin-bottom:0px;
-    margin-left: 0px;
-    margin-right:5px;
-    border-radius:0px;
-    border:none;
-    min-height:33px!important;
-    clear:both;
-}
-.navbar-collapse {
-	padding-right:0px;
+	margin-bottom:0px;
+	margin-left: 0px;
+	border-radius:0px;
+	border:none;
+	min-height:33px!important;		
 }
 .navbar-default {
-	background-color:transparent;
+	background-color:#4d4d4d;
 }
-.container > .navbar-header,
-.container > .navbar-collapse {
-    margin-right:0px;
-    padding:0px;
-}
-#topnavbar .collapse.navbar-collapse {
-	margin-top:0px;
-}
+
+@media (min-width:840px) {
+	.navbar-collapse {
+		padding:0;
+	}
+	.container > .navbar-header, 
+	.container > .navbar-collapse {
+	    margin-right:0px;
+	    padding:0px;
+	}
+	#topnavbar .collapse.navbar-collapse {
+		margin-top:0px;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul, 
+	#topnavbar .ms-core-listMenu-horizontalBox li  {
+	    margin:0px;
+	    padding:0px;
+	}
+	/* Root Level Start */
+	#topnavbar .nav ul.static {
+	    float: right;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a, 
+	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span,
+	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span.dynamic-children  {
+	    padding:0px;			
+	}
+	#topnavbar ul.root li.static > .menu-item,
+	#topnavbar ul.root li.static > .menu-item.dynamic-children {
+		font-family:"Open Sans", sans-serif;
+		font-size:17px;	
+		color:#ffffff;	
+		background-color:transparent;
+	    padding:10px;
+		width:auto;
+		height:auto;
+	}
+	#topnavbar .nav li.static {
+	    background-color:transparent;
+	    margin-right:5px;
+	}
+	#topnavbar ul.root li.static.shown > .menu-item{
+		background-color:#cccccc;
+		color:#4d4d4d
+	}
+	#topnavbar ul.root li.static > .menu-item.selected {
+		background-color:#0099cc;
+		color:#ffffff;
+		font-weight:bold;
+	}
+	/*************************************** Root Level End ***************************************/		
+	/*************************************** First/Second Level Drop Down Start ***************************************/	
+	.ms-core-listMenu-horizontalBox LI.ms-navedit-editArea,
+	.ms-navedit-editSpan,
+	.ms-navedit-editArea,
+	.ms-listMenu-editLink,
+	.ms-navedit-editLinksText {
+		display:none; /* Hide Nav Editing */
+	}
+	
+	/* Start Mega Menu Code */	
+	#topnavbar ul.dynamic > li {
+	    min-width:inherit;
+	}	
+	#topnavbar .nav ul.static > li.dynamic-children > ul.dynamic {
+	    top:auto!important;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox UL.root UL.dynamic UL.dynamic {
+	    display:block!important;
+	    font-weight:normal;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic {
+	    background-color:#cccccc;
+	    display:table-row;
+	    width:auto!important;
+	    border-spacing:10px;
+	    border:none;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox UL.root > LI > UL.dynamic > LI {
+	    display:table-cell;
+	    font-weight:bold;
+	    padding-right:5px;
+	    /*border-left:2px solid #008472;*/
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL {
+	    display:block !important;
+	    width:auto;                        
+	    left:0px !important;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL > LI {
+	    display:list-item;
+	    margin-right:10px;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children,
+	#topnavbar .nav .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
+	    background-image:none;
+	    padding-right:0px;
+	}
+	#topnavbar .nav ul.dynamic > li.dynamic-children > ul {
+	    position:relative !important;
+	    left:0px !important;
+	    width:auto;
+	    box-shadow:none;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic LI {
+	    border:1px solid transparent;
+	}
+	
+	#topnavbar li.dynamic > .menu-item {
+	    height: auto;
+	    line-height:normal;
+	    padding: 5px 10px;
+	}
+	#topnavbar .nav .ms-core-listMenu-horizontalBox ul.root ul.dynamic > li a {
+	    padding: 5px;
+	}
+	
+	
+	/* End Mega Menu Code */
+	#topnavbar li.hover ul.dynamic {
+		padding-top:0px;
+	}
+	#topnavbar li.hover-off ul.dynamic {
+		display:none;
+	}
+	#topnavbar ul.dynamic > li {
+		border-top:none;
+	}
+	#topnavbar ul.dynamic {
+	    /*-webkit-box-shadow: 2px 2px 10px 0 #8E8E8E;
+		box-shadow: 2px 2px 10px 0 #8E8E8E;*/
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A {
+		font-family:"Open Sans", sans-serif;
+		font-size:13px;	
+		color:#666666;	
+		background-color:transparent;
+	    padding:10px;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A:hover {
+		/*background-color:#008472;*/
+		color:#006699;
+		text-decoration:none;
+	}
+	/* First/Second Level Drop Down End */
+} /* min-width:840px (end) */
 
 /***************************************
-Margin padding resets
+Menu shrinks to dropdown at this point
 ***************************************/
-#topnavbar .ms-core-listMenu-horizontalBox ul,
-#topnavbar .ms-core-listMenu-horizontalBox li  {
-    margin:0px;
-    padding:0px;
-}
-/*************************************** Root Level Start ***************************************/
-#topnavbar {
-	top:37px;
-}
-#topnavbar .nav ul.static {
-    float: right;
-}
-#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a,
-#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span,
-#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span.dynamic-children  {
-    padding:0px;
-}
-#topnavbar ul.root li.static > .menu-item,
-#topnavbar ul.root li.static > .menu-item.dynamic-children {
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:13px;
-	color:#000000;
-	text-transform:uppercase;
-	background-color:transparent;
-    padding:10px;
-	width:auto;
-	height:auto;
-}
-#topnavbar .nav li.static {
-    background-color:#FFFFFF;
-    margin-right:5px;
-}
-#topnavbar ul.root li.static > .menu-item:hover {
-	box-shadow:inset 0px 5px 0px 0px #008472;
-    text-decoration:none !important;
-}
-#topnavbar ul.root li.static > .menu-item.selected {
-	box-shadow:inset 0px 5px 0px 0px #008472;
-}
-/*************************************** Root Level End ***************************************/
+@media (max-width:839px) {
+    #ms-designer-ribbon {
+        display:none !important; /* Hide Ribbon */
+    }
+    .ms-dialog #ms-designer-ribbon {
+        display:block !important;
+    }	
+	.nav .ms-core-listMenu-horizontalBox UL.root {
+		background-color:#FFFFFF;
+		padding:5px;
+		border:0px solid #E0E0E0;		
+	}
+	.nav .ms-core-listMenu-horizontalBox{
+		width:100% !important;
+	}
+	.navbar-default .navbar-toggle {
+		color:#000000;
+		border:none;
+		font-size:20px;
+		line-height:20px;
+		padding:2px;
+		color:#ffffff;
+	}
+	.navbar-default .navbar-toggle:hover,
+	.navbar-default .navbar-toggle:focus,
+	.navbar-default .navbar-toggle:active{
+		background-color:transparent;
+	}	
+	.navbar-collapse {
+		padding-left:0px;
+		padding-right:0px;
+		padding:0px;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root{
+		padding:0px;
+	}
+	#topnavbar ul.dynamic > li {
+	    border:none;	    
+	}
+	#topnavbar ul.dynamic {
+	    border:0px solid #D1D1D1;
+	    background-color:transparent;
+	}	
+	#topnavbar ul.root li.static .menu-item:hover {
+		color:#666666;
+	}
 
-/*************************************** First/Second Level Drop Down Start ***************************************/
-/* Start Mega Menu Code */
+	#topnavbar ul.root li.static .menu-item:hover {
+		color:#666666;
+	}
+	#topnavbar ul.root ul.dynamic > li.dynamic > .menu-item {
+	    padding: 5px 15px;
+	    font-weight:bold;
+	}
+	#topnavbar ul.root ul.dynamic ul.dynamic li.dynamic > .menu-item {
+	    padding: 0px 30px;
+	    font-weight:normal;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static{
+		border-bottom:1px solid #ffffff;
+		line-height:20px;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > .menu-item{
+		background-color:#cccccc;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root li.dynamic .additional-background{
+		background-image:none;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children {
+	    background-image:url("/_catalogs/masterpage/WTA/img/GlobalNavDown.png");
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
+	    background-image:url("/_catalogs/masterpage/WTA/img/GlobalNavChild.png");
+	}	
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.shown > a{
+	    border-bottom: 1px solid #D1D1D1 !important;
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root li.shown ul.dynamic{
+		display:block !important;
+	    width: 90% !important;
+	    left: auto !important;
+	    top: auto !important;
+	    padding-right: 5%;
+	    margin-right: 5%;		
+	    margin-left:10px;
+	    border-bottom:1px solid #d1d1d1;
+	}	
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > UL.dynamic{
+		background-color:#fff;
+	}	 
+	#topnavbar ul.root li.static > .menu-item,
+	#topnavbar ul.root li.static > .dynamic-children.menu-item {
+	    font-size:1.2em;
+	    font-weight:bold;
+	    padding:10px 15px;;
+	    margin:0px;
+		line-height:normal;
+	    height: auto;	    
+	}
+	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.static > ul.dynamic {
+		border:none;
+	}	
+}
 
-#topnavbar ul.dynamic > li {
-    min-width:inherit;
-}
-#topnavbar .nav ul.static > li.dynamic-children > ul.dynamic {
-    top:auto!important;
-}
-#topnavbar .ms-core-listMenu-horizontalBox UL.root UL.dynamic UL.dynamic {
-    display:block!important;
-    font-weight:normal;
-}
-#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic {
-    background-color:#FFFFFF;
-    display:table-row;
-    width:auto!important;
-    border-spacing:10px;
-    border:none;
-}
-#topnavbar .ms-core-listMenu-horizontalBox UL.root > LI > UL.dynamic > LI {
-    display:table-cell;
-    font-weight:bold;
-    padding-right:5px;
-    border-left:2px solid #008472;
-}
-#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL {
-    display:block !important;
-    width:auto;
-    left:0px !important;
-}
-#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL > LI {
-    display:list-item;
-    margin-right:10px;
-    padding-left:0px;
-}
-#topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children,
-#topnavbar .nav .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
-    background-image:none;
-    padding-right:0px;
-}
-#topnavbar .nav ul.dynamic > li.dynamic-children > ul {
-    position:relative !important;
-    left:0px !important;
-    width:auto;
-    box-shadow:none;
-}
-#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic LI {
-    border:1px solid transparent;
-}
-#topnavbar li.dynamic > .menu-item {
-    height: auto;
-    line-height:normal;
-    padding: 5px 10px;
-}
-#topnavbar .nav .ms-core-listMenu-horizontalBox ul.root ul.dynamic > li a {
-    padding: 5px;
-}
-/* End Mega Menu Code */
 
-#topnavbar li.hover ul.dynamic {
-	padding-top:0px;
-}
-#topnavbar li.hover-off ul.dynamic {
-	display:none;
-}
-#topnavbar ul.dynamic > li {
-	border-top:none;
-}
-#topnavbar ul.dynamic {
-    -webkit-box-shadow: 2px 2px 10px 0 #8E8E8E;
-	box-shadow: 2px 2px 10px 0 #8E8E8E;
-}
-#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A {
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:13px;
-	color:#000000;
-	background-color:transparent;
-    padding:10px;
-}
-#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A:hover {
-	/*background-color:#008472;*/
-	color:#008472;
-	text-decoration:underline;
-}
-/*************************************** First/Second Level Drop Down End ***************************************/}
 /*************************************** Global Nav End ***************************************/
+
 
 /*************************************** Left Nav Start ***************************************/
 
 #leftNav{
-
+    padding-right:20px;
 }
 .left-nav ul{
     padding-left:10px;
@@ -797,133 +1029,295 @@ Margin padding resets
     list-style:none;
     font-weight:normal;
     line-height:1.5em;
+    text-align:right;
 }
-.left-nav{
-    text-transform:uppercase;
+.left-nav{    
     font-size:14px;
 }
 .left-nav li{
     padding:3px 4px;
+    color:#666666;
+    font-weight:normal;
+}
+.left-nav li a{
+    color:#666666;
 }
 .left-nav .selected,
 .left-nav li:hover{
-    background-color:#008472;
+    color:#006699;
+    font-weight:bold;
 }
 .left-nav .selected a,
 .left-nav li:hover a{
-     color:#ffffff;
+    color:#006699;
+    background-color:transparent;
+
 }
 /*************************************** Left Nav End ***************************************/
 
 
 
-
-/***************************************Footer Start ******************************************************/
-.mastfooter {
-	background-color:#F2F2F2;
-	border-top:2px #A0A0A0 solid;
-	color:#0F457A;
-	font-size:13px;
-    padding-top:20px;
+/* WTA Widgets (begin) */
+input[type=text],
+select{
+    border:1px solid #8E8E8E;
+    border-radius:6px;
+    height:28px;    
+    padding-left:5px;
 }
-.mastfooter .col-md-12 {
+input[type=submit],
+input[type=button]{
+    border:none;
+    border-radius:5px; 
+    background-color:#006699;
+    color:#ffffff;
+    font-size:16px;
+    font-weight:bold;
+    margin-left:10px;
+    padding:0 0 2px 0;
+    line-height:28px;
+    min-width:0;
+    width:76px;
+    vertical-align:middle;
+    -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
+	box-shadow: 3px 3px 10px 0 #8E8E8E; 
+}
+input[type=submit]:hover,
+input[type=button]:hover,
+.wta-widget.trip-planner #google-transit-submit:hover {
+    background-color:#0099cc;
+}
+.wta-widget input[type=time]{
+    height:16px;
+}
+.wta-widget input[type=time],
+.wta-widget input[type=text],
+.wta-widget input[type=date],
+.wta-widget select{
+    line-height:14px;
+}
+.wta-widget.system-map{
+	vertical-align:top;
+}
+.wta-widget.system-map p{
+	box-sizing:border-box;
+	display:inline-block;
+}
+.wta-widget.system-map #findMap{
+	margin-left:14px;
+}
+/* Trip Planner */
+.wta-widget.trip-planner #tbStartLocation,
+.wta-widget.trip-planner #tbEndLocation,
+.wta-widget #selRoutes,
+.wta-widget #tbStop{
+	box-sizing:border-box;
+}
+.wta-widget.route-selector #selRoutes,
+.wta-widget.stop-selector #tbStop,
+.wta-widget.system-map p{
+	width:calc(100% - 95px);
+}
+.wta-widget.trip-planner #tbStartLocation,
+.wta-widget.trip-planner #tbEndLocation,
+.wta-widget.trip-planner .info-fields{
+	width:100%;
+}	
+
+.wta-widget.trip-planner #fdate{
+	padding-right:10px;
+}
+.wta-widget.trip-planner #fdate,
+.wta-widget.trip-planner #ftime{
+    box-sizing:border-box;
+    width:49%;
+}
+.wta-widget.trip-planner .info-fields,
+.wta-widget.trip-planner .plan-trip{
+	display:table-cell;
+	vertical-align:top;
+	
+}
+.wta-widget.trip-planner .plan-trip span{
+	display:none;
+}
+.wta-widget.trip-planner a.usecurrent{
+	font-weight:normal !important;
+	font-size:12px;
+	color:#666666;
+}
+.wta-widget.trip-planner .radios{
+	color:#006699;	
+	text-align:center;
+	margin-left:-10px;
+}
+.wta-widget.trip-planner .radios .arriving{
+	margin-left:10px;	
+}
+.wta-widget.trip-planner #google-transit-submit{
+	height:75px;
+	width:75px;
+	border:none;
+	border-radius:100%;
+	white-space:normal;
+	min-width:0;
+	padding:5px;
+	margin:10px;
+	background-color:#006699;
+	color:#ffffff;
+	font-weight:bold;	
+	font-size:16px;
+    -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
+	box-shadow: 3px 3px 10px 0 #8E8E8E
+}
+.wta-widget.system-map p,
+.wta-widget.system-map input{
+	float:left;
+}
+
+@media(max-width:440px){
+	.wta-widget.trip-planner #tbStartLocation,
+	.wta-widget.trip-planner #tbEndLocation{
+		width:100%;
+	}	
+}
+
+/* WTA Widgets (end) */
+
+
+
+/* Sidebar (begin) */
+.sidebar{
+	background-color:rgba(0, 153, 204, .15);	
+	padding:15px;
+    box-sizing:border-box;
+}
+.sidebar input,
+.sidebar a,
+.sidebar .ms-rtestate-field{
+	font-size:14px;
+}
+.container-pad{	
+    padding:8px;
+}
+.sidebar  h4{
+    color:#0f457a;   
+    margin-top:8px;
+}
+/* Sidebar (end) */
+
+
+
+/* Footer Start */
+#footer {
+	background-color:#F2F2F2;
+	color:#666666;
+	font-size:13px;
+	
+}
+#footer .container-fluid{
+	margin:0 auto;
+	max-width:1500px;
+}
+#footer .col-md-12 {
 	min-height:50px;
 	vertical-align:middle;
-	display:table;
+	display:table;	
 	width:100%;
 	text-align:left;
 	margin-top:20px;
 	padding-left:0px;
 }
-.mastfooter a,
-.mastfooter a:focus,
-.mastfooter a:link,
-.mastfooter a:visited,
-.mastfooter a:hover {
-	color:#008472;
-	text-decoration:underline;
+#footer a,
+#footer a:focus,
+#footer a:link,
+#footer a:visited,
+#footer a:hover {
+	color:#666666;
+	text-decoration:none;;
 }
 
-
-.mastfooter #topContact {
-	float:left;
+/* Footer info bar (begin) */
+#footer .social-info-bar{
+	background-color:#4d4d4d;
+	padding:20px 0;
+	text-align:center;
+	box-sizing:border-box;
 }
-.socialTop {
-	text-transform:uppercase;
-	font-weight:bold;
+#footer .wta-tiles .tile{
+	box-sizing:border-box;
+	font-size:1em;
 	text-align:left;
-	font-size:13px;
+	margin:0;
+	padding:0;
+	color:#ffffff;
+	display:inline-block;
+	vertical-align:top;
+	width:19%;
 }
-.mastfooter .socialTop a,
-.mastfooter .socialTop a:focus,
-.mastfooter .socialTop a:link,
-.mastfooter .socialTop a:visited,
-.mastfooter .socialTop a:hover {
-	color:#0F457A;
-	text-decoration:none;
+.wta-tiles .tile .icon{
+	font-size:45px;
+	line-height:normal;
 }
-.socialBottom {
+.wta-tiles .tile:hover .icon{
+	color:#0099cc;
+}
+.wta-tiles .tile .icon,
+.wta-tiles .tile .info{
+	display:table-cell;
+	vertical-align:top;
+}
+.wta-tiles .tile .info{
+	padding-left:15px;
+	text-align:left;
+}
+.wta-tiles .tile .info h5{
+	color:#0099cc;
+	margin-top:0;
+	margin-bottom:3px;
+	text-transform:none;
+	font-size:18px;
+	letter-spacing:1px;	
+}
+.wta-tiles .tile .info p{
 	font-size:10px;
-	text-align:left;
+	margin-bottom:0;
 }
-.socialBottom,.TwitterIMG,.TwitterInfo,.FacebookIMG,.FacebookInfo,.EmailIMG,
-.EmailInfo,.AddressMap,.GeneralPhone,.GeneralEmail,.GeneralMisc{
-   position:relative;
-   float:left;
+@media(max-width:940px){
+	#footer .social-info-bar{
+		padding:0;
+	}
+	#footer .wta-tiles .tile .info{
+		display:none;
+	}
+	#footer .wta-tiles .tile .icon{
+		display:block;
+	}	
+	#footer .wta-tiles .tile{
+		text-align:center;
+	}
 }
-.TwitterIMG {
-   left:0px;
-}
-.TwitterInfo {
-   left:10px;
-   padding-right:20px;
-}
-.FacebookIMG {
-   left:20px;
-}
-.FacebookInfo {
-   left:30px;
-   padding-right:20px;
-}
-.EmailIMG {
-   left:40px;
-}
-.EmailInfo {
-   left:50px;
-   padding-right:60px;
-}
-.AddressMap {
-   left:0px;
-   padding-right:40px;
-   text-align:left;
-}
-.GeneralPhone {
-   left:0px;
-   padding-right:40px;
-   text-align:left;
-}
-.GeneralEmail {
-   left:0px;
-   text-align:left;
-   padding-right:40px;
-}
-.GeneralMisc {
-   left:0px;
-   text-align:left;
-   padding-right:40px;
-}
-/*************************************** Footer Nav Start ***************************************/
-.mastfooter .bottomSiteMap {
+
+/* Footer info tiles (end) */
+
+/*************************************** Footer site map (begin) ***************************************/
+#footer .footer-site-map {
 	float:left;
-	color:#00394E;
+	color:#666666;
+	padding-left:30px;
+	padding-right:30px;
 }
-.mastfooter .bottomSiteMap a,
-.mastfooter .bottomSiteMap a:focus,
-.mastfooter .bottomSiteMap a:link,
-.mastfooter .bottomSiteMap a:visited,
-.mastfooter .bottomSiteMap a:hover {
-	color:#00394e;
+#footer .footer-site-map a,
+#footer .footer-site-map a:focus,
+#footer .footer-site-map a:link,
+#footer .footer-site-map a:visited,
+#footer .footer-site-map a:hover {
+	color:#666666;
 	text-decoration:none;
+	font-size:15px;
+}
+.footer-nav.ms-core-listMenu-horizontalBox {
+    display:inline-block;
 }
 .footer-nav .ms-core-listMenu-root {
 	max-height:inherit;
@@ -933,89 +1327,174 @@ Margin padding resets
 .footer-nav UL.root > LI > SPAN {
 	display:none;
 }
-.footer-nav UL.root {
-	-webkit-columns:6; /* Chrome, Safari, Opera */
-	-webkit-column-width:auto;
-	-webkit-column-gap:0px;
-
-	/* Firefox */
-	/*-moz-columns:2;
-	-moz-column-width:auto;
-	-moz-column-gap:0px;
-
-	columns:2;
-	column-width:auto;
-	column-gap:0px;*/
+.footer-nav UL.root {    
+    -webkit-columns:6; /* Chrome, Safari, Opera */
+    -webkit-column-width:auto;
+    -webkit-column-gap:0px;
 }
-.footer-nav UL.root > UL 	{
-	margin-bottom:10px;
+.footer-nav UL.root > UL{
+	margin-bottom:10px;   
 }
 .footer-nav UL.root UL,
-.footer-nav UL.root LI 	{
+.footer-nav UL.root LI{
 	display:block;
 	padding:0;
-	break-inside:avoid;
-	page-break-inside:avoid;
+	break-inside:avoid;        
+	page-break-inside:avoid;               
+}
+.footer-nav UL.root > LI{
+	max-width:220px;
 }
 .footer-nav UL.root > LI > UL > LI 	{
-	font-size:14px;
+	font-size:15px;
 	font-weight:bold;
-    margin-bottom:20px;
+	margin-bottom:20px;
 }
 .footer-nav UL.root > LI > UL > LI > UL LI {
-	font-size:12px;
+	font-size:15px;
 	font-weight:normal;
 }
-.ms-core-listMenu-horizontalBox ul {
+.footer-nav.ms-core-listMenu-horizontalBox ul {
 	display:inline-flex;
-	margin-right:30px;
+	margin-right:30px;	
+	/*max-width:220px;*/
 }
-/*************************************** Footer Nav End ***************************************/
+/*************************************** Footer site map (end) ***********************************/
+
+/* Footer Responsive Start */
+@media (max-width:1520px) {
+	.footer-nav.ms-core-listMenu-horizontalBox ul {
+		margin-right:20px;	
+	}	
+}
+@media (max-width:1420px) {
+	.footer-nav.ms-core-listMenu-horizontalBox ul {
+	    margin-right:10px;
+	}
+}
+@media (max-width:1340px) {
+	.footer-nav.ms-core-listMenu-horizontalBox ul {
+		display:inline-block;
+		max-width:none;
+	}
+	.footer-nav UL.root > LI{
+		max-width:none;
+	}
+	
+	.footer-nav UL.root {    
+	    -webkit-columns:4; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px;
+	    
+	    -moz-columns:4; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+	                
+	    columns:4;
+	    column-width:auto;
+	    column-gap:0px;
+	}	
+}
+@media (max-width:1000px) {
+	.footer-nav UL.root {          
+ 	    -webkit-columns:3; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px;
+  	
+	   	-moz-columns:3; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+ 
+	    columns:3;
+	    column-width:auto;
+	    column-gap:0px;
+	}
+	#footer .footer-site-map {
+		padding-left:15px;
+		padding-right:15px;
+	}	
+}
+@media (max-width:580px) {
+	.footer-nav UL.root {          
+   	    -webkit-columns:2; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px; 
+   	    
+   	    -moz-columns:2; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+
+	    columns:2;
+	    column-width:auto;
+	    column-gap:0px;
+	}
+}
+@media (max-width:400px) {
+	.footer-nav UL.root {          
+   	    -webkit-columns:1; /* Chrome, Safari, Opera */
+	    -webkit-column-width:auto;
+	    -webkit-column-gap:0px; 
+   	    
+   	    -moz-columns:1; /* Firefox */
+	    -moz-column-width:auto;
+	    -moz-column-gap:0px;
+
+	    columns:1;
+	    column-width:auto;
+	    column-gap:0px;
+	}
+}
+/* Footer Responsive End */
 /*************************************** Footer End ***************************************/
+
 
 
 /*************************************** Responsive Start ***************************************/
 
-@media(min-width:1400px){
-    #leftNav{
-        width:15%;
-        max-width:200px;
-    }
+@media (max-width:1399px){
+	.header .language.social{
+		clear: right;
+		margin-top:10px;
+		margin-bottom:10px;
+	}
 }
-@media(max-width:1399px){
+@media (min-width:1251px){
     #leftNav{
-        width:15%;
-        min-width:0;
-    }
-}
-@media(min-width:1200px){
-
-    #appPage{
-        width:58%;
-        margin-left:1%;
-        margin-right:1%;
-    }
-    #sidebar{
-        width:25%;
-    }
-}
-@media(max-width:1199px){
-    #leftNav{
-        display:none;
+        width:200px;
+        min-width:200px;        
     }
     #appPage{
-        width:68%;
-        margin-left:1%;
-        margin-right:1%;
+        width:calc(70% - 200px);
     }
     #sidebar{
         width:30%;
     }
-    ul.banner-social-buttons {
-        float: left;
-        margin-top: 15px;
-    }
 }
+@media (max-width:1250px){
+	#leftNav{
+		display:none;	
+	}
+    #appPage{
+        width:70%;
+    }
+    #sidebar{
+        width:30%;
+    }	
+	#footer > .container{	
+		width:auto;
+	}
+	.header .site-title{
+		font-size:18px;
+		margin-top:38px;
+	}
+	.header .searchbox {
+	    width:250px;
+	}
+	.header .language.social{
+		margin-right:15px;
+	}
+}
+
 @media(max-width:900px){
     #leftNav{
         display:none;
@@ -1070,17 +1549,7 @@ Margin padding resets
 	}
 }
 @media (max-width:895px){
-	#topnavbar {
-	    top:25px;
-	}
-	#topnavbar ul.root li.static > .menu-item,
-	#topnavbar ul.root li.static > .dynamic-children.menu-item {
-	    font-size:11px;
-	    padding:8px;
-	}
-	.navbar {
-	    min-height:27px!important;
-	}
+
     #routeList {
         list-style:none;
         -moz-column-count: 1;
@@ -1093,385 +1562,90 @@ Margin padding resets
     }
 }
 
-/*************************************** Footer Top Contact Responsive Design Start ***************************************/
-/* Footer Social Start */
-@media (max-width:466px) {
-	.TwitterInfo {
-		left:10px;
-		padding-right:10px;
-	}
-	.FacebookIMG {
-		left:20px;
-	}
-	.FacebookInfo {
-		left:30px;
-		padding-right:10px;
-	}
-	.EmailIMG {
-		left:40px;
-	}
-	.EmailInfo {
-		left:50px;
-		padding-right:5px;
-	}
-}
-@media (max-width:407px) {
-	.socialTop {
-	    font-size:10px;
-	}
-	.TwitterInfo {
-	    left:0px;
-	    padding-right:0px;
-	}
-	.FacebookIMG {
-	    left:10px;
-	}
-	.FacebookInfo {
-	    left:10px;
-	    padding-right:0px;
-	}
-	.EmailIMG {
-	    left:20px;
-	}
-	.EmailInfo {
-	    left:20px;
-	    padding-right:0px;
-	}
-}
-@media (max-width:355px) {
-	.socialTop,
-	.socialBottom {
-		display:none;
-	}
-	.col-md-12 .topContact {
-		padding-right:0px;
-	}
-}
-/* Footer Social End */
-
-@media (min-width:1267px) {
-	.AddressMap {
-		left:445px;
-	}
-	.GeneralPhone {
-		left:455px;
-	}
-	.GeneralEmail {
-		left:465px;
-	}
-	.GeneralMisc {
-		left:475px;
-		padding-right:5px;
-	}
-	.AddressMap,
-	.GeneralPhone,
-	.GeneralEmail,
-	.GeneralMisc {
-		bottom:70px;
-	}
-}
-@media (max-width:875px) {
-	.AddressMap,
-	.GeneralPhone,
-	.GeneralEmail,
-	.GeneralMisc {
-		font-size:12px;
-	}
-}
-@media (max-width:805px) {
-	.GeneralMisc {
-		padding-top:10px;
-	}
-}
-@media (max-width:570px) {
-	.GeneralEmail {
-		padding-right:0px;
-	}
-}
-@media (max-width:515px) {
-	.GeneralEmail {
-	    padding-right:30px;
-	    padding-top:10px;
-	}
-}
-@media (max-width:480px) {
-	.AddressMap,
-	.GeneralPhone,
-	.GeneralEmail,
-	.GeneralMisc {
-		font-size:11px;
-	}
-}
-@media (max-width:360px) {
-	.GeneralPhone {
-		padding-top:10px;
-	}
-}
-/*************************************** Footer Top Contact Responsive Design End ***************************************/
-
-/*************************************** Footer Bottom Responsive Design Start ***************************************/
-@media (max-width:1440px) {
-	.ms-core-listMenu-horizontalBox ul {
-	    margin-right:20px;
-	}
-	.ms-core-listMenu-horizontalBox {
-	    display:inline-block;
-	}
-
-    #routeList {
-        list-style:none;
-        -moz-column-count: 1;
-        -moz-column-gap: 0px;
-        -webkit-column-count: 1;
-        -webkit-column-gap: 0px;
-        column-count: 1;
-        column-gap: 0px;
-        padding-left:0;
-    }
-}
-@media (max-width:1320px) {
-	.ms-core-listMenu-horizontalBox ul {
-	    margin-right:10px;
-	}
-}
-@media (max-width:1175px) {
-	.ms-core-listMenu-horizontalBox ul {
-	    margin-right:5px;
-	}
-	.footer-nav UL.root > LI > UL > LI 	{
-		font-size:13px;
-	}
-	.footer-nav UL.root > LI > UL > LI > UL LI {
-		font-size:11px;
-	}
-}
-@media (max-width:1040px) {
-	.ms-core-listMenu-horizontalBox ul {
-	    margin-right:0px;
-	}
-	.footer-nav UL.root > LI > UL > LI 	{
-		font-size:12px;
-	}
-	.footer-nav UL.root > LI > UL > LI > UL LI {
-		font-size:10px;
-	}
-	.ms-core-listMenu-horizontalBox ul {
-		display:inline-block;
-	}
-		.footer-nav UL.root {
-	    -webkit-columns:4; /* Chrome, Safari, Opera */
-	    -webkit-column-width:auto;
-	    -webkit-column-gap:0px;
-
-	    -moz-columns:4; /* Firefox */
-	    -moz-column-width:auto;
-	    -moz-column-gap:0px;
-
-	    columns:4;
-	    column-width:auto;
-	    column-gap:0px;
-	}
-}
-@media (max-width:775px) {
-		.footer-nav UL.root {
- 	    -webkit-columns:3; /* Chrome, Safari, Opera */
-	    -webkit-column-width:auto;
-	    -webkit-column-gap:0px;
-
-	   	-moz-columns:3; /* Firefox */
-	    -moz-column-width:auto;
-	    -moz-column-gap:0px;
-
-	    columns:3;
-	    column-width:auto;
-	    column-gap:0px;
-	}
-}
-@media (max-width:480px) {
-		.footer-nav UL.root {
-   	    -webkit-columns:2; /* Chrome, Safari, Opera */
-	    -webkit-column-width:auto;
-	    -webkit-column-gap:0px;
-
-   	    -moz-columns:2; /* Firefox */
-	    -moz-column-width:auto;
-	    -moz-column-gap:0px;
-
-	    columns:2;
-	    column-width:auto;
-	    column-gap:0px;
-	}
-}
-
-/*************************************** Footer Bottom Responsive Design End ***************************************/
-/***************************************
-Menu shrinks to dropdown at this point
-***************************************/
-@media (max-width:767px) {
-	#DeltaSiteLogo {
-	    padding:0px;
-	    margin-left:0px;
-	    height:100px;
-	}
-    .headtitle,
-    .masthead .breadcrumb,
-    #ms-designer-ribbon,
-    #sideNavBox {
-        display:none !important; /* Hide Page Title / Breadcrumbs / Left Nav / Ribbon? */
-    }
-    .ms-dialog #ms-designer-ribbon {
-        display:block !important;
-    }
-	.headtitle {
-	    margin-top:0px;
-	    margin-left:10px;
-	    clear:both;
-	}
-
-	.well,
-	#pageTitle,
-	.ms-core-pageTitle,
-	.ms-core-pageTitle A,
-	.ms-core-pageTitle A:hover,
-	li.s4-breadcrumbRootNode,
-	li.s4-breadcrumbRootNode,
-	ul.s4-breadcrumb,
-	ul.s4-breadcrumb ul {
-		display:none;
-	}
-	#topnavbar {
-		width:auto;
-		height:37px;
-		border:none;
-	}
-	.nav {
-		width:100%;
-	}
-	.navbar {
-		margin-bottom:0px;
-        clear:both;
-	}
-	.navbar-toggle {
-		padding:0px;
-		margin:0 30px;
-        position:static;
-	}
-	.navbar-default {
-		background-color:#008472;
-	}
-	.nav .ms-core-listMenu-horizontalBox UL.root {
-		background-color:#FFFFFF;
-		padding:5px;
-		border:0px solid #E0E0E0;
-	}
-	.nav .ms-core-listMenu-horizontalBox
-	{
-		width:100% !important;
-	}
-	.navbar-default .navbar-toggle {
-		color:#ffffff;
-		border:none;
-		font-size:20px;
-		line-height:26px;
-        padding:5px 8px;
-	}
-    .navbar-default .navbar-toggle:hover,
-    .navbar-default .navbar-toggle:focus {
-        background-color: #8E8E8E;
-    }
-
-	.navbar-collapse {
-		padding-left:0px;
-		padding-right:0px;
-		padding:0px;
-	}
-	.header .searchbox { /* from MG RD */
-		top:0px;
-		margin-top:5px;
-		margin-bottom:10px;
-	}
-	/*.navbar-default .navbar-toggle:hover,
-	.navbar-default .navbar-toggle:focus {
-	    background-color:transparent;
-	}*/
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root
-	{
-		padding:0px;
-	}
-	#topnavbar ul.dynamic > li {
-	    border:none;
-	}
-	#topnavbar ul.dynamic {
-	    border:0px solid #D1D1D1;
-	    background-color:transparent;
-	}
-	#topnavbar ul.root li.static .menu-item:hover {
-		color:#008472;
-	}
-	#topnavbar ul.root ul.dynamic > li.dynamic > .menu-item {
-	    padding: 5px 15px;
-	    font-weight:bold;
-	}
-	#topnavbar ul.root ul.dynamic ul.dynamic li.dynamic > .menu-item {
-	    padding: 0px 30px;
-	    font-weight:normal;
-	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static
-	{
-		border-bottom:1px solid #D1D1D1;
-		line-height:20px;
-		*background-color:#efefef;
-	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > .menu-item
-	{
-		background-color:#efefef;
-	}
-    #topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children {
-        background-image:url('../Images/GlobalNavDown.png');
-        background-repeat:no-repeat;
-        background-position:right;
-    }
-
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root li.dynamic .additional-background
-	{
-		*background-image:url('../Images/GlobalNavChild.png');
-	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.shown > a
-	{
-	    border-bottom: 1px solid #D1D1D1 !important;
-	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root li.shown ul.dynamic
-	{
-		display:block !important;
-	    width: 90% !important;
-	    left: auto !important;
-	    top: auto !important;
-	    padding-right: 5%;
-	    margin-right: 5%;
-	    margin-left:10px;
-	    border-bottom:1px solid #d1d1d1;
-	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > UL.dynamic
-	{
-		background-color:#fff;
-	}
+@media (max-width:1020px) {
 	#topnavbar ul.root li.static > .menu-item,
 	#topnavbar ul.root li.static > .dynamic-children.menu-item {
-	    font-size:1.2em;
-	    font-weight:bold;
-	    padding:10px 30px 5px 15px;
-	    margin:0px;
-		line-height:normal;
-	    height: auto;
+	    font-size:14px;
+	    padding:10px 8px;
 	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.static > ul.dynamic {
-		border:none;
+	#topnavbar a.wta-alert{
+		font-size:14px;
+	}
+	.header .site-title{
+		margin-top:38px;
+		padding:0 15px;
+	}	
+	.header .language.social,
+	.header .searchbox{		
+		float:left !important;		
+		margin:0 15px 10px 15px;
+	}
+	.header .language.social{
+		margin-top:5px;
+	}
+	.header .searchbox {
+	    clear:both;
+	}	
+	.wta-layout .sidebar{
+		width:40%;
+	}
+	.wta-layout .page-content{	
+		width:60%;		
+	}
+	.wta-layout .sidebar{
+		max-width:none;
+	}	
+	.wta-layout .wta-widget{
+		max-width:417px;
+	}		
+}
+@media (max-width:824px) {
+	.wta-layout .sidebar,
+	.wta-layout .page-content {
+		width:100%;
+		float:left;
+		display:block;
+	}
+	.wta-layout .wta-sidebar .ms-webpart-zone .ms-fullWidth {
+		padding: 20px 12.5%;
+	}
+	.wta-layout .wta-widget {
+		max-width: none;
 	}
 }
 @media (max-width:680px) {
+	#DeltaSiteLogo img{
+		height:30px;
+	}
+	.header .site-title{
+		margin-top:18px;
+	}	
+	.header .language.social,
+	.header .searchbox{		
+		float:left !important;		
+		margin:0;
+		box-sizing:border-box;
+		padding:8px 15px;
+	}
+	.header .searchbox{
+		width:55%;
+		padding:8px 15px;
+	}
+	.header .language.social{
+		width:45%;
+		padding:8px 15px 8px 0px;
+		text-align:center;
+	}
+	.header .language.social a{
+		padding-right:8px;
+	}
+	.ms-srch-sb INPUT{
+		height:auto;
+		font-size:14px;
+	}
 	.WTA-main .col1,
 	.WTA-main .col2 {
-		float:none;
+		float:none;	
 	}
 	.WTA-main .col1 {
 		width:100%;
@@ -1481,40 +1655,56 @@ Menu shrinks to dropdown at this point
 		width:100%;
 		margin-right:10px;
 	}
-	#topnavbar {
-		width:auto;
-	}
 	.WTA-landing .col2 .cta-cont > DIV {
 		display:block;
 		margin:0 auto;
+	}	
+}
+@media (max-width:485px) {
+	#DeltaSiteLogo{
+		margin:15px 0 8px 0;		
+	}
+	#DeltaSiteLogo,
+	.header .site-title,
+	.header .language.social,
+	.header .searchbox{
+		width:100%;
+		text-align:center;
+	}
+	.header .site-title{
+		font-size:16px;
+		margin-top:0;
+	}		
+	.wta-layout .sidebar,
+	.wta-layout .page-content {
+		display:block;
+		float:left;
+		width:100%;
+	}
+	.wta-layout .wta-sidebar .ms-webpart-zone .ms-fullWidth {
+		padding: 0;
 	}
 }
+@media (max-width:326px) {
+	.wta-widget.trip-planner #fdate,
+	.wta-widget.trip-planner #ftime{
+	    width:100%;
+	    margin-top:10px;
+	}
+}
+@media (max-width:280px) {
+	#SocialShare img {
+	    width:80%;
+	    height:80%
+	}
+}
+
+
+
+
+
 @media (max-width:530px) {
-    .content-main{
-        padding-left:2px;
-        padding-right:2px;
-    }
-	.ms-srch-sb > input {
-		width:100px;
-	}
-	.header .searchbox {
-		padding-left: 10px;
-	}
-	.navbar-toggle {
-		*display: table-column;
-	}
-	#topnavbar {
-		*margin-top: 90px;
-	}
-    #Spanish{
-        font-size:14px;
-        font-weight:normal;
-    }
-    .drop-shadow{
-        box-shadow:none;
-        border:1px solid #D1D1D1;
-        border-radius:5px;
-    }
+    
     fieldset {
         margin-right:0;
     }

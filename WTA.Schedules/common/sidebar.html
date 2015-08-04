@@ -1,68 +1,72 @@
-﻿<div class="trip-planner container-pad">
-    <h3>Trip Planner</h3>
+﻿<div class="wta-widget trip-planner container-pad">
+    <h2>Trip Planner</h2>
     <div class="">
-        <form id="google-transit-maps" action="http://google.com/transit">
-            <p>
-                <input id="tbStartLocation" name="saddr" title="Enter the Start Address" type="text" placeholder="Start" maxlength="2048">
-                <input id=google-transit-submit type="submit" value="Plan Trip" >
-                <br />
-                <a class="usecurrent" href="javascript:useCurrentStart()">use my current location</a>
-            </p>
-            <p>
-                <input id="tbEndLocation" name="daddr" title="Enter the Destination Address" type="text" placeholder="End" maxlength="2048"> <br />
-                <a class="usecurrent" href="javascript:useCurrentEnd()">use my current location</a>
-            </p>
-            <p id="google-transit-date">
-                <input type="text" id="fdate" size="6" name="date" value="" maxlength="10" title="Enter the Date in MM/DD/YY format" placeholder="Date">
-                <input type="text" id="ftime" size="5" name="time" value="" maxlength="8" title="Enter the Time in HH:MM AM or PM format" placeholder="Time">
-            </p>
-            <p>
-                <input type="radio" name="ttype" value="dep" checked /> Departing
-                <input type="radio" name="ttype" value="arr" /> Arriving
-            </p>
+        <form id="google-transit-maps" action="http://google.com/maps" >
+            <div class="info-fields">
+                <p>
+                    <input id="tbStartLocation" name="saddr" title="Enter the Start Address" type="text" placeholder="Start" maxlength="2048">
+                    <br />
+                    <a class="usecurrent" href="javascript:useCurrentStart()">use my current location</a>
+                </p>
+                <p>
+                    <input id="tbEndLocation" name="daddr" title="Enter the Destination Address" type="text" placeholder="End" maxlength="2048"> <br />
+                    <a class="usecurrent" href="javascript:useCurrentEnd()">use my current location</a>
+                </p>
+                <p id="google-transit-date">
+                    <input type="text" id="fdate" size="6" name="date" value="" maxlength="10" title="Enter the Date in MM/DD/YY format" placeholder="Date">
+                    <input type="text" id="ftime" size="5" name="time" value="" maxlength="8" title="Enter the Time in HH:MM AM or PM format" placeholder="Time">
+                </p>
+                <p>
+                    <input type="radio" name="ttype" value="dep" checked /> Departing
+                    <input type="radio" name="ttype" value="arr" /> Arriving
+                </p>
+            </div>
+            <div class="plan-trip">
+                <button id=google-transit-submit type="submit" value="Plan Trip">Plan<br />Trip</button> </br>
+                <span>Or call 676-RIDE</span>
+            </div>
+
         </form>
     </div>
 </div>
 
-
-
-<div class="route-selector container-pad">
-    <h3>Routes</h3>
+<div class="wta-widget route-selector container-pad">
+    <h2>Routes</h2>
     <div>
         <select id="selRoutes">
             <option class="option" value="selectRoute">Select A Route</option>
-        </select>        
+        </select>
         <input id="findRoute" type="button" value="Find">
     </div>
 </div>
 
-<div class="stop-selector container-pad">
-    <h3>My Stop</h3>
+<div class="wta-widget stop-selector container-pad">
+    <h2>My Stop</h2>
     <div>
         <input id="tbStop" title="Enter the Stop ID" type="text" placeholder="Enter Stop Id, Address or Intersection" maxlength="2048">
         <input id="findStop" type="button" value="Find">
     </div>
 </div>
 
-<div class="system-map container-pad">
-    <h3>System Map</h3>
+<div class="wta-widget system-map container-pad">
+    <h2>System Map</h2>
     <div>
-        <p style="float:left;padding:0 5px 0 0;width:60%;text-align:left;">Find bus information on our interactive map!</p>
-        <a href="#map"><input id="systemMap" type=submit value="Map"></a>
+        <p>Our interactive map displays our routes and stops.</p>
+        <a href="#map"><input id="systemMap" type=submit value="Find"></a>
     </div>
 </div>
 
-<div class="notices container-pad">
-    <h3>Notices</h3>
-    <div class="drop-shadow">
+<div class="wta-widget notices container-pad">
+    <h2>Notices</h2>
+    <div class="">
         <ul id="noticeList"></ul>
     </div>
 </div>
 
-<div class="twitter-feed container-pad">
-    <h3>Tweets</h3>
-    <div id="tweets" class="drop-shadow">
-        <a class="twitter-timeline" href="https://twitter.com/ridewta" data-widget-id="539932276482527232" data-chrome="transparent noheader nofooter" width="600px" height="350px">Tweets by @ridewta</a>
+<div class="wta-widget twitter-feed container-pad">
+    <h2>Tweets</h2>
+    <div id="tweets" class="">
+        <a class="twitter-timeline" href="https://twitter.com/ridewta" data-widget-id="539932276482527232" data-chrome="#ffffff noheader nofooter" width="600px" height="350px">Tweets by @ridewta</a>
         <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
     </div>
 </div>
