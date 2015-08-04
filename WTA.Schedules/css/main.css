@@ -202,7 +202,10 @@ A.ms-signInLink {
     padding-top:10px;
     box-sizing:border-box;
 }
-
+#appPage{
+    padding-left:15px;
+    padding-right:15px;
+}
 ::-webkit-input-placeholder {
    color: #D1D1D1;
 }
@@ -582,6 +585,14 @@ to {transform: rotate(359deg);}
 	background:#005E82 url('../Images/InteriorHeader_4.jpg') no-repeat;
 	height:201px;
 }
+.header .site-title{
+	font-weight:normal;
+	float:left;
+	font-size:24px;
+	color:#ffffff;
+	margin-top:33px;
+	box-sizing:border-box;
+}
 .header .language.social{
 	float:right;	
 	font-size:14px;
@@ -952,16 +963,15 @@ Menu shrinks to dropdown at this point
 	    border:0px solid #D1D1D1;
 	    background-color:transparent;
 	}	
-	#topnavbar ul.root li.static .menu-item:hover {
-		color:#666666;
-	}
-
+    #topnavbar ul.root li.static .menu-item,
 	#topnavbar ul.root li.static .menu-item:hover {
 		color:#666666;
 	}
 	#topnavbar ul.root ul.dynamic > li.dynamic > .menu-item {
 	    padding: 5px 15px;
 	    font-weight:bold;
+        display:inline-block;
+        font-size:13px;
 	}
 	#topnavbar ul.root ul.dynamic ul.dynamic li.dynamic > .menu-item {
 	    padding: 0px 30px;
@@ -978,10 +988,12 @@ Menu shrinks to dropdown at this point
 		background-image:none;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children {
-	    background-image:url("/_catalogs/masterpage/WTA/img/GlobalNavDown.png");
+	    background-image:url("/images/GlobalNavDown.png");
+        background-repeat:no-repeat;
+        background-position-x:right;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
-	    background-image:url("/_catalogs/masterpage/WTA/img/GlobalNavChild.png");
+	    background-image:url("/images/GlobalNavChild.png");
 	}	
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.shown > a{
 	    border-bottom: 1px solid #D1D1D1 !important;
@@ -1077,10 +1089,12 @@ input[type=button]{
     padding:0 0 2px 0;
     line-height:28px;
     min-width:0;
-    width:76px;
+    min-width:76px;
+    padding:0 6px;
     vertical-align:middle;
     -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
 	box-shadow: 3px 3px 10px 0 #8E8E8E; 
+    box-sizing:border-box;
 }
 input[type=submit]:hover,
 input[type=button]:hover,
@@ -1191,6 +1205,9 @@ input[type=button]:hover,
 	background-color:rgba(0, 153, 204, .15);	
 	padding:15px;
     box-sizing:border-box;
+}
+.sidebar:empty{
+    padding:0;
 }
 .sidebar input,
 .sidebar a,
@@ -1494,74 +1511,20 @@ input[type=button]:hover,
 		margin-right:15px;
 	}
 }
-
-@media(max-width:900px){
-    #leftNav{
-        display:none;
-    }
-    #appPage{
-        width:100%;
-        margin:0;
-    }
-    #sidebar{
-        width:100%;
-    }
-}
-@media(max-width:767px) {
-    .banner h2 {
-        margin: 0;
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
-        font-size: 3em;
-    }
-    ul.banner-social-buttons > li {
-        display: block;
-        margin-bottom: 20px;
-        padding: 0;
-    }
-    ul.banner-social-buttons > li:last-child {
-        margin-bottom: 0;
-    }
-}
-
-@media (max-width:960px) {
-	.header {
-		background:url('../Images/LogoBannerMd.jpg') no-repeat;
-		height:200px;
+@media(min-width:1021px){
+	.masthead .ms-siteicon-img,
+	.header .site-title{
+		display:none;
 	}
-	.header .searchbox {
-	    position:relative;
-	    top:100px;
-	}
-	#topnavbar {
-	    top:20px;
-	}
-	#DeltaSiteLogo {
+	.masthead .ms-siteicon-a{
+		height:160px;
 		width:150px;
-		height:150px;
 	}
-	#topnavbar ul.root li.static > .menu-item,
-	#topnavbar ul.root li.static > .dynamic-children.menu-item {
-	    font-size:12px;
-	    padding:9px;
-	}
-	.navbar {
-	    min-height:30px!important;
-	}
+	.header{
+		background-repeat:no-repeat;
+		height:201px;
+	}	
 }
-@media (max-width:895px){
-
-    #routeList {
-        list-style:none;
-        -moz-column-count: 1;
-        -moz-column-gap: 20px;
-        -webkit-column-count: 1;
-        -webkit-column-gap: 20px;
-        column-count: 1;
-        column-gap: 20px;
-        padding-left:0;
-    }
-}
-
 @media (max-width:1020px) {
 	#topnavbar ul.root li.static > .menu-item,
 	#topnavbar ul.root li.static > .dynamic-children.menu-item {
@@ -1571,6 +1534,10 @@ input[type=button]:hover,
 	#topnavbar a.wta-alert{
 		font-size:14px;
 	}
+    .header {
+	    background-image:none;
+        height:auto;
+    }
 	.header .site-title{
 		margin-top:38px;
 		padding:0 15px;
@@ -1586,18 +1553,31 @@ input[type=button]:hover,
 	.header .searchbox {
 	    clear:both;
 	}	
-	.wta-layout .sidebar{
+	#sidebar{
 		width:40%;
 	}
-	.wta-layout .page-content{	
+	#appPage{	
 		width:60%;		
 	}
-	.wta-layout .sidebar{
+	#sidebar{
 		max-width:none;
 	}	
-	.wta-layout .wta-widget{
+	.wta-widget{
 		max-width:417px;
 	}		
+}
+@media (max-width:895px){
+
+    #routeList {
+        list-style:none;
+        -moz-column-count: 1;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 1;
+        -webkit-column-gap: 20px;
+        column-count: 1;
+        column-gap: 20px;
+        padding-left:0;
+    }
 }
 @media (max-width:824px) {
 	.wta-layout .sidebar,

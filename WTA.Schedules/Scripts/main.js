@@ -1869,7 +1869,7 @@ function DropTopNav($, l, a) {
                 p.addClass('shown');
             }
             // Following code attempts to keep mega menu dropdown on screen by positioning left or right depending on width of dropdown.
-            if ($(window).width() > 767) {
+            if ($(window).width() > 840) {
                 var ddRightEdge = u.offset().left + u.width();
                 if (ddRightEdge > ($(window).width() - 20)) {
                     u.attr('style', 'left: -' + (ddRightEdge - ($(window).width() - 20)) + 'px !important;  position:absolute !important;');

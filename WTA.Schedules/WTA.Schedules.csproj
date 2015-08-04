@@ -152,6 +152,7 @@
     <Content Include="favicon-96x96.png" />
     <Content Include="favicon.ico" />
     <Content Include="Images\InteriorHeader_4.jpg" />
+    <Content Include="Images\wta-logo.png" />
     <Content Include="mstile-144x144.png" />
     <Content Include="mstile-150x150.png" />
     <Content Include="mstile-310x150.png" />

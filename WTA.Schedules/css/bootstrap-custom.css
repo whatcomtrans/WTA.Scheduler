@@ -178,12 +178,27 @@ button::-moz-focus-inner {
 
 
 
-
+@media (max-width: 839px) {
+    .navbar-toggle {
+        display: block;
+    }
+	#topnavbar .collapse.navbar-collapse {
+        display: none !important;
+    }
+	#topnavbar .collapse.navbar-collapse.in {
+        display: block !important;
+    }
+}
 
 /*responsive*/
-@media (min-width: 768px) {
+@media (min-width: 840px) {
 	
-	
+	#topnavbar .collapse.navbar-collapse {
+        display: block !important;
+        height: auto !important;
+        padding-bottom: 0px;
+        overflow: visible !important;
+    }
 	/*search box*/
 	.header .searchbox {
 		display: block;
