@@ -451,8 +451,9 @@ fieldset select{
 .hiddenHeader{
     visibility:hidden;
 }
-#datepicker,
-select{
+
+#appPage #datepicker,
+#appPage select{
     min-width:250px;
 }
 .stops #mainSchedule,
@@ -1083,7 +1084,7 @@ input[type=button]{
     border-radius:5px; 
     background-color:#006699;
     color:#ffffff;
-    font-size:16px;
+    font-size:14px;
     font-weight:bold;
     margin-left:10px;
     padding:0 0 2px 0;
@@ -1579,17 +1580,14 @@ input[type=button]:hover,
         padding-left:0;
     }
 }
-@media (max-width:824px) {
-	.wta-layout .sidebar,
-	.wta-layout .page-content {
+@media (max-width:850px) {
+	#sidebar,
+	#appPage {
 		width:100%;
 		float:left;
 		display:block;
 	}
-	.wta-layout .wta-sidebar .ms-webpart-zone .ms-fullWidth {
-		padding: 20px 12.5%;
-	}
-	.wta-layout .wta-widget {
+	.wta-widget {
 		max-width: none;
 	}
 }

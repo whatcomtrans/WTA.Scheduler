@@ -306,7 +306,7 @@ function initializeRouteDetails() {
         $('#routeList').on('change', function () {
             currentRouteNumber = this.value;
             currentRouteID = $(this).children(":selected").attr("id");
-            displaySelectedRoute();
+            displaySelectedRouteAsync();
         });
         $('#routeList').on('click', function () {
             $(this).removeClass('highlight');
@@ -344,7 +344,7 @@ function initializeRouteDetails() {
             $('#stopListEnd').append(endingOptions);
         });
 
-        displaySelectedRoute();
+        displaySelectedRouteAsync();
         scrollContentTop();
     }
     else {
@@ -444,7 +444,7 @@ function flipRoute() {
     } else {
         currentDirectionID = 0;
     }
-    displaySelectedRoute();
+    displaySelectedRouteAsync();
     // Flip trip head signs
     var dir1 = $("#routeDir1").html();
     var dir2 = $("#routeDir2").html();
@@ -465,12 +465,12 @@ function thisDay(day) {
     }
     $("#dayTabs").tabs({ activate: onRouteTabChanged });
     throwTheDate();
-    displaySelectedRoute();
+    displaySelectedRouteAsync();
 }
 function displaySelectedRouteAsync() {
-    //$('#datePicker').after('<div class="spinner"></div>');
-    showLoader();
-    setTimeout(displaySelectedRoute, 1000);
+    $('#datePicker').after('<div class="spinner"></div>');
+    //showLoader();
+    setTimeout(function () { displaySelectedRoute();}, 1000);
 }
 function displaySelectedRoute() {
     $('#noService').empty();
@@ -1872,6 +1872,7 @@ function DropTopNav($, l, a) {
             if ($(window).width() > 840) {
                 var ddRightEdge = u.offset().left + u.width();
                 if (ddRightEdge > ($(window).width() - 20)) {
+                    
                     u.attr('style', 'left: -' + (ddRightEdge - ($(window).width() - 20)) + 'px !important;  position:absolute !important;');
                 }
             }
