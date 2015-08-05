@@ -19,7 +19,6 @@ CACHE:
 /css/jquery-ui.min.css
 /css/main.css
 
-
 /Scripts/app.min.js
 
 /data/data_routes.js
@@ -33,21 +32,18 @@ CACHE:
 /fonts/Open-Sans-regular.woff
 /fonts/Open-Sans-regular.ttf
 
-/Images/EmailIcon.png
-/EmailIconSM.png
-/Images/FacebookIcon.png
-/Images/FacebookIconSM.png
 /Images/GlobalNavChild.png
 /Images/GlobalNavDown.png
-/Images/LogoBanner.jpg
-/Images/LogoBannerMd.jpg
-/Images/TwitterIcon.png
-/Images/TwitterIconSM.png
-http://static.addtoany.com/buttons/share_save_256_24.png
-/images/ui-bg_glass_65_ffffff_1x400.png
-/images/ui-bg_highlight-soft_75_cccccc_1x100.png
-/images/ui-icons_222222_256x240.png
-/images/InteriorHeader_4.jpg
+/Images/InteriorHeader_4.jpg
+/Images/wta-logo.png
+/Images/ui-bg_glass_65_ffffff_1x400.png
+/Images/ui-bg_highlight-soft_75_cccccc_1x100.png
+/Images/ui-icons_222222_256x240.png
+/Images/ui-bg_flat_75_ffffff_40x100.png
+/Images/ui-bg_highlight-soft_75_cccccc_1x100.png
+/Images/ui-bg_glass_75_e6e6e6_1x400.png
+/Images/ui-bg_glass_65_ffffff_1x400.png
+
 
 
 

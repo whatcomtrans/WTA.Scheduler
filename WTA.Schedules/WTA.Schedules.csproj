@@ -124,10 +124,6 @@
     <Content Include="data\data_trips.js" />
     <Content Include="data\notices.js" />
     <Content Include="data\stop_times.min.js" />
-    <Content Include="Images\EmailIcon.png" />
-    <Content Include="Images\EmailIconSM.png" />
-    <Content Include="Images\FacebookIcon.png" />
-    <Content Include="Images\FacebookIconSM.png" />
     <Content Include="Images\GlobalNavChild.png" />
     <Content Include="Images\GlobalNavDown.png" />
     <Content Include="android-chrome-144x144.png" />
@@ -158,8 +154,6 @@
     <Content Include="mstile-310x150.png" />
     <Content Include="mstile-310x310.png" />
     <Content Include="mstile-70x70.png" />
-    <Content Include="Images\LogoBanner.jpg" />
-    <Content Include="Images\LogoBannerMd.jpg" />
     <Content Include="Images\maps\105.png" />
     <Content Include="Images\maps\107.png" />
     <Content Include="Images\maps\108.png" />
@@ -190,8 +184,6 @@
     <Content Include="Images\maps\72X.png" />
     <Content Include="Images\maps\80.png" />
     <Content Include="Images\maps\90.png" />
-    <Content Include="Images\TwitterIcon.png" />
-    <Content Include="Images\TwitterIconSM.png" />
     <Content Include="Images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\ui-bg_glass_55_fbf9ee_1x400.png" />
