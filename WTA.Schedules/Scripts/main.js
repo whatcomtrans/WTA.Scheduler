@@ -1643,8 +1643,8 @@ function codeAddressMap() {
         }
     } else {
         geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
-            center = results[0].geometry.location;
             if (status == google.maps.GeocoderStatus.OK) {
+                center = results[0].geometry.location;
                 if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
                     //we are within the bounds, go ahead and display
                     map.setCenter(results[0].geometry.location);
