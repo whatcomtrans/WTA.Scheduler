@@ -1258,18 +1258,23 @@ function displaySelectedStop() {
 
         geocode.geocode({ 'latLng': LatLng  }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
+                var city, zip;
 
-                var city;
-                var zip;
-                for (i=0;i<results[1].address_components.length;i++) {
-                    if (results[1].address_components[i].types[0] == "locality") {
-                        city = results[1].address_components[i].long_name;
-                    }
-                    if (results[1].address_components[i].types[0] == "postal_code") {
-                        zip = results[1].address_components[i].long_name;
+                for (h=0;h<results.length;h++) {
+                    for (i=0;i<results[0].address_components.length;i++) {
+                        for (j=0;j<results[0].address_components[i].types.length;j++) {
+                            if (results[0].address_components[i].types[j] == "locality") {
+                                city = results[0].address_components[i].long_name;
+                            }
+                            if (results[0].address_components[i].types[j] == "postal_code") {
+                                zip = results[0].address_components[i].long_name;
+                            }
+                        }
                     }
                 }
+                
                 $('#cityZip').text(city + ', ' + zip);
+                //$('#cityZip').text(results[0].formatted_address);
             }
         });
 
@@ -1638,8 +1643,8 @@ function codeAddressMap() {
         }
     } else {
         geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
-            center = results[0].geometry.location;
             if (status == google.maps.GeocoderStatus.OK) {
+                center = results[0].geometry.location;
                 if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
                     //we are within the bounds, go ahead and display
                     map.setCenter(results[0].geometry.location);

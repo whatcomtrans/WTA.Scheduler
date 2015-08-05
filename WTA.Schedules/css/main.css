@@ -425,6 +425,7 @@ fieldset select{
 #stopNames td div {
     height:100%;
     display:block;
+    line-height: normal;
 }
 #stopNames td span{
     display:block;

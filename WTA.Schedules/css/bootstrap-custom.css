@@ -142,6 +142,7 @@ button::-moz-focus-inner {
 }
 #topnavbar li.shown > ul.dynamic {
 	display: block !important;
+	z-index:1;
 }
 #topnavbar ul.dynamic > li {
 	background: transparent none;
