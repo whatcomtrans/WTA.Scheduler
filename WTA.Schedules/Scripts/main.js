@@ -1258,19 +1258,21 @@ function displaySelectedStop() {
 
         geocode.geocode({ 'latLng': LatLng  }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                var city;
-                var zip;
-                console.log(results);
-                for (i=0;i<results[0].address_components.length;i++) {
-                    for (j=0;j<results[0].address_components[i].types.length;j++) {
-                        if (results[0].address_components[i].types[j] == "locality") {
-                            city = results[0].address_components[i].long_name;
-                        }
-                        if (results[0].address_components[i].types[j] == "postal_code") {
-                            zip = results[0].address_components[i].long_name;
+                var city, zip;
+
+                for (h=0;h<results.length;h++) {
+                    for (i=0;i<results[0].address_components.length;i++) {
+                        for (j=0;j<results[0].address_components[i].types.length;j++) {
+                            if (results[0].address_components[i].types[j] == "locality") {
+                                city = results[0].address_components[i].long_name;
+                            }
+                            if (results[0].address_components[i].types[j] == "postal_code") {
+                                zip = results[0].address_components[i].long_name;
+                            }
                         }
                     }
                 }
+                
                 $('#cityZip').text(city + ', ' + zip);
                 //$('#cityZip').text(results[0].formatted_address);
             }
