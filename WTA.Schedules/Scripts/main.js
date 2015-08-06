@@ -587,9 +587,9 @@ function displaySelectedRoute() {
                 return new Date('1970/01/01 ' + a.departure_time) - new Date('1970/01/01 ' + b.departure_time);
             });
             var j = 0;
-           
+
             for (k = 0; k < uniqueStopNamesInRoute.length; k++) {  
-                var columnId = parseInt($('#stopNames td:nth-child(' + (k + 1) + ')').attr('id')); // This line is failing on iPad: Mike 3-24              
+                var columnId = parseInt($('#stopNames td:eq(' + (k) + ')').attr('id')); // This line is failing on iPad: Mike 3-24        
                 if (stopTimesInTrip[j] == undefined) {
                     $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
                 } else if (stopTimesInTrip[j].stop_id == parseInt($('#stopNames td:nth-child(' + (k) + ')').attr('id'))) {
