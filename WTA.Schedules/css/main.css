@@ -64,7 +64,7 @@ a,
 a:focus,
 a:link {
 	color:#0099cc;
-	text-decoration:none;	
+	text-decoration:none;
 }
 a:visited {
 	color:#0099cc;
@@ -114,7 +114,7 @@ hr {
 	height:0px;
 	color:#FFFFFF;
 	background-color:transparent;
-	margin:0px;	
+	margin:0px;
 }
 
 td,th {
@@ -597,7 +597,7 @@ to {transform: rotate(359deg);}
 	box-sizing:border-box;
 }
 .header .language.social{
-	float:right;	
+	float:right;
 	font-size:14px;
 	margin-top:32px;
 	vertical-align:bottom;
@@ -681,7 +681,7 @@ to {transform: rotate(359deg);}
 	*display:table-cell;
 }
 #SearchBox .ms-srch-sb > input.ms-helperText{
-	color:#b8b8b8;	
+	color:#b8b8b8;
 }
 #SearchBox .ms-srch-sb-border,
 #SearchBox .ms-srch-sb-borderFocused{
@@ -697,7 +697,7 @@ to {transform: rotate(359deg);}
 	height:auto;
 	display:table-cell;
 	text-align:center;
-	padding:3px 3px 0 2px;	
+	padding:3px 3px 0 2px;
 }
 #SearchBox .ms-srch-sb-searchLink,
 #SearchBox .ms-srch-sb-searchLink:hover{
@@ -725,7 +725,7 @@ to {transform: rotate(359deg);}
   -ms-transform: scale(-1, 1);
   -o-transform: scale(-1, 1);
   transform: scale(-1, 1);
-    
+
 }
 /* Alter icon on hover */
 #SearchBox .ms-srch-sb-searchLink:hover:before,
@@ -768,7 +768,7 @@ to {transform: rotate(359deg);}
 	margin-left: 0px;
 	border-radius:0px;
 	border:none;
-	min-height:33px!important;		
+	min-height:33px!important;
 }
 .navbar-default {
 	background-color:#4d4d4d;
@@ -778,7 +778,7 @@ to {transform: rotate(359deg);}
 	.navbar-collapse {
 		padding:0;
 	}
-	.container > .navbar-header, 
+	.container > .navbar-header,
 	.container > .navbar-collapse {
 	    margin-right:0px;
 	    padding:0px;
@@ -786,7 +786,7 @@ to {transform: rotate(359deg);}
 	#topnavbar .collapse.navbar-collapse {
 		margin-top:0px;
 	}
-	#topnavbar .ms-core-listMenu-horizontalBox ul, 
+	#topnavbar .ms-core-listMenu-horizontalBox ul,
 	#topnavbar .ms-core-listMenu-horizontalBox li  {
 	    margin:0px;
 	    padding:0px;
@@ -795,16 +795,16 @@ to {transform: rotate(359deg);}
 	#topnavbar .nav ul.static {
 	    float: right;
 	}
-	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a, 
+	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > a,
 	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span,
 	#topnavbar .ms-core-listMenu-horizontalBox.nav li.static > span.dynamic-children  {
-	    padding:0px;			
+	    padding:0px;
 	}
 	#topnavbar ul.root li.static > .menu-item,
 	#topnavbar ul.root li.static > .menu-item.dynamic-children {
 		font-family:"Open Sans", sans-serif;
-		font-size:17px;	
-		color:#ffffff;	
+		font-size:17px;
+		color:#ffffff;
 		background-color:transparent;
 	    padding:10px;
 		width:auto;
@@ -823,8 +823,8 @@ to {transform: rotate(359deg);}
 		color:#ffffff;
 		font-weight:bold;
 	}
-	/*************************************** Root Level End ***************************************/		
-	/*************************************** First/Second Level Drop Down Start ***************************************/	
+	/*************************************** Root Level End ***************************************/
+	/*************************************** First/Second Level Drop Down Start ***************************************/
 	.ms-core-listMenu-horizontalBox LI.ms-navedit-editArea,
 	.ms-navedit-editSpan,
 	.ms-navedit-editArea,
@@ -832,11 +832,11 @@ to {transform: rotate(359deg);}
 	.ms-navedit-editLinksText {
 		display:none; /* Hide Nav Editing */
 	}
-	
-	/* Start Mega Menu Code */	
+
+	/* Start Mega Menu Code */
 	#topnavbar ul.dynamic > li {
 	    min-width:inherit;
-	}	
+	}
 	#topnavbar .nav ul.static > li.dynamic-children > ul.dynamic {
 	    top:auto!important;
 	}
@@ -859,7 +859,7 @@ to {transform: rotate(359deg);}
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL {
 	    display:block !important;
-	    width:auto;                        
+	    width:auto;
 	    left:0px !important;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic > LI > UL > LI {
@@ -880,7 +880,7 @@ to {transform: rotate(359deg);}
 	#topnavbar .ms-core-listMenu-horizontalBox UL.dynamic LI {
 	    border:1px solid transparent;
 	}
-	
+
 	#topnavbar li.dynamic > .menu-item {
 	    height: auto;
 	    line-height:normal;
@@ -889,8 +889,8 @@ to {transform: rotate(359deg);}
 	#topnavbar .nav .ms-core-listMenu-horizontalBox ul.root ul.dynamic > li a {
 	    padding: 5px;
 	}
-	
-	
+
+
 	/* End Mega Menu Code */
 	#topnavbar li.hover ul.dynamic {
 		padding-top:0px;
@@ -907,8 +907,8 @@ to {transform: rotate(359deg);}
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root ul.dynamic > LI A {
 		font-family:"Open Sans", sans-serif;
-		font-size:13px;	
-		color:#666666;	
+		font-size:13px;
+		color:#666666;
 		background-color:transparent;
 	    padding:10px;
 	}
@@ -929,11 +929,11 @@ Menu shrinks to dropdown at this point
     }
     .ms-dialog #ms-designer-ribbon {
         display:block !important;
-    }	
+    }
 	.nav .ms-core-listMenu-horizontalBox UL.root {
 		background-color:#FFFFFF;
 		padding:5px;
-		border:0px solid #E0E0E0;		
+		border:0px solid #E0E0E0;
 	}
 	.nav .ms-core-listMenu-horizontalBox{
 		width:100% !important;
@@ -950,7 +950,7 @@ Menu shrinks to dropdown at this point
 	.navbar-default .navbar-toggle:focus,
 	.navbar-default .navbar-toggle:active{
 		background-color:transparent;
-	}	
+	}
 	.navbar-collapse {
 		padding-left:0px;
 		padding-right:0px;
@@ -960,12 +960,12 @@ Menu shrinks to dropdown at this point
 		padding:0px;
 	}
 	#topnavbar ul.dynamic > li {
-	    border:none;	    
+	    border:none;
 	}
 	#topnavbar ul.dynamic {
 	    border:0px solid #D1D1D1;
 	    background-color:transparent;
-	}	
+	}
     #topnavbar ul.root li.static .menu-item,
 	#topnavbar ul.root li.static .menu-item:hover {
 		color:#666666;
@@ -997,7 +997,7 @@ Menu shrinks to dropdown at this point
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
 	    background-image:url("/Images/GlobalNavChild.png");
-	}	
+	}
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.shown > a{
 	    border-bottom: 1px solid #D1D1D1 !important;
 	}
@@ -1007,13 +1007,13 @@ Menu shrinks to dropdown at this point
 	    left: auto !important;
 	    top: auto !important;
 	    padding-right: 5%;
-	    margin-right: 5%;		
+	    margin-right: 5%;
 	    margin-left:10px;
 	    border-bottom:1px solid #d1d1d1;
-	}	
+	}
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > LI.static > UL.dynamic{
 		background-color:#fff;
-	}	 
+	}
 	#topnavbar ul.root li.static > .menu-item,
 	#topnavbar ul.root li.static > .dynamic-children.menu-item {
 	    font-size:1.2em;
@@ -1021,11 +1021,11 @@ Menu shrinks to dropdown at this point
 	    padding:10px 15px;;
 	    margin:0px;
 		line-height:normal;
-	    height: auto;	    
+	    height: auto;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.static > ul.dynamic {
 		border:none;
-	}	
+	}
 }
 
 
@@ -1046,7 +1046,7 @@ Menu shrinks to dropdown at this point
     line-height:1.5em;
     text-align:right;
 }
-.left-nav{    
+.left-nav{
     font-size:14px;
 }
 .left-nav li{
@@ -1077,13 +1077,13 @@ input[type=text],
 select{
     border:1px solid #8E8E8E;
     border-radius:6px;
-    height:28px;    
+    height:28px;
     padding-left:5px;
 }
 input[type=submit],
 input[type=button]{
     border:none;
-    border-radius:5px; 
+    border-radius:5px;
     background-color:#006699;
     color:#ffffff;
     font-size:14px;
@@ -1096,7 +1096,7 @@ input[type=button]{
     padding:0 6px;
     vertical-align:middle;
     -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
-	box-shadow: 3px 3px 10px 0 #8E8E8E; 
+	box-shadow: 3px 3px 10px 0 #8E8E8E;
     box-sizing:border-box;
 }
 input[type=submit]:hover,
@@ -1139,7 +1139,7 @@ input[type=button]:hover,
 .wta-widget.trip-planner #tbEndLocation,
 .wta-widget.trip-planner .info-fields{
 	width:100%;
-}	
+}
 
 .wta-widget.trip-planner #fdate{
 	padding-right:10px;
@@ -1153,7 +1153,7 @@ input[type=button]:hover,
 .wta-widget.trip-planner .plan-trip{
 	display:table-cell;
 	vertical-align:top;
-	
+
 }
 .wta-widget.trip-planner .plan-trip span{
 	display:none;
@@ -1164,12 +1164,12 @@ input[type=button]:hover,
 	color:#666666;
 }
 .wta-widget.trip-planner .radios{
-	color:#006699;	
+	color:#006699;
 	text-align:center;
 	margin-left:-10px;
 }
 .wta-widget.trip-planner .radios .arriving{
-	margin-left:10px;	
+	margin-left:10px;
 }
 .wta-widget.trip-planner #google-transit-submit{
 	height:75px;
@@ -1182,7 +1182,7 @@ input[type=button]:hover,
 	margin:10px;
 	background-color:#006699;
 	color:#ffffff;
-	font-weight:bold;	
+	font-weight:bold;
 	font-size:16px;
     -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
 	box-shadow: 3px 3px 10px 0 #8E8E8E
@@ -1196,7 +1196,7 @@ input[type=button]:hover,
 	.wta-widget.trip-planner #tbStartLocation,
 	.wta-widget.trip-planner #tbEndLocation{
 		width:100%;
-	}	
+	}
 }
 
 /* WTA Widgets (end) */
@@ -1205,7 +1205,7 @@ input[type=button]:hover,
 
 /* Sidebar (begin) */
 .sidebar{
-	background-color:rgba(0, 153, 204, .15);	
+	background-color:rgba(0, 153, 204, .15);
 	padding:15px;
     box-sizing:border-box;
 }
@@ -1217,11 +1217,11 @@ input[type=button]:hover,
 .sidebar .ms-rtestate-field{
 	font-size:14px;
 }
-.container-pad{	
+.container-pad{
     padding:8px;
 }
 .sidebar  h4{
-    color:#0f457a;   
+    color:#0f457a;
     margin-top:8px;
 }
 /* Sidebar (end) */
@@ -1233,7 +1233,7 @@ input[type=button]:hover,
 	background-color:#F2F2F2;
 	color:#666666;
 	font-size:13px;
-	
+
 }
 #footer .container-fluid{
 	margin:0 auto;
@@ -1242,7 +1242,7 @@ input[type=button]:hover,
 #footer .col-md-12 {
 	min-height:50px;
 	vertical-align:middle;
-	display:table;	
+	display:table;
 	width:100%;
 	text-align:left;
 	margin-top:20px;
@@ -1260,6 +1260,12 @@ input[type=button]:hover,
 /* Footer info bar (begin) */
 #footer .social-info-bar{
 	background-color:#4d4d4d;
+	padding:20px 0;
+	text-align:center;
+	box-sizing:border-box;
+}
+#footer .social-info-bar-white{
+	background-color:#ffffff;
 	padding:20px 0;
 	text-align:center;
 	box-sizing:border-box;
@@ -1297,9 +1303,48 @@ input[type=button]:hover,
 	margin-bottom:3px;
 	text-transform:none;
 	font-size:18px;
-	letter-spacing:1px;	
+	letter-spacing:1px;
 }
 .wta-tiles .tile .info p{
+	font-size:10px;
+	margin-bottom:0;
+}
+#footer .wta-tiles-grey .tile{
+	box-sizing:border-box;
+	font-size:1em;
+	text-align:left;
+	margin:0;
+	padding:0;
+	color:#4d4d4d;
+	display:inline-block;
+	vertical-align:top;
+	width:19%;
+}
+.wta-tiles-grey .tile .icon{
+	font-size:45px;
+	line-height:normal;
+}
+.wta-tiles-grey .tile:hover .icon{
+	color:#0099cc;
+}
+.wta-tiles-grey .tile .icon,
+.wta-tiles-grey .tile .info{
+	display:table-cell;
+	vertical-align:top;
+}
+.wta-tiles-grey .tile .info{
+	padding-left:15px;
+	text-align:left;
+}
+.wta-tiles-grey .tile .info h5{
+	color:#0099cc;
+	margin-top:0;
+	margin-bottom:3px;
+	text-transform:none;
+	font-size:18px;
+	letter-spacing:1px;
+}
+.wta-tiles-grey .tile .info p{
 	font-size:10px;
 	margin-bottom:0;
 }
@@ -1312,7 +1357,7 @@ input[type=button]:hover,
 	}
 	#footer .wta-tiles .tile .icon{
 		display:block;
-	}	
+	}
 	#footer .wta-tiles .tile{
 		text-align:center;
 	}
@@ -1347,20 +1392,20 @@ input[type=button]:hover,
 .footer-nav UL.root > LI > SPAN {
 	display:none;
 }
-.footer-nav UL.root {    
+.footer-nav UL.root {
     -webkit-columns:6; /* Chrome, Safari, Opera */
     -webkit-column-width:auto;
     -webkit-column-gap:0px;
 }
 .footer-nav UL.root > UL{
-	margin-bottom:10px;   
+	margin-bottom:10px;
 }
 .footer-nav UL.root UL,
 .footer-nav UL.root LI{
 	display:block;
 	padding:0;
-	break-inside:avoid;        
-	page-break-inside:avoid;               
+	break-inside:avoid;
+	page-break-inside:avoid;
 }
 .footer-nav UL.root > LI{
 	max-width:220px;
@@ -1376,7 +1421,7 @@ input[type=button]:hover,
 }
 .footer-nav.ms-core-listMenu-horizontalBox ul {
 	display:inline-flex;
-	margin-right:30px;	
+	margin-right:30px;
 	/*max-width:220px;*/
 }
 /*************************************** Footer site map (end) ***********************************/
@@ -1384,8 +1429,8 @@ input[type=button]:hover,
 /* Footer Responsive Start */
 @media (max-width:1520px) {
 	.footer-nav.ms-core-listMenu-horizontalBox ul {
-		margin-right:20px;	
-	}	
+		margin-right:20px;
+	}
 }
 @media (max-width:1420px) {
 	.footer-nav.ms-core-listMenu-horizontalBox ul {
@@ -1400,31 +1445,31 @@ input[type=button]:hover,
 	.footer-nav UL.root > LI{
 		max-width:none;
 	}
-	
-	.footer-nav UL.root {    
+
+	.footer-nav UL.root {
 	    -webkit-columns:4; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
 	    -webkit-column-gap:0px;
-	    
+
 	    -moz-columns:4; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
-	                
+
 	    columns:4;
 	    column-width:auto;
 	    column-gap:0px;
-	}	
+	}
 }
 @media (max-width:1000px) {
-	.footer-nav UL.root {          
+	.footer-nav UL.root {
  	    -webkit-columns:3; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
 	    -webkit-column-gap:0px;
-  	
+
 	   	-moz-columns:3; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
- 
+
 	    columns:3;
 	    column-width:auto;
 	    column-gap:0px;
@@ -1432,14 +1477,14 @@ input[type=button]:hover,
 	#footer .footer-site-map {
 		padding-left:15px;
 		padding-right:15px;
-	}	
+	}
 }
 @media (max-width:580px) {
-	.footer-nav UL.root {          
+	.footer-nav UL.root {
    	    -webkit-columns:2; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
-	    -webkit-column-gap:0px; 
-   	    
+	    -webkit-column-gap:0px;
+
    	    -moz-columns:2; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
@@ -1450,11 +1495,11 @@ input[type=button]:hover,
 	}
 }
 @media (max-width:400px) {
-	.footer-nav UL.root {          
+	.footer-nav UL.root {
    	    -webkit-columns:1; /* Chrome, Safari, Opera */
 	    -webkit-column-width:auto;
-	    -webkit-column-gap:0px; 
-   	    
+	    -webkit-column-gap:0px;
+
    	    -moz-columns:1; /* Firefox */
 	    -moz-column-width:auto;
 	    -moz-column-gap:0px;
@@ -1481,7 +1526,7 @@ input[type=button]:hover,
 @media (min-width:1251px){
     #leftNav{
         width:200px;
-        min-width:200px;        
+        min-width:200px;
     }
     #appPage{
         width:calc(70% - 200px);
@@ -1492,15 +1537,15 @@ input[type=button]:hover,
 }
 @media (max-width:1250px){
 	#leftNav{
-		display:none;	
+		display:none;
 	}
     #appPage{
         width:70%;
     }
     #sidebar{
         width:30%;
-    }	
-	#footer > .container{	
+    }
+	#footer > .container{
 		width:auto;
 	}
 	.header .site-title{
@@ -1526,7 +1571,7 @@ input[type=button]:hover,
 	.header{
 		background-repeat:no-repeat;
 		height:201px;
-	}	
+	}
 }
 @media (max-width:1020px) {
 	#topnavbar ul.root li.static > .menu-item,
@@ -1544,10 +1589,10 @@ input[type=button]:hover,
 	.header .site-title{
 		margin-top:38px;
 		padding:0 15px;
-	}	
+	}
 	.header .language.social,
-	.header .searchbox{		
-		float:left !important;		
+	.header .searchbox{
+		float:left !important;
 		margin:0 15px 10px 15px;
 	}
 	.header .language.social{
@@ -1555,19 +1600,19 @@ input[type=button]:hover,
 	}
 	.header .searchbox {
 	    clear:both;
-	}	
+	}
 	#sidebar{
 		width:40%;
 	}
-	#appPage{	
-		width:60%;		
+	#appPage{
+		width:60%;
 	}
 	#sidebar{
 		max-width:none;
-	}	
+	}
 	.wta-widget{
 		max-width:417px;
-	}		
+	}
 }
 @media (max-width:895px){
 
@@ -1599,10 +1644,10 @@ input[type=button]:hover,
 	}
 	.header .site-title{
 		margin-top:18px;
-	}	
+	}
 	.header .language.social,
-	.header .searchbox{		
-		float:left !important;		
+	.header .searchbox{
+		float:left !important;
 		margin:0;
 		box-sizing:border-box;
 		padding:8px 15px;
@@ -1625,7 +1670,7 @@ input[type=button]:hover,
 	}
 	.WTA-main .col1,
 	.WTA-main .col2 {
-		float:none;	
+		float:none;
 	}
 	.WTA-main .col1 {
 		width:100%;
@@ -1638,11 +1683,11 @@ input[type=button]:hover,
 	.WTA-landing .col2 .cta-cont > DIV {
 		display:block;
 		margin:0 auto;
-	}	
+	}
 }
 @media (max-width:485px) {
 	#DeltaSiteLogo{
-		margin:15px 0 8px 0;		
+		margin:15px 0 8px 0;
 	}
 	#DeltaSiteLogo,
 	.header .site-title,
@@ -1654,7 +1699,7 @@ input[type=button]:hover,
 	.header .site-title{
 		font-size:16px;
 		margin-top:0;
-	}		
+	}
 	.wta-layout .sidebar,
 	.wta-layout .page-content {
 		display:block;
@@ -1684,7 +1729,7 @@ input[type=button]:hover,
 
 
 @media (max-width:530px) {
-    
+
     fieldset {
         margin-right:0;
     }
