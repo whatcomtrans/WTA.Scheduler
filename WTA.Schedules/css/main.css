@@ -457,8 +457,7 @@ fieldset select{
 #appPage select{
     min-width:250px;
 }
-.stops #mainSchedule,
-.map #map-canvas{
+.stops #mainSchedule{
     margin-top:10px;
 }
 .stops #datePicker{
@@ -501,6 +500,7 @@ fieldset select{
     padding-top:35px;
     height:0;
     overflow:hidden;
+    top:10px;
 }
 
 /*Testing for pulsing search box border*/
@@ -1587,6 +1587,7 @@ input[type=button]:hover,
 		width:100%;
 		float:left;
 		display:block;
+        margin-top: 30px;
 	}
 	.wta-widget {
 		max-width: none;
