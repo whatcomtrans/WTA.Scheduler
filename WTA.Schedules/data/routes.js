@@ -1,7 +1,7 @@
 var routes = [
 {"route_id":1365,"agency_id":14,"route_short_name":3,"route_long_name":"Maplewood &harr; Hospital","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},
 {"route_id":1367,"agency_id":14,"route_short_name":4,"route_long_name":"Hospital &harr; Maplewood","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},
-{"route_id":1351,"agency_id":14,"route_short_name":14,"route_long_name":"Cordata/WCC &harr; Downtown","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},
+{"route_id":1351,"agency_id":14,"route_short_name":14,"route_long_name":"Fairhaven &harr; Downtown","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},
 {"route_id":1353,"agency_id":14,"route_short_name":"14S","route_long_name":"Shuttle","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},
 {"route_id":1354,"agency_id":14,"route_short_name":15,"route_long_name":"Downtown &harr; Cordata/WCC","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},
 {"route_id":1361,"agency_id":14,"route_short_name":24,"route_long_name":"Tremont &harr; Cordata/WCC","route_desc":"","route_type":3,"route_url":"","route_color":"","route_text_color":""},

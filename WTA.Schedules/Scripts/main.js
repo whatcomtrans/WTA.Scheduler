@@ -435,6 +435,7 @@ function swapMapSize() {
 function findRouteClick() {
     var selRoute = $("#selRoutes").val();
     if (selRoute != 'selectRoute') {
+        //hash change here
         loadRouteDetails(selRoute);
     }
 }
@@ -1191,6 +1192,8 @@ function directSearch() {
     if (searchTerm.length > 0) {
         if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
             if (validateStopId(searchTerm)) {
+                //hash change here
+                //window.location.href = "#stops?stopId=" + searchTerm;
                 displaySelectedStop();
             }
             else {
