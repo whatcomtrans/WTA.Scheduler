@@ -234,7 +234,7 @@ function initializeRoutes() {
     for (i = 0; i < routeList.length; i ++) {
         //ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].trip_headsign + '<i class=\"fa fa-arrows-h\"></i>' + routeList[i + 1].trip_headsign + "</a></li>");
         //ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].route_long_name + "</a></li>");
-        ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='schedules.html#route-details?routeId=" + routeList[i].route_id + "'>" + routeList[i].route_long_name + "</a></li>");
+        ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='#route-details?routeId=" + routeList[i].route_id + "'>" + routeList[i].route_long_name + "</a></li>");
     }
 }
 
