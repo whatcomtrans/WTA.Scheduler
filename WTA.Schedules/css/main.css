@@ -990,12 +990,12 @@ Menu shrinks to dropdown at this point
 		background-image:none;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox .additional-background.dynamic-children {
-	    background-image:url("/images/GlobalNavDown.png");
+	    background-image:url("/Images/GlobalNavDown.png");
         background-repeat:no-repeat;
         background-position-x:right;
 	}
 	#topnavbar .ms-core-listMenu-horizontalBox .dynamic .additional-background.dynamic-children {
-	    background-image:url("/images/GlobalNavChild.png");
+	    background-image:url("/Images/GlobalNavChild.png");
 	}	
 	#topnavbar .ms-core-listMenu-horizontalBox ul.root > li.shown > a{
 	    border-bottom: 1px solid #D1D1D1 !important;
