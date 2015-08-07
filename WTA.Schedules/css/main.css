@@ -1264,7 +1264,6 @@ input[type=button]:hover,
 	box-sizing:border-box;
 }
 #footer .social-info-bar-white{
-	background-color:#ffffff;
 	padding:20px 0;
 	text-align:center;
 	box-sizing:border-box;
@@ -1332,6 +1331,7 @@ input[type=button]:hover,
 	vertical-align:top;
 }
 .wta-tiles-grey .tile .info{
+    padding-top:12px;
 	padding-left:15px;
 	text-align:left;
 }
