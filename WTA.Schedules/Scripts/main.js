@@ -1340,8 +1340,9 @@ function servingRoutes() {
     }
     var servingToday = [];
     var servingStops = $.grep(stop_times, function (a) {
-        return a.stop_id == stopIdVariable;
+        return (a.stop_id == stopIdVariable && a.pickup_type != 1);
     });
+    console.log(servingStops);
     finalStops = [];
     for (i = 0; i < servingStops.length; i++) {
         var gimmeThat = $.grep(trips, function (a) {
