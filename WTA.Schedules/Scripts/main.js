@@ -303,10 +303,12 @@ function initializeRouteDetails() {
             $('#routeList option[id="' + currentRouteID + '"]').attr('selected', 'selected');
         }
         //Change the header of the page based on the selected route from the drop down
+        //hash change here
         $('#routeList').on('change', function () {
             currentRouteNumber = this.value;
             currentRouteID = $(this).children(":selected").attr("id");
-            displaySelectedRouteAsync();
+            window.location.href = "#route-details?routeId=" + currentRouteID;
+            //displaySelectedRouteAsync();
         });
         $('#routeList').on('click', function () {
             $(this).removeClass('highlight');
@@ -436,7 +438,8 @@ function findRouteClick() {
     var selRoute = $("#selRoutes").val();
     if (selRoute != 'selectRoute') {
         //hash change here
-        loadRouteDetails(selRoute);
+        window.location.href = "#route-details?routeId=" + selRoute;
+        // loadRouteDetails(selRoute);
     }
 }
 function flipRoute() {
@@ -1123,17 +1126,17 @@ function initializeStops() {
         $('#searchStops').addClass('pulse');
         setTimeout(function () { $('#searchStops').removeClass('pulse') }, 6500);
     }
-    if (currentStopID != null) {
-
-        displaySelectedStop();
-        scrollContentTop();
-        panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
-        cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
-        panorama.setPov({
-            heading: cameraHeading,
-            pitch: 5
-        });
-    }
+    // if (currentStopID != null) {
+    //     setSVPano(LatLng);
+    // }
+}
+function setSVPano(LatLng) {
+    panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
+    cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
+    panorama.setPov({
+        heading: cameraHeading,
+        pitch: 5
+    });
 }
 function onStopDatepickerChanged(e) {
     currentDate = e.target.value;
@@ -1193,8 +1196,8 @@ function directSearch() {
         if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
             if (validateStopId(searchTerm)) {
                 //hash change here
-                //window.location.href = "#stops?stopId=" + searchTerm;
-                displaySelectedStop();
+                window.location.href = "#stops?stopId=" + searchTerm;
+                //displaySelectedStop();
             }
             else {
                 window.location.href = "#map?search=" + searchTerm;
