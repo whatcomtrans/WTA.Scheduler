@@ -171,7 +171,7 @@ function initializeHeader() {
     });
 }
 function initializeSidebar() {
-    getLocation();
+    //getLocation();
     $("#fdate").datepicker({ dateFormat: "mm/dd/y" }).datepicker("setDate", new Date());
     // Route dropdown
     if (!routeList) {
@@ -1697,13 +1697,26 @@ function saveLocation(position) {
 function useCurrentStart() {
     if (currentLocation) {
         $("#tbStartLocation").val(currentLocation);
-    }    
+    }
+    else if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            currentLocation = position.coords.latitude + ' ' + position.coords.longitude;
+            $("#tbStartLocation").val(currentLocation);
+        });
+    }
 }
 function useCurrentEnd() {
     if (currentLocation) {
         $("#tbEndLocation").val(currentLocation);
     }
+    else if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            currentLocation = position.coords.latitude + ' ' + position.coords.longitude;
+            $("#tbEndLocation").val(currentLocation);
+        });
+    }
 }
+
 function showError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
