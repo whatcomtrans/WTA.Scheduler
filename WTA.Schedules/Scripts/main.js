@@ -11,7 +11,7 @@ var scrollToTop = false;
 var searchURL = "http://test.ridewta.com/search/pages/results.aspx?k=";
 var markers = [];
 
-$(document).ready(function () {    
+$(document).ready(function () {
     window.onpopstate = onPopState;
     $(window).on('hashchange', function () {
         loadPageContent();
@@ -19,8 +19,14 @@ $(document).ready(function () {
     loadMain();
 });
 
-
-
+function lookupRouteID(routeNum) {
+  if (!routeList) { routeList = getRoutes(); }
+  var route = $.grep(routeList, function (a) {
+      return a.route_short_name == routeNum;
+  });
+  if (route) { return route[0].route_id; }
+  else { return null}
+}
 
 function getQueryParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -28,6 +34,7 @@ function getQueryParameterByName(name) {
         results = regex.exec(location.hash);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
 function loadQueryParams() {
     //RouteId
     var routeId = getQueryParameterByName("routeId");
@@ -38,6 +45,17 @@ function loadQueryParams() {
     else {
         currentRouteID = null;
     }
+    //routeNum
+    var routeNum = getQueryParameterByName("routeNum");
+    if (routeNum) {
+      var foundRouteId = lookupRouteID(routeNum;
+      if (foundRouteId) {
+        validateRouteId(foundRouteId);
+      }
+    } else {
+      routeNum = null;
+    }
+
     //StopId
     var stopId = getQueryParameterByName("stopId");
     if (stopId && (stopId == parseInt(stopId))) {
@@ -56,6 +74,7 @@ function loadQueryParams() {
         stopQuery = null;
     }
 }
+
 function loadMain() {
     hideLoading();
     loadQueryParams();
@@ -66,6 +85,19 @@ function loadMain() {
 
     loadPageContent();
 }
+
+function loadTripData(callback) {
+  if (typeof trips != 'undefined') {
+    callback;
+  } else {
+    var oScript = document.createElement("script");
+    oScript.type = "text\/javascript";
+    oScript.onload = callback;
+    (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
+    oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
+  }
+}
+
 function loadPageContent() {
     // Clear Google map stuff. This isn't 100% working yet
     try{
@@ -80,13 +112,13 @@ function loadPageContent() {
     var hash = window.location.hash.split("?")[0].replace("#","");
     switch (hash) {
         case "route-details":
-            loadRouteDetails(currentRouteID); 
+            loadTripData(function () {loadRouteDetails(currentRouteID);});
             break;
         case "map":
-            loadMap();
+            loadTripData(loadMap);
             break;
         case "stops":
-            loadStops(currentStopID);
+            loadTripData(function () {loadStops(currentStopID);});
             break;
         case "routes":
         default:
@@ -102,7 +134,7 @@ function setLeftnav(item) {
 }
 // ----------- History -------------------
 function setHistory(appPage) {
-    
+
     //var params = "";
     //switch (appPage) {
     //    case "routes":
@@ -132,7 +164,7 @@ function setHistory(appPage) {
 }
 function onPopState(event) {
     //console.log("popState: " + event.state)
-    //if (event.state) {        
+    //if (event.state) {
     //    switch (event.state.page) {
     //        case "routes":
     //            loadRoutes();
@@ -176,7 +208,7 @@ function initializeSidebar() {
     // Route dropdown
     if (!routeList) {
         routeList = getRoutes();
-    }  
+    }
     var selRoutes = $("#selRoutes");
     for (i = 0; i < routeList.length; i ++) {
         selRoutes.append("<option value='" + routeList[i].route_id + "'>" + routeList[i].route_short_name + "</option>");
@@ -189,7 +221,7 @@ function initializeSidebar() {
             $('#findStop').trigger('click');
         }
     });
-    
+
 
     // Notices
     var noticeList = $("#noticeList");
@@ -329,7 +361,7 @@ function initializeRouteDetails() {
             clearInterval(pagerTimeout);
             return false;
         });
-        
+
         $('#datepicker').on('change', onRouteDatepickerChanged);
 
         $('#stopListStart').on('change', function () {
@@ -362,7 +394,7 @@ function onRouteTabChanged(event, ui) {
     var day = ui.newTab[0].textContent;
     thisDay(day);
 }
- 
+
 var sync = function(){
     $tableHeaderClone.scrollLeft(this.scrollLeft);
 }
@@ -387,7 +419,7 @@ function setStickyHeader() {
             $tableHeaderClone.width($tableContainer.width() );
         }
     });
-        
+
     $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
     $(window).scroll(function () {
         if ($tableHeader) {
@@ -419,7 +451,7 @@ function swapMapSize() {
         rMap.removeClass("normal");
         $("i", rMap).removeClass("fa-search-plus");
         $("i", rMap).addClass("fa-search-minus");
-        rMap.addClass("full");        
+        rMap.addClass("full");
         //$(".map-image a").html("Shrink >>");
     } else {
         var offset = rMap.offset();
@@ -457,7 +489,7 @@ function flipRoute() {
 }
 function thisDay(day) {
     $("#dayTabs").tabs({ activate: null });
-    if (day == 'Weekday' || day == 'Monday' || day == 'Tuesday' || day == 'Wednesday' || day == 'Thursday' || day == 'Friday') {        
+    if (day == 'Weekday' || day == 'Monday' || day == 'Tuesday' || day == 'Wednesday' || day == 'Thursday' || day == 'Friday') {
         currentServiceID = 1;
         $("#dayTabs").tabs("option", "active", 0);
     } else if (day == 'Saturday') {
@@ -485,7 +517,7 @@ function displaySelectedRoute() {
 
         // populate heading
         var route = getRoute(currentRouteID);
-        if (route) {            
+        if (route) {
             $("#routeNumber").html("Route " + route.route_short_name);
             var directions = route.route_long_name.split("&harr;");
             routeDir0 = directions[0];
@@ -499,7 +531,7 @@ function displaySelectedRoute() {
                 $("#routeDir2").html(routeDir0);
             }
             // Set map image if we have one.
-            
+
             var imgMap = document.createElement('img');
             imgMap.onload = function () {
                 $("#routeMap img").remove();
@@ -579,7 +611,7 @@ function displaySelectedRoute() {
             //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></div</td>');
             //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' <span>(' + uniqueStopNamesInRoute[i].stop_code + ')</span></a></div</td>');
             $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + '</span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
-        } 
+        }
         for (i = 0; i < tripsInRoute.length; i++) {
             $('#busTable').append('<tr class="tripTimes" id="trip' + tripsInRoute[i].trip_id + '"></tr>');
             var tripId = document.getElementById('trip' + tripsInRoute[i].trip_id);
@@ -591,8 +623,8 @@ function displaySelectedRoute() {
             });
             var j = 0;
 
-            for (k = 0; k < uniqueStopNamesInRoute.length; k++) {  
-                var columnId = parseInt($('#stopNames td:eq(' + (k) + ')').attr('id')); // This line is failing on iPad: Mike 3-24        
+            for (k = 0; k < uniqueStopNamesInRoute.length; k++) {
+                var columnId = parseInt($('#stopNames td:eq(' + (k) + ')').attr('id')); // This line is failing on iPad: Mike 3-24
                 if (stopTimesInTrip[j] == undefined) {
                     $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
                 } else if (stopTimesInTrip[j].stop_id == parseInt($('#stopNames td:nth-child(' + (k) + ')').attr('id'))) {
@@ -741,7 +773,7 @@ function displaySelectedRoute() {
             //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
             $('#stopNames').append('<td><div class="continuesOnAs">Continues On As</div></td>');
         }
-        
+
     } catch (e) { alert(e.message);}
     finally {
         $('.spinner').remove();
@@ -882,7 +914,7 @@ function convertToMilitary(cells) {
             //AM values between 1 and 9 don't change except for adding a leading 0 and removing the ' am'
             var time = $(this)[0].innerHTML.slice(0,4);
             $(this)[0].innerHTML = '0'+time;
-        } else if (($(this)[0].innerHTML.substr(-2) == 'am') && ($(this)[0].innerHTML.length == 8) && ($(this)[0].innerHTML.slice(0,2) == '12')) { 
+        } else if (($(this)[0].innerHTML.substr(-2) == 'am') && ($(this)[0].innerHTML.length == 8) && ($(this)[0].innerHTML.slice(0,2) == '12')) {
             //12AM values, needs '00:'+minutes
             var minutes = $(this)[0].innerHTML.slice(3,5);
             $(this)[0].innerHTML = '00:'+minutes;
@@ -907,7 +939,7 @@ function convertToMilitary(cells) {
 }
 function convertToStandard(cells) {
     //Step2- for each of them, check if they begin with a 0--if so, remove the 0 and append am to the end
-    
+
     $.each(cells, function() {
         if (($(this)[0].innerHTML) == '--') {
         //do nothing
@@ -998,7 +1030,7 @@ function throwTheDate() {
     //var d = new Date(prevYear, prevMonth, next).toLocaleDateString('en-US', dateConfig);
     var d = new Date(prevYear, prevMonth, next);
     $('#datepicker').attr('value', d);
-    $(function () {        
+    $(function () {
         $('#datepicker').datepicker('setDate', d);
         $('#datepicker').datepicker("option", "dateFormat", "DD, MM d, yy" );
     });
@@ -1021,26 +1053,26 @@ function pageRight() {
 
 
 // -------- Stops ----------
-function loadStops(stopId) {    
+function loadStops(stopId) {
     currentStopID = stopId;
     $("#appPage").load("/common/stops.html", function () { initializeStops(); });
     setLeftnav("#lnavStops");
 }
 function initializeStops() {
     //setHistory("stops");
-    //Get the Lat/Lng of the StopId 
-    var LatLng; 
-    var panoLatLng; 
-    var cameraHeading; 
-    if (currentStopID == null) { 
-        LatLng = new google.maps.LatLng(48.750267, -122.476362); 
-        cameraHeading = 105; 
-    } else { 
-        var currentStopLatLng = $.grep(stops, function(a) { 
-            return a.stop_code == currentStopID; 
-        }); 
-        LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon); 
-   } 
+    //Get the Lat/Lng of the StopId
+    var LatLng;
+    var panoLatLng;
+    var cameraHeading;
+    if (currentStopID == null) {
+        LatLng = new google.maps.LatLng(48.750267, -122.476362);
+        cameraHeading = 105;
+    } else {
+        var currentStopLatLng = $.grep(stops, function(a) {
+            return a.stop_code == currentStopID;
+        });
+        LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon);
+   }
     geocode = new google.maps.Geocoder();
     var BTS = new google.maps.LatLng(48.750267, -122.476362);
     var mapOptions = {
@@ -1091,7 +1123,7 @@ function initializeStops() {
         currentServiceID = 3;
     }
     $("#dayTabs").tabs({ activate: onStopTabChanged });
-    
+
 
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {
@@ -1161,7 +1193,7 @@ function initStreetView(stopPosition, panoramaLatLng){
     };
     var streetView = new google.maps.StreetViewPanorama(document.getElementById('map-canvas'),panoramaOptions);
     var heading = google.maps.geometry.spherical.computeHeading(panoramaLatLng, stopPosition);
-    map.setStreetView(streetView);      
+    map.setStreetView(streetView);
     streetView.setPov({heading:heading, pitch:0});
     streetView.setZoom(0);
 }
@@ -1246,9 +1278,9 @@ function displaySelectedStop() {
         stopNameVariable = stop.stop_name;
 
         //Add the city/zip info below the stop name
-        var currentStopLatLng = $.grep(stops, function(a) { 
-            return a.stop_code == currentStopID; 
-        }); 
+        var currentStopLatLng = $.grep(stops, function(a) {
+            return a.stop_code == currentStopID;
+        });
         var LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon);
 
         geocode.geocode({ 'latLng': LatLng  }, function(results, status) {
@@ -1267,7 +1299,7 @@ function displaySelectedStop() {
                         }
                     }
                 }
-                
+
                 $('#cityZip').text(city + ', ' + zip);
                 //$('#cityZip').text(results[0].formatted_address);
             }
@@ -1385,14 +1417,14 @@ function servingRoutes() {
         }
         $('#stopTable').append('<tr id="' + finalTimeRoute[0].route_id + '"><td>' + currentTime + '</td><td>' + finalTimeRoute[0].route_short_name + ' ' + currentTimeRoute[0].trip_headsign + '</td></tr>');
     }
-    //convert the times to standard format here 
+    //convert the times to standard format here
     var cells = $('#stopTable tr td:nth-child(1)');
     convertToStandard(cells);
 
     selectedStopId = $('#selectedStopId')[0].innerHTML;
     //set the pano
     //move the map and pano
-    
+
 }
 function servingRoutesMap() {
     var servingStops = $.grep(stop_times, function (a) {
@@ -1468,9 +1500,9 @@ function onFindStopClick(e){
         }
         else {
             window.location.href = "#map?search=" + searchTerm;
-        } 
+        }
     }
-    
+
 }
 
 
@@ -1551,7 +1583,7 @@ function finishInit() {
     google.maps.event.addListenerOnce(map, 'idle', function(){
     // do something only the first time the map is loaded
     //@mapCopyright - gets the google copyright tags
-        var mapCopyright=document.getElementById('map-canvas').getElementsByTagName("a");   
+        var mapCopyright=document.getElementById('map-canvas').getElementsByTagName("a");
         $(mapCopyright).click(function(){
             return false;
         });
@@ -1735,7 +1767,7 @@ function getRoutes() {
     //    .Where("$.service_id == 1")
     //    .Distinct("$.route_id + $.trip_headsign + $.direction_id")
     //    .OrderBy("$.route_short_name")
-    //    .ToArray();    
+    //    .ToArray();
 
     var myRoutes = routes;
 
@@ -1795,7 +1827,7 @@ function validateRouteId(routeId) {
     var route = getRoute(routeId);
     if (route) {
         currentRouteID = route.route_id;
-        //currentRouteNumber = route.route_short_name;        
+        //currentRouteNumber = route.route_short_name;
         return true;
     } else {
         currentRouteID = null;
@@ -1885,11 +1917,10 @@ function DropTopNav($, l, a) {
             if ($(window).width() > 840) {
                 var ddRightEdge = u.offset().left + u.width();
                 if (ddRightEdge > ($(window).width() - 20)) {
-                    
+
                     u.attr('style', 'left: -' + (ddRightEdge - ($(window).width() - 20)) + 'px !important;  position:absolute !important;');
                 }
             }
         }
     }
 }
-
