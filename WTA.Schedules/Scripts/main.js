@@ -1126,17 +1126,6 @@ function initializeStops() {
         $('#searchStops').addClass('pulse');
         setTimeout(function () { $('#searchStops').removeClass('pulse') }, 6500);
     }
-    // if (currentStopID != null) {
-    //     setSVPano(LatLng);
-    // }
-}
-function setSVPano(LatLng) {
-    panoLatLng = new google.maps.LatLng(map.streetView.position.k, map.streetView.position.D);
-    cameraHeading = google.maps.geometry.spherical.computeHeading(LatLng,panoLatLng);
-    panorama.setPov({
-        heading: cameraHeading,
-        pitch: 5
-    });
 }
 function onStopDatepickerChanged(e) {
     currentDate = e.target.value;
