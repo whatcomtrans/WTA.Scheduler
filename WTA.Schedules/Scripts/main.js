@@ -48,7 +48,7 @@ function loadQueryParams() {
     //routeNum
     var routeNum = getQueryParameterByName("routeNum");
     if (routeNum) {
-      var foundRouteId = lookupRouteID(routeNum;
+      var foundRouteId = lookupRouteID(routeNum);
       if (foundRouteId) {
         validateRouteId(foundRouteId);
       }
@@ -82,7 +82,7 @@ function loadMain() {
     $("#sidebar").load("/common/sidebar.html", function () { initializeSidebar(); });
     $("#footer").load("/common/footer.html");
     $("#leftNav").load("/common/left-nav.html");
-
+    window.setTimeout(loadTripData, 500)
     loadPageContent();
 }
 
