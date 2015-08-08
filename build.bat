@@ -5,7 +5,7 @@ Echo Minifying and combining Javascript application files
 cd WTA.Schedules
 cd Scripts
 uglifyjs jquery-ui.min.js linq.min.js main.js bootstrap.min.js -o app.min.js
-
+/*  Moved to a seperate site.
 Echo Minifying and combining data set 1
 cd ..
 cd data
@@ -13,7 +13,7 @@ uglifyjs routes.js calendar.js calendar_dates.js stops.js -o data_routes.js
 Echo Minifying and combining data set 1
 uglifyjs trips.js stop_times.min.js -o data_trips.js
 cd ..
-
+*/
 Echo Minifying and combining CSS
 cd css
 uglifycss bootstrap.min.css bootstrap-custom.css font-awesome.min.css jquery-ui.min.css main.css > combined.css
