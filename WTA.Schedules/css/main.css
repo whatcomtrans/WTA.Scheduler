@@ -629,6 +629,14 @@ to {transform: rotate(359deg);}
 	padding-left:0px;
 	padding-right:0px;
 }
+.linkToHome {
+    position:relative;
+    top:0;
+    left:0;
+    height:100%;
+    width:17%;
+    float:left;
+}
 
 
 /*************************************** Search Start ***************************************/
