@@ -87,15 +87,15 @@ function loadMain() {
 }
 
 function loadTripData(callback) {
-  if (typeof trips != 'undefined') {
-    callback;
-  } else {
-    var oScript = document.createElement("script");
-    oScript.type = "text\/javascript";
-    oScript.onload = callback;
-    (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
-    oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
-  }
+    if (typeof trips != 'undefined') {
+        callback;
+    } else {
+        var oScript = document.createElement("script");
+        oScript.type = "text\/javascript";
+        oScript.onload = callback;
+        (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
+        oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
+    }
 }
 
 function loadPageContent() {
@@ -112,13 +112,13 @@ function loadPageContent() {
     var hash = window.location.hash.split("?")[0].replace("#","");
     switch (hash) {
         case "route-details":
-            loadTripData(function () {loadRouteDetails(currentRouteID);});
+            loadTripData(loadRouteDetails(currentRouteID));
             break;
         case "map":
-            loadTripData(loadMap);
+            loadTripData(loadMap());
             break;
         case "stops":
-            loadTripData(function () {loadStops(currentStopID);});
+            loadTripData(loadStops(currentStopID));
             break;
         case "routes":
         default:
@@ -1342,7 +1342,6 @@ function servingRoutes() {
     var servingStops = $.grep(stop_times, function (a) {
         return (a.stop_id == stopIdVariable && a.pickup_type != 1);
     });
-    console.log(servingStops);
     finalStops = [];
     for (i = 0; i < servingStops.length; i++) {
         var gimmeThat = $.grep(trips, function (a) {
