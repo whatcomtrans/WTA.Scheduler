@@ -509,7 +509,7 @@ function displaySelectedRouteAsync() {
     setTimeout(function () { displaySelectedRoute();}, 1000);
 }
 function displaySelectedRoute() {
-    if (trips) {
+    if (typeof trips != "undefined") {
         $('#noService').empty();
         try{
             $('#busTable').empty();
