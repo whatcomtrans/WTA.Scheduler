@@ -1098,6 +1098,9 @@ input[type=button]{
 	box-shadow: 3px 3px 10px 0 #8E8E8E;
     box-sizing:border-box;
 }
+.wta-widget {
+    clear:both;
+}
 input[type=submit]:hover,
 input[type=button]:hover,
 .wta-widget.trip-planner #google-transit-submit:hover {
@@ -1716,6 +1719,11 @@ input[type=button]:hover,
 	.wta-layout .wta-sidebar .ms-webpart-zone .ms-fullWidth {
 		padding: 0;
 	}
+}
+@media (max-width:339px) {
+    #appPage #datePicker, #appPage select {
+        min-width:0;
+    }
 }
 @media (max-width:326px) {
 	.wta-widget.trip-planner #fdate,
