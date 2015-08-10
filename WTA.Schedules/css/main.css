@@ -1638,6 +1638,11 @@ input[type=button]:hover,
 		max-width: none;
 	}
 }
+@media (max-width:850px) and (orientation:landscape) {
+    #map-canvas {
+        max-height:80%;
+    }   
+}
 @media (max-width:680px) {
 	#DeltaSiteLogo img{
 		height:30px;
