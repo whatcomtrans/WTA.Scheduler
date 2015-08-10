@@ -1641,6 +1641,8 @@ input[type=button]:hover,
 @media (max-width:850px) and (orientation:landscape) {
     #map-canvas {
         max-height:80%;
+        max-width:90%;
+        margin:0 5%;
     }   
 }
 @media (max-width:680px) {
