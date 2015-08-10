@@ -509,274 +509,278 @@ function displaySelectedRouteAsync() {
     setTimeout(function () { displaySelectedRoute();}, 1000);
 }
 function displaySelectedRoute() {
-    $('#noService').empty();
-    try{
-        $('#busTable').empty();
-        $('.routeNumber').empty();
-        $('#datePicker').after('<div class="spinner"></div>');
+    if (trips) {
+        $('#noService').empty();
+        try{
+            $('#busTable').empty();
+            $('.routeNumber').empty();
+            $('#datePicker').after('<div class="spinner"></div>');
 
-        // populate heading
-        var route = getRoute(currentRouteID);
-        if (route) {
-            $("#routeNumber").html("Route " + route.route_short_name);
-            var directions = route.route_long_name.split("&harr;");
-            routeDir0 = directions[0];
-            routeDir1 = directions[1];
-            if (currentDirectionID == 0) {
-                $("#routeDir1").html(routeDir0);
-                $("#routeDir2").html(routeDir1);
-            }
-            else {
-                $("#routeDir1").html(routeDir1);
-                $("#routeDir2").html(routeDir0);
-            }
-            // Set map image if we have one.
+            // populate heading
+            var route = getRoute(currentRouteID);
+            if (route) {
+                $("#routeNumber").html("Route " + route.route_short_name);
+                var directions = route.route_long_name.split("&harr;");
+                routeDir0 = directions[0];
+                routeDir1 = directions[1];
+                if (currentDirectionID == 0) {
+                    $("#routeDir1").html(routeDir0);
+                    $("#routeDir2").html(routeDir1);
+                }
+                else {
+                    $("#routeDir1").html(routeDir1);
+                    $("#routeDir2").html(routeDir0);
+                }
+                // Set map image if we have one.
 
-            var imgMap = document.createElement('img');
-            imgMap.onload = function () {
-                $("#routeMap img").remove();
-                $("#routeMap").prepend(imgMap);
+                var imgMap = document.createElement('img');
+                imgMap.onload = function () {
+                    $("#routeMap img").remove();
+                    $("#routeMap").prepend(imgMap);
+                }
+                imgMap.onerror = function () {
+                    $("#routeMap").hide();
+                }
+                imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
             }
-            imgMap.onerror = function () {
-                $("#routeMap").hide();
-            }
-            imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
-        }
 
-        var tripsInRoute = [];
-        var specialService = $.grep(calendar_dates, function (a) {
-            return a.date == specialServiceDate;
-        });
-        var isHoliday = $.grep(specialService, function (a) {
-            return a.exception_type == 2;//magic number based on data for now
-        });
-        if (isHoliday.length > 0) {
-        } else if (specialService.length > 0) {
-            var specialServiceDate_id = specialService[0].service_id;
-            if (specialServiceDate == specialService[0].date) {
+            var tripsInRoute = [];
+            var specialService = $.grep(calendar_dates, function (a) {
+                return a.date == specialServiceDate;
+            });
+            var isHoliday = $.grep(specialService, function (a) {
+                return a.exception_type == 2;//magic number based on data for now
+            });
+            if (isHoliday.length > 0) {
+            } else if (specialService.length > 0) {
+                var specialServiceDate_id = specialService[0].service_id;
+                if (specialServiceDate == specialService[0].date) {
+                    for (i = 0; i < trips.length; i++) {
+                        if (trips[i].route_id == currentRouteID && trips[i].direction_id == currentDirectionID && (trips[i].service_id == currentServiceID || trips[i].service_id == specialServiceDate_id)) {
+                            tripsInRoute.push(trips[i]);
+                        }
+                    }
+                }
+            } else {
                 for (i = 0; i < trips.length; i++) {
-                    if (trips[i].route_id == currentRouteID && trips[i].direction_id == currentDirectionID && (trips[i].service_id == currentServiceID || trips[i].service_id == specialServiceDate_id)) {
+                    if (trips[i].route_id == currentRouteID && trips[i].direction_id == currentDirectionID && trips[i].service_id == currentServiceID) {
                         tripsInRoute.push(trips[i]);
                     }
                 }
             }
-        } else {
-            for (i = 0; i < trips.length; i++) {
-                if (trips[i].route_id == currentRouteID && trips[i].direction_id == currentDirectionID && trips[i].service_id == currentServiceID) {
-                    tripsInRoute.push(trips[i]);
-                }
+            if (tripsInRoute == 0) {
+                trip_headsign = -1;
+            } else {
+                trip_headsign = tripsInRoute[0].trip_headsign; //currently using the first trip's trip_headsign for the entire route
             }
-        }
-        if (tripsInRoute == 0) {
-            trip_headsign = -1;
-        } else {
-            trip_headsign = tripsInRoute[0].trip_headsign; //currently using the first trip's trip_headsign for the entire route
-        }
-        var stopTimesInRoute = [];
-        for (i = 0; i < tripsInRoute.length; i++) {
-            tripStopArray = $.grep(stop_times, function (d) {
-                return d.trip_id == tripsInRoute[i].trip_id;
-            });
-            for (j = 0; j < tripStopArray.length; j++) {
-                stopTimesInRoute.push(tripStopArray[j]);
-            }
-        }
-        var flags = {};
-        var uniqueStopTimesInRoute = stopTimesInRoute.filter(function (entry) {
-            if (flags[entry.stop_id]) {
-                return false;
-            }
-            flags[entry.stop_id] = true;
-            return true;
-        });
-        uniqueStopTimesInRoute.sort(function compare(a, b) {
-            if (a.stop_sequence < b.stop_sequence)
-                return -1;
-            if (a.stop_sequence > b.stop_sequence)
-                return 1;
-            return 0;
-        });
-        var uniqueStopNamesInRoute = [];
-        for (i = 0; i < uniqueStopTimesInRoute.length; i++) {
-            var grepArray = $.grep(stops, function (a) {
-                return a.stop_id == uniqueStopTimesInRoute[i].stop_id;
-            });
-            for (j = 0; j < grepArray.length; j++) {
-                uniqueStopNamesInRoute.push(grepArray[j]);
-            }
-        }
-        $('#busTable').append('<tr id="stopNames"></tr>');
-        for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
-           // $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '">' + uniqueStopNamesInRoute[i].stop_name + '</td>');
-            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></div</td>');
-            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' <span>(' + uniqueStopNamesInRoute[i].stop_code + ')</span></a></div</td>');
-            $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + '</span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
-        }
-        for (i = 0; i < tripsInRoute.length; i++) {
-            $('#busTable').append('<tr class="tripTimes" id="trip' + tripsInRoute[i].trip_id + '"></tr>');
-            var tripId = document.getElementById('trip' + tripsInRoute[i].trip_id);
-            var stopTimesInTrip = $.grep(stopTimesInRoute, function (a) {
-                return a.trip_id == tripsInRoute[i].trip_id;
-            });
-            stopTimesInTrip.sort(function (a, b) {
-                return new Date('1970/01/01 ' + a.departure_time) - new Date('1970/01/01 ' + b.departure_time);
-            });
-            var j = 0;
-
-            for (k = 0; k < uniqueStopNamesInRoute.length; k++) {
-                var columnId = parseInt($('#stopNames td:eq(' + (k) + ')').attr('id')); // This line is failing on iPad: Mike 3-24
-                if (stopTimesInTrip[j] == undefined) {
-                    $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
-                } else if (stopTimesInTrip[j].stop_id == parseInt($('#stopNames td:nth-child(' + (k) + ')').attr('id'))) {
-                    j++;
-                    k--;
-                } else if (columnId != stopTimesInTrip[j].stop_id) {
-                    $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
-                } else {
-                    if (stopTimesInTrip[j].departure_time.length == 7) {
-                        $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">0' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
-                    } else {
-                        $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
-                    }
-                    j++;
-                }
-            }
-        }
-        for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
-            var colArray = $('#busTable td:nth-child(' + (i + 1) + ')').map(function () {
-                return $(this).text();
-            }).get();
-            var counter = 0;
-            for (j = 1; j < colArray.length; j++) {
-                if (colArray[j] == '--') {
-                    counter++;
-                }
-            }
-            if (counter == (colArray.length - 1)) {
-                $('#busTable tr').find('td:eq(' + i + ')').addClass('markedForDeletion');
-            }
-        }
-        $('.markedForDeletion').remove();
-        var tableRows = $('#busTable tr');
-        for (i = 1; i < tableRows.length; i++) {
-            var howMany = $(tableRows[i]).children().length;
-            var rowArray = [];
-            for (j = 0; j < howMany; j++) {
-                rowArray.push($('#busTable tr:eq(' + i + ') td:eq(' + j + ')').text());
-            }
-            rowArray = rowArray.filter(function (n) { return n != '--' });
-            rowArray.sort();
-            $('#busTable tr:eq(' + i + ')').attr('value', rowArray[0]);
-        }
-        var $table = $('#busTable');
-        var rows = $('.tripTimes');
-        rows.sort(function (a, b) {
-            var keyA = $(a).attr('value');
-            var keyB = $(b).attr('value');
-            if (keyA > keyB) return 1;
-            if (keyA < keyB) return -1;
-            return 0;
-        });
-        $.each(rows, function (index, row) {
-            $table.children('tbody').append(row);
-        });
-        customizeStopListStart();
-        var processContinuing = function () {
-            $('.tripTimes').each(function (x) {
-                var currentRow = $(this);
-                var originTrip = $.grep(tripsInRoute, function (a) {
-                    return currentRow.attr('id') == 'trip' + a.trip_id;
-                })[0];
-                var continuingTrips = $.grep(trips, function (a) {
-                    return originTrip.block_id == a.block_id && (a.service_id == currentServiceID || a.service_id == specialServiceDate_id);
+            var stopTimesInRoute = [];
+            for (i = 0; i < tripsInRoute.length; i++) {
+                tripStopArray = $.grep(stop_times, function (d) {
+                    return d.trip_id == tripsInRoute[i].trip_id;
                 });
-                var firstStopTimes = [];
-                for (i = 0; i < continuingTrips.length; i++) {
-                    var firstStopTime = $.grep(stop_times, function (a) {
-                        return continuingTrips[i].trip_id == a.trip_id;
+                for (j = 0; j < tripStopArray.length; j++) {
+                    stopTimesInRoute.push(tripStopArray[j]);
+                }
+            }
+            var flags = {};
+            var uniqueStopTimesInRoute = stopTimesInRoute.filter(function (entry) {
+                if (flags[entry.stop_id]) {
+                    return false;
+                }
+                flags[entry.stop_id] = true;
+                return true;
+            });
+            uniqueStopTimesInRoute.sort(function compare(a, b) {
+                if (a.stop_sequence < b.stop_sequence)
+                    return -1;
+                if (a.stop_sequence > b.stop_sequence)
+                    return 1;
+                return 0;
+            });
+            var uniqueStopNamesInRoute = [];
+            for (i = 0; i < uniqueStopTimesInRoute.length; i++) {
+                var grepArray = $.grep(stops, function (a) {
+                    return a.stop_id == uniqueStopTimesInRoute[i].stop_id;
+                });
+                for (j = 0; j < grepArray.length; j++) {
+                    uniqueStopNamesInRoute.push(grepArray[j]);
+                }
+            }
+            $('#busTable').append('<tr id="stopNames"></tr>');
+            for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
+               // $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '">' + uniqueStopNamesInRoute[i].stop_name + '</td>');
+                //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></div</td>');
+                //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' <span>(' + uniqueStopNamesInRoute[i].stop_code + ')</span></a></div</td>');
+                $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + '</span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
+            }
+            for (i = 0; i < tripsInRoute.length; i++) {
+                $('#busTable').append('<tr class="tripTimes" id="trip' + tripsInRoute[i].trip_id + '"></tr>');
+                var tripId = document.getElementById('trip' + tripsInRoute[i].trip_id);
+                var stopTimesInTrip = $.grep(stopTimesInRoute, function (a) {
+                    return a.trip_id == tripsInRoute[i].trip_id;
+                });
+                stopTimesInTrip.sort(function (a, b) {
+                    return new Date('1970/01/01 ' + a.departure_time) - new Date('1970/01/01 ' + b.departure_time);
+                });
+                var j = 0;
+
+                for (k = 0; k < uniqueStopNamesInRoute.length; k++) {
+                    var columnId = parseInt($('#stopNames td:eq(' + (k) + ')').attr('id')); // This line is failing on iPad: Mike 3-24
+                    if (stopTimesInTrip[j] == undefined) {
+                        $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
+                    } else if (stopTimesInTrip[j].stop_id == parseInt($('#stopNames td:nth-child(' + (k) + ')').attr('id'))) {
+                        j++;
+                        k--;
+                    } else if (columnId != stopTimesInTrip[j].stop_id) {
+                        $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
+                    } else {
+                        if (stopTimesInTrip[j].departure_time.length == 7) {
+                            $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">0' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
+                        } else {
+                            $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
+                        }
+                        j++;
+                    }
+                }
+            }
+            for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
+                var colArray = $('#busTable td:nth-child(' + (i + 1) + ')').map(function () {
+                    return $(this).text();
+                }).get();
+                var counter = 0;
+                for (j = 1; j < colArray.length; j++) {
+                    if (colArray[j] == '--') {
+                        counter++;
+                    }
+                }
+                if (counter == (colArray.length - 1)) {
+                    $('#busTable tr').find('td:eq(' + i + ')').addClass('markedForDeletion');
+                }
+            }
+            $('.markedForDeletion').remove();
+            var tableRows = $('#busTable tr');
+            for (i = 1; i < tableRows.length; i++) {
+                var howMany = $(tableRows[i]).children().length;
+                var rowArray = [];
+                for (j = 0; j < howMany; j++) {
+                    rowArray.push($('#busTable tr:eq(' + i + ') td:eq(' + j + ')').text());
+                }
+                rowArray = rowArray.filter(function (n) { return n != '--' });
+                rowArray.sort();
+                $('#busTable tr:eq(' + i + ')').attr('value', rowArray[0]);
+            }
+            var $table = $('#busTable');
+            var rows = $('.tripTimes');
+            rows.sort(function (a, b) {
+                var keyA = $(a).attr('value');
+                var keyB = $(b).attr('value');
+                if (keyA > keyB) return 1;
+                if (keyA < keyB) return -1;
+                return 0;
+            });
+            $.each(rows, function (index, row) {
+                $table.children('tbody').append(row);
+            });
+            customizeStopListStart();
+            var processContinuing = function () {
+                $('.tripTimes').each(function (x) {
+                    var currentRow = $(this);
+                    var originTrip = $.grep(tripsInRoute, function (a) {
+                        return currentRow.attr('id') == 'trip' + a.trip_id;
+                    })[0];
+                    var continuingTrips = $.grep(trips, function (a) {
+                        return originTrip.block_id == a.block_id && (a.service_id == currentServiceID || a.service_id == specialServiceDate_id);
                     });
-                    firstStopTime.sort(function (a, b) {
-                        if (a.stop_sequence < b.stop_sequence) {
+                    var firstStopTimes = [];
+                    for (i = 0; i < continuingTrips.length; i++) {
+                        var firstStopTime = $.grep(stop_times, function (a) {
+                            return continuingTrips[i].trip_id == a.trip_id;
+                        });
+                        firstStopTime.sort(function (a, b) {
+                            if (a.stop_sequence < b.stop_sequence) {
+                                return -1;
+                            } else {
+                                return 1;
+                            }
+                        });
+                        firstStopTimes.push(firstStopTime[0]);
+                    }
+                    firstStopTimes.sort(function (a, b) {
+                        var A = new Date('1970/01/01 ' + a.departure_time);
+                        var B = new Date('1970/01/01 ' + b.departure_time);
+                        if (A < B) {
                             return -1;
                         } else {
                             return 1;
                         }
                     });
-                    firstStopTimes.push(firstStopTime[0]);
-                }
-                firstStopTimes.sort(function (a, b) {
-                    var A = new Date('1970/01/01 ' + a.departure_time);
-                    var B = new Date('1970/01/01 ' + b.departure_time);
-                    if (A < B) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
-                stopTimesInRoute.sort(function (a, b) {
-                    var A = new Date('1970/01/01 ' + a.departure_time);
-                    var B = new Date('1970/01/01 ' + b.departure_time);
-                    if (A < B) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
-                var originFirst = $.grep(stopTimesInRoute, function (a) {
-                    return originTrip.trip_id == a.trip_id;
-                })[0].departure_time;
-                var continuesOnAs;
-                for (i = 0; i < firstStopTimes.length; i++) {
-                    if (firstStopTimes[i].hasOwnProperty("departure_time") && firstStopTimes[i].departure_time == originFirst) {
-                        if (firstStopTimes[i + 1] == undefined) {
-                            continuesOnAs = 'Out of Service';
+                    stopTimesInRoute.sort(function (a, b) {
+                        var A = new Date('1970/01/01 ' + a.departure_time);
+                        var B = new Date('1970/01/01 ' + b.departure_time);
+                        if (A < B) {
+                            return -1;
                         } else {
-                            var continuingTripId = firstStopTimes[i + 1].trip_id;
+                            return 1;
+                        }
+                    });
+                    var originFirst = $.grep(stopTimesInRoute, function (a) {
+                        return originTrip.trip_id == a.trip_id;
+                    })[0].departure_time;
+                    var continuesOnAs;
+                    for (i = 0; i < firstStopTimes.length; i++) {
+                        if (firstStopTimes[i].hasOwnProperty("departure_time") && firstStopTimes[i].departure_time == originFirst) {
+                            if (firstStopTimes[i + 1] == undefined) {
+                                continuesOnAs = 'Out of Service';
+                            } else {
+                                var continuingTripId = firstStopTimes[i + 1].trip_id;
+                            }
                         }
                     }
-                }
-                if (continuesOnAs == 'Out of Service') {
-                    $(this).append('<td class="outOfService">Out of Service</td>');
-                } else {
-                    continuesOnAs = $.grep(trips, function (a) {
-                        return continuingTripId === a.trip_id;
-                    });
-                    var continuesOnAsDirection = continuesOnAs[0].direction_id;
-                    var continuesOnAsRouteId = continuesOnAs[0].route_id;
-                    var continuesOnAsHeadsign = continuesOnAs[0].trip_headsign;
-                    var continuesOnAsHeadsignVar = "'" + continuesOnAs[0].trip_headsign + "'";
-                    var continuesOnAsRoute = $.grep(routes, function (a) {
-                        return continuesOnAs[0].route_id === a.route_id
-                    });
-                    continuesOnAsRoute = continuesOnAsRoute[0].route_short_name;
-                    continuesOnAs = continuesOnAsRoute + ' ' + continuesOnAsHeadsign;
-                    //$(this).append('<td class="continuing" id="' + continuesOnAsRoute + ' ' + continuesOnAsDirection + '" onClick="continuingRoute(' + continuesOnAsRouteId + ', ' + currentServiceID + ', ' + continuesOnAsDirection + ', ' + continuesOnAsHeadsignVar + ');">' + continuesOnAs + '</td>');
-                    $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '">' + continuesOnAs + '</a></td>');
-                }
-            });
-            // Reset vars for sticky table header
-            setStickyHeader();
-        }
-        //Convert from military time right here
-        //Step1- select all the td cells that's parent hasClass of tripTimes
-        var cells = $('#busTable tr.tripTimes td');
-        convertToStandard(cells);
-        setTimeout(processContinuing, 100);
-        selectedRoute = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
-        if (trip_headsign === -1) {
-            if (isHoliday.length > 0) {
-                $('#noService').append('There is no service during the holiday.');
-            } else {
-                $('#noService').append('There is no service for the specified route and time.');
+                    if (continuesOnAs == 'Out of Service') {
+                        $(this).append('<td class="outOfService">Out of Service</td>');
+                    } else {
+                        continuesOnAs = $.grep(trips, function (a) {
+                            return continuingTripId === a.trip_id;
+                        });
+                        var continuesOnAsDirection = continuesOnAs[0].direction_id;
+                        var continuesOnAsRouteId = continuesOnAs[0].route_id;
+                        var continuesOnAsHeadsign = continuesOnAs[0].trip_headsign;
+                        var continuesOnAsHeadsignVar = "'" + continuesOnAs[0].trip_headsign + "'";
+                        var continuesOnAsRoute = $.grep(routes, function (a) {
+                            return continuesOnAs[0].route_id === a.route_id
+                        });
+                        continuesOnAsRoute = continuesOnAsRoute[0].route_short_name;
+                        continuesOnAs = continuesOnAsRoute + ' ' + continuesOnAsHeadsign;
+                        //$(this).append('<td class="continuing" id="' + continuesOnAsRoute + ' ' + continuesOnAsDirection + '" onClick="continuingRoute(' + continuesOnAsRouteId + ', ' + currentServiceID + ', ' + continuesOnAsDirection + ', ' + continuesOnAsHeadsignVar + ');">' + continuesOnAs + '</td>');
+                        $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '">' + continuesOnAs + '</a></td>');
+                    }
+                });
+                // Reset vars for sticky table header
+                setStickyHeader();
             }
-        } else {
-            //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
-            $('#stopNames').append('<td><div class="continuesOnAs">Continues On As</div></td>');
-        }
+            //Convert from military time right here
+            //Step1- select all the td cells that's parent hasClass of tripTimes
+            var cells = $('#busTable tr.tripTimes td');
+            convertToStandard(cells);
+            setTimeout(processContinuing, 100);
+            selectedRoute = $('#routeList option[id="' + currentRouteID + '"]').attr('value');
+            if (trip_headsign === -1) {
+                if (isHoliday.length > 0) {
+                    $('#noService').append('There is no service during the holiday.');
+                } else {
+                    $('#noService').append('There is no service for the specified route and time.');
+                }
+            } else {
+                //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
+                $('#stopNames').append('<td><div class="continuesOnAs">Continues On As</div></td>');
+            }
 
-    } catch (e) { alert(e.message);}
-    finally {
-        $('.spinner').remove();
+        } catch (e) { alert(e.message);}
+        finally {
+            $('.spinner').remove();
+        }
+    } else {
+        loadTripData(loadRouteDetails(currentRouteID));
     }
 }
 
