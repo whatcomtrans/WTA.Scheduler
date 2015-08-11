@@ -264,7 +264,7 @@ input[type=date],
     padding:0;
 }
 fieldset{
-    height:40px;
+    /*height:40px;*/
     margin-right:20px;
     margin-bottom:10px;
 }
@@ -305,15 +305,20 @@ fieldset select{
 }
 #routeList li{
     display:table;
-    border-spacing:5px;
+    border-spacing:3px;
 }
 #routeList a:link{
-    color:#0f457a;
+    color:#000000;
+}
+#routeList .fa-arrows-h{
+    color:#8E8E8E;
+    font-size:16px;
 }
 #routeList .route-num{
     font-weight:bold;
     display:table-cell;
     padding-right:5px;
+    color:#006699;
 }
 #routeList .fa {
     padding:0 3px;
@@ -336,6 +341,9 @@ fieldset select{
     padding:0;
     vertical-align:middle;
 }
+.direction-row{
+    margin-bottom:10px;
+}
 .direction-row h3{
     font-size:20px;
 }
@@ -345,8 +353,23 @@ fieldset select{
 .direction-row .reverse{
     line-height:normal;
 }
-#route-details h3{
+#route-details h1{
      word-break:break-all;
+     color:#006699;
+     margin-bottom:0;
+}
+#route-details #customizeRoute{
+    border-radius:8px;
+    background-color:#006699;
+    vertical-align:top;
+    padding:15px 20px;
+}
+#route-details #customizeRoute h4{
+    font-size:18px;
+}
+#route-details #customizeRoute h4,
+#route-details #customizeRoute label {
+    color:#ffffff;
 }
 #route-details #schedule{
     overflow-x:scroll;
@@ -360,29 +383,41 @@ fieldset select{
 }
 #route-details .locations,
 #route-details .times{
-    display:inline-block;
+    display:block;
     vertical-align:top;
 }
 #route-details #datePicker{
     margin:5px;
 }
-.map-image{
-    *min-width:200px;
-    margin:10px 20px 10px 0px;
+#route-details .map-image{
+    margin:0;
+    margin-right:10px;
     position:relative;
 }
-.map-image.normal{
-    width:20%;
+#route-details .map-image.normal{
+    width:25%;
+}
+#route-details .map-image,
+#route-details #customizeRoute{
+    display:inline-block;
+}
+
+.map-image.normal,
+#route-details #customizeRoute{
+    box-sizing:border-box;
+}
+#route-details #customizeRoute .route-selector{
+    display:none;
 }
 .map-image img {
     width:100%;
     max-width:100%;
     height:auto;
 }
-.map-image,
+/*.map-image,
 #route-details #customizeRoute{
     display:inline-block;
-}
+}*/
 .map-image .map-bottom-row{
     text-align:center;
 }
@@ -402,9 +437,7 @@ fieldset select{
     font-size:3em;
     right:25px;
 }
-#route-details #customizeRoute{
-    vertical-align:bottom;
-}
+
 #route-details #mainSchedule .paging{
     height:20px;
     width:100%;

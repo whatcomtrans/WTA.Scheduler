@@ -2,7 +2,7 @@
 <div id="route-details" class="">
     <h1 id="routeNumber"></h1>
     <div class="direction-row">
-        <h3 id="routeDir1"></h3>
+        <h1 id="routeDir1"></h1>
         <i class="fa fa-arrows-h"></i>
         <h3 id="routeDir2"></h3>
         <!--<input type="button" class="fa fa-refresh" name="flipRoute" id="flipRoute" onclick="flipRoute();">-->
@@ -13,53 +13,53 @@
                 <i class="fa fa-refresh fa-stack-1x icon"></i>
             </span>
             <span class="reverse">Reverse<br />Direction</span>
-        </div>
-
-       
-    </div>
-    <div id="routeMap" class="map-image normal">
-        <!--<img id="imgMap" alt="route map" src="" />-->
-        <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search-plus"></i></a>
-        <div class="map-bottom-row"><span><a href="#map">System Map</a></span></div>
+        </div>       
     </div>
 
-    <div id="customizeRoute">
-        <div>
-            <h4>Choose a route:</h4>
-            <select id="routeList" class="highlight" name="routeList">
-                <option value="selectRoute" disabled>Select A Route</option>
-            </select>
-        </div>
-        <h4>Customize Schedule</h4>
-        <div class="locations">
-            <fieldset>
-                <label class="centerText">Start</label>
-                <select id="stopListStart" name="stopListStart">
-                    <option value="selectStopListStart" disabled>Starting Bus Stop</option>
-                </select>
-            </fieldset>
-            <fieldset>
-                <label class="centerText">End</label>
-                <select id="stopListEnd" name="stopListEnd">
-                    <option value="selectStopListEnd" disabled>Select the Starting Bus Stop First</option>
-                </select>
-            </fieldset>
-        </div>
-        <div class="times">
-            <fieldset>
-                <label class="centerText">Between</label>
-                <input type="time" id="startTime" placeholder="HH:MM">
-            </fieldset>
-            <fieldset>
-                <label class="centerText">And</label>
-                <input type="time" id="endTime" placeholder="HH:MM">
-            </fieldset>
+    <div class="row">
+        <div id="routeMap" class="map-image normal ">
+            <!--<img id="imgMap" alt="route map" src="" />-->
+            <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search-plus"></i></a>
+            <div class="map-bottom-row"><span><a href="#map">System Map</a></span></div>
         </div>
 
-        <div class="button-row">
-            <input type="button" name="applyFilter" id="applyFilter" value="Apply Filter" onclick="applyFilter();">
-            <input type="button" name="clearFilter" id="clearFilter" value="Clear Filter" onclick="clearFilter();">
-            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('route-details');">
+        <div id="customizeRoute" class="">
+            <div class="route-selector">
+                <h4>Choose a route:</h4>
+                <select id="routeList" class="highlight" name="routeList">
+                    <option value="selectRoute" disabled>Select A Route</option>
+                </select>
+            </div>
+            <h4>Customize Your Schedule</h4>
+            <div class="locations">
+                <fieldset>
+                    <label class="centerText">1. Starting from</label>
+                    <select id="stopListStart" name="stopListStart">
+                        <option value="selectStopListStart" disabled>Starting Bus Stop</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label class="centerText">2. Arriving at</label>
+                    <select id="stopListEnd" name="stopListEnd">
+                        <option value="selectStopListEnd" disabled>Select the Starting Bus Stop First</option>
+                    </select>
+                </fieldset>
+            </div>
+            <div class="times">
+                <fieldset>
+                    <label class="centerText">3. Between</label>
+                    <input type="time" id="startTime" placeholder="HH:MM">
+                    <label class="centerText">and</label>
+                    <input type="time" id="endTime" placeholder="HH:MM">
+                </fieldset>
+
+            </div>
+
+            <div class="button-row">
+                <input type="button" name="applyFilter" id="applyFilter" value="Apply Filter" onclick="applyFilter();">
+                <input type="button" name="clearFilter" id="clearFilter" value="Clear Filter" onclick="clearFilter();">
+                
+            </div>
         </div>
     </div>
 
@@ -75,6 +75,7 @@
                 <label>Schedule for:</label>
                 <input type="text" name="datepicker" id="datepicker" value="" onclick="">
             </div>
+            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('route-details');">
             <div class="paging">
                 <div class="page-button left" onclick="pageLeft()">         
                     <span class="circle-icon fa-stack fa-2x">

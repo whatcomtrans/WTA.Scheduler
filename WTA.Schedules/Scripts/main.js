@@ -1,4 +1,4 @@
-// locals
+﻿// locals
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId, chosenRoute, chosenRouteId,
@@ -12,7 +12,7 @@ var searchURL = "http://test.ridewta.com/search/pages/results.aspx?k=";
 var markers = [];
 
 $(document).ready(function () {
-    window.onpopstate = onPopState;
+    //window.onpopstate = onPopState;
     $(window).on('hashchange', function () {
         loadPageContent();
     });
@@ -263,10 +263,10 @@ function initializeRoutes() {
         routeList = getRoutes();
     }
     var ulRoutes = $("#routeList");
-    for (i = 0; i < routeList.length; i ++) {
-        //ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].trip_headsign + '<i class=\"fa fa-arrows-h\"></i>' + routeList[i + 1].trip_headsign + "</a></li>");
-        //ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='javascript:loadRouteDetails(" + routeList[i].route_id + ")'>" + routeList[i].route_long_name + "</a></li>");
-        ulRoutes.append("<li><span class='route-num'>" + routeList[i].route_short_name + "</span><a href='#route-details?routeId=" + routeList[i].route_id + "'>" + routeList[i].route_long_name + "</a></li>");
+    for (i = 0; i < routeList.length; i++) {
+        var longName = routeList[i].route_long_name;        
+        longName = longName.replace('&harr;', '<i class="fa fa-arrows-h"></i>');
+        ulRoutes.append("<li><a href='#route-details?routeId=" + routeList[i].route_id + "'><span class='route-num'>" + routeList[i].route_short_name + "</span>" + longName + "</a></li>");
     }
 }
 
