@@ -61,9 +61,15 @@ function loadQueryParams() {
     if (stopId && (stopId == parseInt(stopId))) {
         //currentStopID = stopId;
         validateStopId(stopId);
-    }
-    else {
+    } else {
         currentStopID = null;
+    }
+    //DirectionId
+    var dirId = getQueryParameterByName("directionId");
+    if (dirId) {
+        validateDirId(dirId);
+    } else {
+        currentDirectionID = 0;
     }
     // Stop query - used if searching for either a stop id or an address
     var q = getQueryParameterByName("search");
@@ -754,7 +760,7 @@ function displaySelectedRoute() {
                     continuesOnAsRoute = continuesOnAsRoute[0].route_short_name;
                     continuesOnAs = continuesOnAsRoute + ' ' + continuesOnAsHeadsign;
                     //$(this).append('<td class="continuing" id="' + continuesOnAsRoute + ' ' + continuesOnAsDirection + '" onClick="continuingRoute(' + continuesOnAsRouteId + ', ' + currentServiceID + ', ' + continuesOnAsDirection + ', ' + continuesOnAsHeadsignVar + ');">' + continuesOnAs + '</td>');
-                    $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '">' + continuesOnAs + '</a></td>');
+                    $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '&?directionId=' + continuesOnAsDirection + '">' + continuesOnAs + '</a></td>');
                 }
             });
             // Reset vars for sticky table header
@@ -906,7 +912,7 @@ function applyFilter() {
         var startingStop = $('#stopListStart option:selected')[0].innerHTML;
         var endingStop = $('#stopListEnd option:selected')[0].innerHTML;
         $('#stopNames').hide();
-        $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>')
+        $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>');
     }
     setStickyHeader();
 }
@@ -1823,6 +1829,15 @@ function validateStopId(stopId) {
         }
     }
     return valid;
+}
+function validateDirId(dirId) {
+    if (dirId == 0) {
+        currentDirectionID = 0;
+    } else if (dirId == 1) {
+        currentDirectionID = 1;
+    } else {
+        currentDirectionID = 0;
+    }
 }
 function validateRouteId(routeId) {
     // If routeId is found set local vars.

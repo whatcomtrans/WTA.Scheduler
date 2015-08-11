@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-# v0.7 2015-07-03
+# v0.8 2015-08-11
 
 CACHE:
 /schedules.html
@@ -21,8 +21,8 @@ CACHE:
 
 /Scripts/app.min.js
 
-http://data.ridewta.com/gfts/data_routes.js
-http://data.ridewta.com/gfts/data_trips.js
+http://data.ridewta.com/gfts/website/data_routes.js
+http://data.ridewta.com/gfts/website/data_trips.js
 
 /fonts/fontawesome-webfont.eot
 /fonts/fontawesome-webfont.svg
