@@ -388,7 +388,6 @@ fieldset select{
 #route-details h1{
      word-break:break-all;
      color:#006699;
-     margin-bottom:0;
 }
 #route-details #customizeRoute{
     border-radius:8px;
@@ -424,7 +423,7 @@ fieldset select{
     text-align:center;
 }
 #route-details .button-row input{
-    background-color:#008472;
+    background-color:#009999;
     -webkit-box-shadow: 3px 3px 10px 0 #000000;
 	box-shadow: 3px 3px 10px 0 #000000;
     border-radius:100%;
@@ -446,7 +445,7 @@ fieldset select{
     max-width:none;
 }
 #route-details .times input{
-    width:90px;
+    width:100px;
     padding:3px;
     border-radius:5px;
     border:none;
