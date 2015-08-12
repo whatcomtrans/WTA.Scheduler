@@ -209,6 +209,7 @@
     <Content Include="fonts\Open-Sans-regular.ttf" />
     <Content Include="fonts\Open-Sans-regular.woff" />
     <Content Include="fonts\Open-Sans-regular.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Properties\PublishProfiles\MG-WK-Dev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\MG-WK-Dev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />

@@ -8,9 +8,8 @@
         <!--<input type="button" class="fa fa-refresh" name="flipRoute" id="flipRoute" onclick="flipRoute();">-->
 
         <div id="flipRoute"  onclick="flipRoute();">
-            <span class="circle-icon fa-stack fa-2x">
-                <i class="fa fa-circle fa-stack-2x icon-background"></i>
-                <i class="fa fa-refresh fa-stack-1x icon"></i>
+            <span class="square-icon">
+                <i class="fa fa-exchange icon"></i>
             </span>
             <span class="reverse">Reverse<br />Direction</span>
         </div>       
@@ -20,7 +19,7 @@
         <div id="routeMap" class="map-image normal ">
             <!--<img id="imgMap" alt="route map" src="" />-->
             <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search-plus"></i></a>
-            <div class="map-bottom-row"><span><a href="#map">System Map</a></span></div>
+            <div class="map-bottom-row"><span><a href="#map">Interactive Map</a></span></div>
         </div>
 
         <div id="customizeRoute" class="">
@@ -49,16 +48,15 @@
                 <fieldset>
                     <label class="centerText">3. Between</label>
                     <input type="time" id="startTime" placeholder="HH:MM">
-                    <label class="centerText">and</label>
+                    <span> and </span>
                     <input type="time" id="endTime" placeholder="HH:MM">
                 </fieldset>
 
             </div>
 
             <div class="button-row">
-                <input type="button" name="applyFilter" id="applyFilter" value="Apply Filter" onclick="applyFilter();">
-                <input type="button" name="clearFilter" id="clearFilter" value="Clear Filter" onclick="clearFilter();">
-                
+                <input type="button" name="applyFilter" id="applyFilter" value="Apply" onclick="applyFilter();">
+                <input type="button" name="clearFilter" id="clearFilter" value="Reset" onclick="clearFilter();">                
             </div>
         </div>
     </div>
