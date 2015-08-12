@@ -237,11 +237,13 @@ function initializeSidebar() {
 }
 
 function showLoading() {
-    $(".spinner").show();
+    $("#appPage").hide();
+    $(".spinner-cont").show();
     //$("#appPage").load("/common/loading.html");
 }
 function hideLoading() {
-    $(".spinner").hide();
+    $(".spinner-cont").hide();
+    $("#appPage").show();
 }
 function scrollContentTop() {
     if(isElementInViewport($("#appPage")) == false){
@@ -510,7 +512,8 @@ function thisDay(day) {
     displaySelectedRouteAsync();
 }
 function displaySelectedRouteAsync() {
-    $('#datePicker').after('<div class="spinner"></div>');
+    //$('#datePicker').after('<div class="spinner"></div>');
+    showLoading();
     if (typeof trips != "undefined") {
         setTimeout(function () { displaySelectedRoute();}, 1000);
     } else {
@@ -522,7 +525,7 @@ function displaySelectedRoute() {
     try{
         $('#busTable').empty();
         $('.routeNumber').empty();
-        $('#datePicker').after('<div class="spinner"></div>');
+        //$('#datePicker').after('<div class="spinner"></div>');
 
         // populate heading
         var route = getRoute(currentRouteID);
@@ -784,7 +787,8 @@ function displaySelectedRoute() {
         }
     } catch (e) { alert(e.message);}
     finally {
-        $('.spinner').remove();
+        //$('.spinner').remove();
+        hideLoading();
     }
 }
 
