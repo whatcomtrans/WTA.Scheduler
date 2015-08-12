@@ -274,7 +274,7 @@ function initializeRoutes() {
     for (i = 0; i < routeList.length; i++) {
         var longName = routeList[i].route_long_name;        
         longName = longName.replace('&harr;', '<i class="fa fa-arrows-h"></i>');
-        ulRoutes.append("<li><a href='#route-details?routeId=" + routeList[i].route_id + "'><span class='route-num'>" + routeList[i].route_short_name + "</span>" + longName + "</a></li>");
+        ulRoutes.append("<li><span class='route-num'><a href='#route-details?routeId=" + routeList[i].route_id + "' class='route-num'>" + routeList[i].route_short_name + "</a></span><a href='#route-details?routeId=" + routeList[i].route_id + "'>" + longName + "</a></li>");
     }
 }
 
