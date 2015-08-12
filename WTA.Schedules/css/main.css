@@ -305,6 +305,8 @@ fieldset select{
 #routeList li{
     display:table;
     border-spacing:3px;
+    line-height:2em;
+    font-size:1.15em;
 }
 #routeList a:link{
     color:#000000;
@@ -317,7 +319,7 @@ fieldset select{
     font-weight:bold;
     display:table-cell;
     padding-right:5px;
-    color:#006699;
+    color:#006699 !important;
 }
 #routeList .fa {
     padding:0 3px;
