@@ -429,6 +429,17 @@ function setStickyHeader() {
     });
 
     $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
+    $("#top-scrollbar .fake-content").css("width", $("#busTable").width() + "px");
+
+    $("#top-scrollbar").scroll(function () {
+        $("#schedule")
+            .scrollLeft($("#top-scrollbar").scrollLeft());
+            });
+    $("#schedule").scroll(function () {
+        $("#top-scrollbar")
+            .scrollLeft($("#schedule").scrollLeft());
+            });
+
     $(window).scroll(function () {
         if ($tableHeader) {
             if ($(window).scrollTop() > $tableHeader.offset().top
@@ -460,7 +471,6 @@ function swapMapSize() {
         $("i", rMap).removeClass("fa-search-plus");
         $("i", rMap).addClass("fa-search-minus");
         rMap.addClass("full");
-        //$(".map-image a").html("Shrink >>");
     } else {
         var offset = rMap.offset();
         rMap.removeClass("full");
@@ -468,7 +478,6 @@ function swapMapSize() {
         $("i", rMap).removeClass("fa-search-minus");
         $("i", rMap).addClass("fa-search-plus");
         rMap.animate({ width: "25%" }, "slow");
-        //$(".map-image a").html("Expand >>");
         //$('html, body').animate({
         //    scrollTop: offset.top
         //});
@@ -1122,6 +1131,7 @@ function initializeStops() {
     if (newMonth.length < 2) { newMonth = '0' + newMonth; }
     var newYear = (presentDate.getFullYear()).toString();
     specialServiceDate = newYear + newMonth + newDate;
+
     if (day > 0 && day < 6) {
         $('#Weekday').addClass('selectedDay');
         currentServiceID = 1;
@@ -1166,7 +1176,9 @@ function initializeStops() {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
         $("#searchStops").val(currentStopID);
         displaySelectedStop();
+        $("#mainSchedule").show();
     } else {
+        $("#mainSchedule").hide();
         $('#searchStops').addClass('pulse');
         setTimeout(function () { $('#searchStops').removeClass('pulse') }, 6500);
     }

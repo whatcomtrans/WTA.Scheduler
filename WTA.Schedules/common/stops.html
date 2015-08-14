@@ -1,11 +1,8 @@
 ﻿
-<div class="stops">
-    <h1>
-        <i class="fa fa-bus"></i>
-        <span>Choose a Stop:</span>
-    </h1>
+<div id="my-stop" >
+    <h1>My Stop:</h1>
     <div class="selection">
-        <span><input id="searchStops" type="text" class="pulse" placeholder="Enter Stop Id, Address or Intersection"></span>
+        <input id="searchStops" type="text" class="pulse" placeholder="Enter Stop Id, Address or Intersection">
         <input id="searchStopsButton" type="button" value="Find" onclick="directSearch();">
     </div>
     <div id="mainSchedule">
@@ -18,11 +15,17 @@
                 <li><a href="javascript:thisDay('Street View')">Street View</a></li>
 
             </ul>
+            <input type="button" name="printSchedule" class="button right" id="printSchedule" value="Print" onclick="printDiv('printThis');">
 
             <div id="schedule">
                 <div id="printThis">
-                    <h3 id="stopNameHeader"></h3>
-                    <p id="cityZip"></p>
+
+                    <div class="stop-header">
+                        <h2 id="stopNameHeader"></h2>
+                        <hr />
+                        <p id="cityZip"></p>
+                    </div>
+
                     <input id="mapButton" type="button" class="button right" value="Map" onclick="directMap();">
 
                     <table id="stopTable1" class="table table-striped table-hover table-bordered">
@@ -37,7 +40,7 @@
                     </table>
 
 
-                    <div id="datePicker" class="" >
+                    <div class="filters" >
                         <fieldset>
                             <label>Date:</label>
                             <input type="text" name="datepicker" id="datepicker" value="" onclick="">
@@ -47,11 +50,10 @@
                             <select id="scheduleFor"><option id="all" value="All Routes">All Routes</option></select>
                         </fieldset>
                     </div>
-                    <div class="button-row">
-                        <input type="button" name="printSchedule" class="button right" id="printSchedule" value="Print" onclick="printDiv('printThis');">
+                    <!--<div class="button-row">                        
                         <input type="button" name="clearFilter" class="button right" id="clearFilter" value="Clear Filter" onclick="filterStops('all');">
                         <input type="button" name="applyFilter" class="button right" id="applyFilter" value="Apply Filter" onclick="filterStops(chosenRouteId);">
-                    </div>
+                    </div>-->
                     <div id="tableRow" class="">
                         <table id="stopTable" class="table table-striped table-hover table-bordered">
                             <tr>
