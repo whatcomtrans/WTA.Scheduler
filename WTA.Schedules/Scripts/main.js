@@ -543,6 +543,11 @@ function displaySelectedRoute() {
             var directions = route.route_long_name.split("&harr;");
             routeDir0 = directions[0];
             routeDir1 = directions[1];
+            if (routeDir1 === undefined) {
+                $('#flipRoute').hide();
+            } else {
+                $('#flipRoute').show();
+            }
             if (currentDirectionID == 0) {
                 $("#routeDir1").html(routeDir0);
                 $("#routeDir2").html(routeDir1);
