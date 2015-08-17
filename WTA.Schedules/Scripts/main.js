@@ -563,6 +563,9 @@ function displaySelectedRoute() {
                 route.route_color == "green" ||
                 route.route_color == "red") {
                 $(".go-line").attr("src", "../Images/go-" + route.route_color + ".jpg");
+                $(".go-line").show();
+            } else {
+                $(".go-line").hide();
             }
 
             // Set map image if we have one.
