@@ -143,10 +143,10 @@
     <Content Include="favicon-32x32.png" />
     <Content Include="favicon-96x96.png" />
     <Content Include="favicon.ico" />
-    <Content Include="Images\GOBlue.jpg" />
-    <Content Include="Images\GOGold.jpg" />
-    <Content Include="Images\GOGreen.jpg" />
-    <Content Include="Images\GORed.jpg" />
+    <Content Include="Images\go-blue.jpg" />
+    <Content Include="Images\go-gold.jpg" />
+    <Content Include="Images\go-green.jpg" />
+    <Content Include="Images\go-red.jpg" />
     <Content Include="Images\InteriorHeader_4.jpg" />
     <Content Include="Images\wta-logo.png" />
     <Content Include="mstile-144x144.png" />

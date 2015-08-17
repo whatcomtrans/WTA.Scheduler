@@ -556,8 +556,16 @@ function displaySelectedRoute() {
                 $("#routeDir1").html(routeDir1);
                 $("#routeDir2").html(routeDir0);
             }
-            // Set map image if we have one.
 
+            // Go Line?
+            if (route.route_color == "blue" ||
+                route.route_color == "gold" ||
+                route.route_color == "green" ||
+                route.route_color == "red") {
+                $(".go-line").attr("src", "../Images/go-" + route.route_color + ".jpg");
+            }
+
+            // Set map image if we have one.
             var imgMap = document.createElement('img');
             imgMap.onload = function () {
                 $("#routeMap img").remove();
