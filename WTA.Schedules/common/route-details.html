@@ -16,12 +16,7 @@
     <img class="go-line" src="" />
 
     <div class="row" style="clear:both">
-        <div id="routeMap" class="map-image normal ">
-            <!--<img id="imgMap" alt="route map" src="" />-->
-            <a id="btnResize" href="javascript:swapMapSize()"><i class="fa fa-search-plus"></i></a>
-            <div class="map-bottom-row"><span><a href="#map">Interactive Map</a></span></div>
-        </div>
-
+        
         <div id="customizeRoute" class="">
             <div class="route-selector">
                 <h4>Choose a route:</h4>
@@ -63,6 +58,12 @@
                 </div>            
             </div>
         </div>
+
+        <div id="routeMap" class="map-image normal" onclick="showMapDialog()">
+            <a id="btnResize" href="javascript:showMapDialog()"><i class="fa fa-search-plus"></i></a>
+            <div class="map-bottom-row"><span><a href="#map">Interactive Map</a></span></div>
+        </div>
+
     </div>
 
     <div id="mainSchedule">
@@ -102,6 +103,11 @@
 
     </div>
 </div>
+
+<div id="mapDialog" style="display:none;">
+    <img src="" />
+</div>
+
 
 
 

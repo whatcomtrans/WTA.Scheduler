@@ -410,6 +410,7 @@ function setStickyHeader() {
     // Set sticky table header
     $tableHeader = $("#stopNames");
     $tableHeaderClone = $("#stopNames").clone();
+    $tableHeaderClone.attr("id", "stopNamesFixed");
     // Need to set each table header cells' width or they don't line up correctly
     var tds = $('TD div', $tableHeader);
     var tdsClone = $('TD div', $tableHeaderClone);
@@ -463,6 +464,20 @@ function setStickyHeader() {
     $tableContainer.on("scroll", sync)
 }
 
+function showMapDialog() {
+    jQuery('#mapDialog').dialog({
+        modal : true,
+        responsive: true,
+        width: 'auto',
+        height: 'auto',
+            dialogClass: "map-dialog",
+        close: function(event, ui) {
+            $("#mapDialog").dialog("destroy");
+        },
+    });
+
+}
+
 function swapMapSize() {
     var rMap = $("#routeMap");
     if (rMap.hasClass("normal")) {
@@ -492,6 +507,12 @@ function findRouteClick() {
     }
 }
 function flipRoute() {
+
+    $tableHeader.removeClass("hiddenHeader");
+    $tableHeaderClone.remove();
+    $tableHeaderClone.removeClass('fixedHeader');
+    $tableHeaderClone = null;
+
     if (currentDirectionID == 0) {
         currentDirectionID = 1;
     } else {
@@ -568,13 +589,14 @@ function displaySelectedRoute() {
             // Set map image if we have one.
             var imgMap = document.createElement('img');
             imgMap.onload = function () {
-                $("#routeMap img").remove();
+                $("#routeMap img").remove();               
                 $("#routeMap").prepend(imgMap);
             }
             imgMap.onerror = function () {
                 $("#routeMap").hide();
             }
             imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
+            $("#mapDialog img").attr("src", "/Images/maps/" + route.route_short_name + ".png");
         }
         
         var tripsInRoute = [];

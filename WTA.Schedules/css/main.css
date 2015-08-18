@@ -472,6 +472,9 @@ fieldset select{
 #route-details .map-image.normal{
     width:25%;
 }
+#route-details .map-image.normal img{
+    max-height:370px;
+}
 #route-details .map-image,
 #route-details #customizeRoute{
     display:inline-block;
@@ -487,16 +490,68 @@ fieldset select{
     width:100%;
     max-width:100%;
     height:auto;
-    border:1px solid #666666;
+}
+.map-dialog{
+    max-height:100vh;
+}
+.map-dialog img{
+    height:calc(100vh - 80px);
+    width:auto;
+}
+.map-dialog.ui-dialog{
+    padding:0;
+    border:none;
     border-radius:8px;
 }
+.map-dialog .ui-dialog-titlebar-close{
+	min-width:0;
+	padding:5px;
+	height:auto;
+	line-height:normal;	
+	margin-right:10px;
+	border:none;
+}
+.map-dialog  .ui-widget-header {
+    background-image:none;
+	background-color:transparent;
+	border:none;
+}
+.map-dialog .ui-dialog-titlebar-close:before{
+    content: '\f010';
+    font-family: FontAwesome;   
+}
+.map-dialog .ui-dialog-titlebar-close{
+    background-color:transparent;
+    background-image:none;
+    position:absolute;
+    top:0;
+    right:0;
+    padding:3px 8px;
+    margin:0;
+    background-color:#666666;
+    color:#ffffff;
+    font-size:1.5em;
+    border-top-right-radius:8px; 
+    outline-width: 0px !important;
+}
+.map-dialog .ui-dialog-titlebar-close:focus,
+.map-dialog .ui-dialog-titlebar-close:active{
+    border:none;
+}
+.ui-widget-overlay{
+	background-color:#303030;
+	background-color:rgba(0,0,0,.8);
+    background-image:none;
+}
+
+
 #route-details .map-image .map-bottom-row{
     text-align:center;
 }
 #route-details .map-image #btnResize{
     position:absolute;
     top:0;
-    right:-2px;
+    right:0;
     padding:3px 8px;
     background-color:#666666;
     color:#ffffff;
@@ -507,8 +562,7 @@ fieldset select{
     color:#0099cc;
 }
 #route-details .map-image.full #btnResize{
-    font-size:3em;
-    right:25px;
+    font-size:3em;    
 }
 
 #top-scrollbar{
