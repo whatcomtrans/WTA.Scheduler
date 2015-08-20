@@ -600,6 +600,7 @@ function displaySelectedRoute() {
             }
             imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
             $("#mapDialog img").attr("src", "/Images/maps/" + route.route_short_name + ".png");
+            $('#mapDialog img').attr('onClick','showMapDialog();');
         }
         
         var tripsInRoute = [];

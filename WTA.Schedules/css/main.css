@@ -401,6 +401,7 @@ fieldset select{
 #route-details #customizeRoute h4{
     font-size:18px;
     font-weight:bold;
+    padding:10px 0 15px;
 }
 #route-details #customizeRoute h4,
 #route-details #customizeRoute label,
@@ -409,6 +410,7 @@ fieldset select{
 }
 #route-details #customizeRoute fieldset{
     margin-right:0;
+    margin-bottom:15px;
 }
 #route-details #customizeRoute label{
     font-size:16px;
@@ -473,7 +475,7 @@ fieldset select{
     width:25%;
 }
 #route-details .map-image.normal img{
-    max-height:370px;
+    max-height:408px;
 }
 #route-details .map-image,
 #route-details #customizeRoute{
