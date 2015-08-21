@@ -1,0 +1,106 @@
+﻿
+<div id="route-details" class="">
+
+    <div class="direction-row">
+        <h1 id="routeNumber" ></h1>
+        <h1 id="routeDir1"></h1>
+        <div id="flipRoute" onclick="flipRoute();">
+            <span class="square-icon">
+                <i class="fa fa-exchange icon"></i>
+            </span>
+        </div>
+        <h3 id="routeDir2"></h3>
+
+        <!--<input type="button" class="fa fa-refresh" name="flipRoute" id="flipRoute" onclick="flipRoute();">-->
+    </div>
+    <img class="go-line" src="" />
+
+    <div class="row" style="clear:both">
+        <div id="routeMap" class="map-image normal">
+            <a id="btnResize" href="javascript:showMapDialog()"><i class="fa fa-search-plus"></i></a>
+            <div class="map-bottom-row"><span><a href="#map">Interactive Map</a></span></div>
+        </div>
+        <div id="customizeRoute" class="">
+            <div class="route-selector">
+                <h4>Choose a route:</h4>
+                <select id="routeList" class="highlight" name="routeList">
+                    <option value="selectRoute" disabled>Select A Route</option>
+                </select>
+            </div>
+            <h4>Customize Your Schedule</h4>
+            <div class="locations">
+                <fieldset>
+                    <label class="centerText">1. Starting from</label>
+                    <select id="stopListStart" name="stopListStart" >
+                        <option value="selectStopListStart" disabled>Starting Bus Stop</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label class="centerText">2. Arriving at</label>
+                    <select id="stopListEnd" name="stopListEnd">
+                        <option value="selectStopListEnd" disabled>Select the Starting Bus Stop First</option>
+                    </select>
+                </fieldset>
+            </div>
+            <div class="times">
+                <fieldset>
+                    <label class="centerText">3. Between</label>
+                    <input type="time" id="startTime" placeholder="HH:MM">
+                    <span> and </span>
+                    <input type="time" id="endTime" placeholder="HH:MM">
+                </fieldset>
+
+            </div>
+
+            <div class="button-row">
+                <div class="spacer">
+                    <input type="button" name="applyFilter" id="applyFilter" value="Apply" onclick="applyFilter();">
+                </div>
+                <div class="spacer">
+                    <input type="button" name="clearFilter" id="clearFilter" value="Reset" onclick="clearFilter();">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainSchedule">
+
+        <div id="dayTabs">
+            <ul>
+                <li><a href="javascript:thisDay('Weekday')">Weekday</a></li>
+                <li><a href="javascript:thisDay('Saturday')">Saturday</a></li>
+                <li><a href="javascript:thisDay('Sunday')">Sunday</a></li>
+            </ul>
+            <div id="datePickerCont">
+                <label>Schedule for:</label>
+                <input type="text" name="datepicker" id="datepicker" value="" onclick="">
+            </div>
+            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('route-details');">
+            <!--<div class="paging">
+                <div class="page-button left" onclick="pageLeft()">
+                    <span class="circle-icon fa-stack fa-2x">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="fa fa-arrow-left fa-stack-1x icon"></i>
+                    </span>
+                </div>
+                <div class="page-button right" onclick="pageRight()">
+                    <span class="circle-icon fa-stack fa-2x">
+                        <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                        <i class="fa fa-arrow-right fa-stack-1x icon"></i>
+                    </span>
+                </div>
+            </div>-->
+            <div id="top-scrollbar"><div class="fake-content"></div></div>
+            <div id="schedule">
+                <table id="busTable" class="table table-striped table-hover table-bordered"></table>
+                <h4 id="noService"></h4>
+                <p id="disclaimer">* Please note that all times are estimates and bus times may vary.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="mapDialog" style="display:none;">
+    <img src="" />
+</div>
