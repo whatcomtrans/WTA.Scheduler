@@ -2,22 +2,26 @@
 # v0.8 2015-08-11
 
 CACHE:
-/schedules.html
-/common/footer.html
-/common/left-nav.html
-/common/sidebar.html
-/common/header.html
-/common/map.html
-/common/routes.html
-/common/route-details.html
-/common/stops.html
+/schedules-en.html
+/schedules-es.html
+/common/en/footer.html
+/common/en/left-nav.html
+/common/en/sidebar.html
+/common/en/header.html
+/common/en/map.html
+/common/en/routes.html
+/common/en/route-details.html
+/common/en/stops.html
+/common/es/footer.html
+/common/es/left-nav.html
+/common/es/sidebar.html
+/common/es/header.html
+/common/es/map.html
+/common/es/routes.html
+/common/es/route-details.html
+/common/es/stops.html
 
-/css/bootstrap-custom.css
-/css/bootstrap-theme.min.css
-/css/bootstrap.min.css
-/css/font-awesome.min.css
-/css/jquery-ui.min.css
-/css/main.css
+/css/schedules.min.css
 
 /Scripts/app.min.js
 
