@@ -82,6 +82,15 @@ function loadQueryParams() {
 }
 
 function loadMain() {
+    var oScript = document.createElement("script");
+    oScript.type = "text\/javascript";
+    oScript.onload = callback;
+    (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
+    if (gzipEnabled) {
+      oScript.src = "http://data.ridewta.com/gtfs/website/data_routes.js.gz";
+    } else {
+      oScript.src = "http://data.ridewta.com/gtfs/website/data_routes.js";
+    }
     hideLoading();
     loadQueryParams();
     $("#headerMain").load("/common/" + language + "/header.html", function () { initializeHeader(); });
@@ -100,7 +109,11 @@ function loadTripData(callback) {
         oScript.type = "text\/javascript";
         oScript.onload = callback;
         (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
-        oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
+        if (gzipEnabled) {
+          oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js.gz";
+        } else {
+          oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
+        }
     }
 }
 
@@ -610,7 +623,7 @@ function displaySelectedRoute() {
             return a.exception_type == 2;//magic number based on data for now
         });
         if (isHoliday.length > 0) {
-        }/* else if (specialServiceDate > calendar[0].end_date) { 
+        }/* else if (specialServiceDate > calendar[0].end_date) {
             "sorry please check back later for schedule information at that date.";
         }*/ else if (specialService.length > 0) {
             var specialServiceDate_id = specialService[0].service_id;

@@ -23,6 +23,8 @@ CACHE:
 
 http://data.ridewta.com/gtfs/website/data_routes.js
 http://data.ridewta.com/gtfs/website/data_trips.js
+http://data.ridewta.com/gtfs/website/data_routes.js.gz
+http://data.ridewta.com/gtfs/website/data_trips.js.gz
 
 /fonts/fontawesome-webfont.eot
 /fonts/fontawesome-webfont.svg
