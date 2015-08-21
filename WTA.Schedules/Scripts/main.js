@@ -82,15 +82,6 @@ function loadQueryParams() {
 }
 
 function loadMain() {
-    var oScript = document.createElement("script");
-    oScript.type = "text\/javascript";
-    oScript.onload = callback;
-    (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
-    if (gzipEnabled) {
-      oScript.src = "http://data.ridewta.com/gtfs/website/data_routes.js.gz";
-    } else {
-      oScript.src = "http://data.ridewta.com/gtfs/website/data_routes.js";
-    }
     hideLoading();
     loadQueryParams();
     $("#headerMain").load("/common/" + language + "/header.html", function () { initializeHeader(); });
@@ -108,12 +99,13 @@ function loadTripData(callback) {
         var oScript = document.createElement("script");
         oScript.type = "text\/javascript";
         oScript.onload = callback;
-        (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
         if (gzipEnabled) {
           oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js.gz";
         } else {
           oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
         }
+        (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
+        callback;
     }
 }
 
