@@ -610,7 +610,9 @@ function displaySelectedRoute() {
             return a.exception_type == 2;//magic number based on data for now
         });
         if (isHoliday.length > 0) {
-        } else if (specialService.length > 0) {
+        }/* else if (specialServiceDate > calendar[0].end_date) { 
+            "sorry please check back later for schedule information at that date.";
+        }*/ else if (specialService.length > 0) {
             var specialServiceDate_id = specialService[0].service_id;
             if (specialServiceDate == specialService[0].date) {
                 for (i = 0; i < trips.length; i++) {
@@ -1633,7 +1635,7 @@ function finishInit() {
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     busLayer = new google.maps.KmlLayer({
-        url: 'http://www.ridewta.com/files/file/maps/2015/Stops.kml',
+        url: 'http://data.ridewta.com/kml/Stops.kml',
         preserveViewport: true
     });
     google.maps.event.addListener(map, 'zoom_changed', function () {
