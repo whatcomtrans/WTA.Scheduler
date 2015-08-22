@@ -673,9 +673,6 @@ function displaySelectedRoute() {
         }
         $('#busTable').append('<tr id="stopNames"></tr>');
         for (i = 0; i < uniqueStopNamesInRoute.length; i++) {
-           // $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '">' + uniqueStopNamesInRoute[i].stop_name + '</td>');
-            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' (' + uniqueStopNamesInRoute[i].stop_code + ')</a></div</td>');
-            //$('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><div><a data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '">' + uniqueStopNamesInRoute[i].stop_name + ' <span>(' + uniqueStopNamesInRoute[i].stop_code + ')</span></a></div</td>');
             $('#stopNames').append('<td id="' + uniqueStopNamesInRoute[i].stop_id + '"><a href="#stops?stopId=' + uniqueStopNamesInRoute[i].stop_code + '"><div><span data-stopid=' + uniqueStopNamesInRoute[i].stop_id + ' class="top">' + uniqueStopNamesInRoute[i].stop_name + '</span><br/><span class="bottom">(' + uniqueStopNamesInRoute[i].stop_code + ')</span></div></a></td>');
         }
         for (i = 0; i < tripsInRoute.length; i++) {
@@ -684,9 +681,11 @@ function displaySelectedRoute() {
             var stopTimesInTrip = $.grep(stopTimesInRoute, function (a) {
                 return a.trip_id == tripsInRoute[i].trip_id;
             });
+            console.log(stopTimesInTrip);
             stopTimesInTrip.sort(function (a, b) {
                 return new Date('1970/01/01 ' + a.departure_time) - new Date('1970/01/01 ' + b.departure_time);
             });
+            console.log(stopTimesInTrip);
             var j = 0;
 
             for (k = 0; k < uniqueStopNamesInRoute.length; k++) {
