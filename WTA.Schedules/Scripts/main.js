@@ -1445,6 +1445,7 @@ function servingRoutes() {
         }
     }
     var stopFlags = {};
+    finalStops = finalStops.filter(function(n){ return n != undefined });
     finalStops = finalStops.filter(function (entry) {
         if (stopFlags[entry.route_id]) {
             return false;
@@ -1454,7 +1455,6 @@ function servingRoutes() {
     });
     servedByRoutes = '';
 
-    // Sort
     finalStops.sort(function (a, b) {
         a = Number(String(a.route_short_name).replace(/\D/g, ''));
         b = Number(String(b.route_short_name).replace(/\D/g, ''));
@@ -1464,12 +1464,8 @@ function servingRoutes() {
 
     for (i = 0; i < finalStops.length; i++) {
         if (i > 0) {
-            //servedByRoutes += ', <a href="index.html?' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</a>';
-            //servedByRoutes += ', <a href="javascript:loadRouteDetails(' + finalStops[i].route_id + ')">' + finalStops[i].route_short_name + '</a>';
             servedByRoutes += ', <a href="#route-details?routeId=' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</a>';
         } else {
-            //servedByRoutes += '<a href="index.html?' + finalStops[i].route_id + '">' + finalStops[i].route_short_name; +'</a>';
-            //servedByRoutes += '<a href="javascript:loadRouteDetails(' + finalStops[i].route_id + ')">' + finalStops[i].route_short_name; +'</a>';
             servedByRoutes += '<a href="#route-details?routeId=' + finalStops[i].route_id + '">' + finalStops[i].route_short_name; +'</a>';
         }
     }
@@ -1533,6 +1529,7 @@ function servingRoutesMap() {
         }
     }
     var stopFlags = {};
+    finalStopsMap = finalStopsMap.filter(function(n){ return n != undefined });
     finalStopsMap = finalStopsMap.filter(function (entry) {
         if (stopFlags[entry.route_id]) {
             return false;
