@@ -50,9 +50,13 @@
                             <select id="scheduleFor"><option id="all" value="All Routes">All Routes</option></select>
                         </fieldset>
                     </div>
+                    <div class="button">
+                        <input type="button" name="applyFilter" class="button right" id="applyFilter" value="Apply" onclick="filterStops(chosenRouteId);">
+                    </div>
+
                     <!--<div class="button-row">                        
                         <input type="button" name="clearFilter" class="button right" id="clearFilter" value="Clear Filter" onclick="filterStops('all');">
-                        <input type="button" name="applyFilter" class="button right" id="applyFilter" value="Apply Filter" onclick="filterStops(chosenRouteId);">
+                        <input type="button" name="applyFilter" class="button right" id="applyFilter" value="Apply" onclick="filterStops(chosenRouteId);">
                     </div>-->
                     <div id="tableRow" class="">
                         <table id="stopTable" class="table table-striped table-hover table-bordered">

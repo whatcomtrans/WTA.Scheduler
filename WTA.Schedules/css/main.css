@@ -490,9 +490,9 @@ fieldset select{
     display:none;
 }
 #route-details .map-image img {
-    width:100%;
+    /*width:100%;    
+    height:auto;*/
     max-width:100%;
-    *height:auto;
 }
 .map-dialog{
     max-height:100vh;
@@ -693,13 +693,18 @@ fieldset select{
 }
 #my-stop #schedule .filters{
     margin-bottom:15px;
-    text-align:center;
+   * text-align:center;
+    display:inline-block;
 }
 #my-stop #schedule .filters fieldset{
     display:inline-block;
     vertical-align:top;
     text-align:left;
 }
+ #my-stop #schedule .button{
+     display:inline-block;
+     vertical-align:middle;
+ }
 
 /* Map */
 #map-canvas {
@@ -1996,6 +2001,10 @@ input[type=button]:hover,
         padding:15px;
         box-sizing:border-box;
     }
+    #my-stop #schedule fieldset,
+    #my-stop #schedule .button{
+        display:block;
+    }
 }
 @media (max-width:485px) {
 	#DeltaSiteLogo{
@@ -2025,8 +2034,6 @@ input[type=button]:hover,
     #my-stop #schedule .filters fieldset{
         display:block;
     }
-
-}
 @media (max-width:370px){
     #route-details #datePickerCont label{
         display:block;
