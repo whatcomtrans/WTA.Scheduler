@@ -88,24 +88,26 @@ function loadMain() {
     $("#sidebar").load("/common/" + language + "/sidebar.html", function () { initializeSidebar(); });
     $("#footer").load("/common/" + language + "/footer.html");
     $("#leftNav").load("/common/" + language + "/left-nav.html");
-    window.setTimeout(loadTripData, 500)
+    window.setTimeout(function () { loadTripData }, 500)
     loadPageContent();
 }
 
 function loadTripData(callback) {
     if (typeof trips != 'undefined') {
-        callback;
+        if (callback) { callback() };
     } else {
         var oScript = document.createElement("script");
         oScript.type = "text\/javascript";
-        oScript.onload = callback;
+        oScript.onload = function () { callback() };
         if (gzipEnabled) {
           oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js.gz";
         } else {
           oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
         }
         (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
-        callback;
+        //if (callback) {
+        //    callback()
+        //};
     }
 }
 
@@ -123,13 +125,14 @@ function loadPageContent() {
     var hash = window.location.hash.split("?")[0].replace("#","");
     switch (hash) {
         case "route-details":
-            loadTripData(loadRouteDetails(currentRouteID));
+            //loadTripData(loadRouteDetails(currentRouteID));
+            loadTripData(function () { loadRouteDetails(currentRouteID) });
             break;
         case "map":
-            loadTripData(loadMap());
+            loadTripData(function () { loadMap() });
             break;
         case "stops":
-            loadTripData(loadStops(currentStopID));
+            loadTripData(function () { loadStops(currentStopID) });
             break;
         case "routes":
         default:
@@ -469,17 +472,18 @@ function setStickyHeader() {
 }
 
 function showMapDialog() {
-    jQuery('#mapDialog').dialog({
-        modal : true,
-        responsive: true,
-        width: 'auto',
-        height: 'auto',
-            dialogClass: "map-dialog",
-        close: function(event, ui) {
-            $("#mapDialog").dialog("destroy");
-        },
-    });
-
+    if ($(window).width() >= 520) {  
+        jQuery('#mapDialog').dialog({
+            modal : true,
+            responsive: true,
+            width: 'auto',
+            height: 'auto',
+                dialogClass: "map-dialog",
+            close: function(event, ui) {
+                $("#mapDialog").dialog("destroy");
+            },
+        });
+    }
 }
 
 function swapMapSize() {
@@ -551,7 +555,7 @@ function displaySelectedRouteAsync() {
     if (typeof trips != "undefined") {
         setTimeout(function () { displaySelectedRoute();}, 1000);
     } else {
-        loadTripData(currentRouteID);
+        loadTripData(function () { displaySelectedRoute });
     }
 }
 function displaySelectedRoute() {
@@ -598,13 +602,14 @@ function displaySelectedRoute() {
             imgMap.onload = function () {
                 $("#routeMap img").remove();
                 $("#routeMap").prepend(imgMap);
+                $('#routeMap img').attr('onClick', 'showMapDialog();');
             }
             imgMap.onerror = function () {
                 $("#routeMap").hide();
             }
             imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
             $("#mapDialog img").attr("src", "/Images/maps/" + route.route_short_name + ".png");
-            $('#mapDialog img').attr('onClick','showMapDialog();');
+            
         }
 
         var tripsInRoute = [];

@@ -103,15 +103,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="browserconfig.xml" />
-    <Content Include="common\footer.html" />
-    <Content Include="common\header.html" />
-    <Content Include="common\left-nav.html" />
-    <Content Include="common\loading.html" />
-    <Content Include="common\map.html" />
-    <Content Include="common\route-details.html" />
-    <Content Include="common\routes.html" />
-    <Content Include="common\sidebar.html" />
-    <Content Include="common\stops.html" />
+    <Content Include="common\en\footer.html" />
+    <Content Include="common\en\header.html" />
+    <Content Include="common\en\left-nav.html" />
+    <Content Include="common\en\map.html" />
+    <Content Include="common\en\route-details.html" />
+    <Content Include="common\en\routes.html" />
+    <Content Include="common\en\sidebar.html" />
+    <Content Include="common\en\stops.html" />
+    <Content Include="common\es\footer.html" />
+    <Content Include="common\es\header.html" />
+    <Content Include="common\es\left-nav.html" />
+    <Content Include="common\es\map.html" />
+    <Content Include="common\es\route-details.html" />
+    <Content Include="common\es\routes.html" />
+    <Content Include="common\es\sidebar.html" />
+    <Content Include="common\es\stops.html" />
     <Content Include="css\bootstrap-custom.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.min.css" />
@@ -198,7 +205,8 @@
     <Content Include="Images\ui-icons_888888_256x240.png" />
     <Content Include="Images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Images\wta-loader.gif" />
-    <Content Include="schedules.html" />
+    <Content Include="schedules-en.html" />
+    <Content Include="schedules-es.html" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
