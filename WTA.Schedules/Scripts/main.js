@@ -828,7 +828,6 @@ function displaySelectedRoute() {
                     var continuesOnAsRoute = $.grep(routes, function (a) {
                         return continuesOnAs[0].route_id === a.route_id
                     });
-                    console.log(continuesOnAsRoute);
                     if (continuesOnAsRoute[0] == undefined) {
                         $(this).append('<td class="outOfService">' + lang("Out of Service") + '</td>');
                     } else {
