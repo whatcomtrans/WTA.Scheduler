@@ -653,11 +653,12 @@ function displaySelectedRoute() {
             }
         }
         var flags = {};
+        //this function is filtering out stops that are repeated on a trip, which is causing problems for routes 27, 43, 44
         var uniqueStopTimesInRoute = stopTimesInRoute.filter(function (entry) {
-            if (flags[entry.stop_id]) {
+            if (flags[entry.stop_sequence]) { //used to filter on stop_id
                 return false;
             }
-            flags[entry.stop_id] = true;
+            flags[entry.stop_sequence] = true;
             return true;
         });
         uniqueStopTimesInRoute.sort(function compare(a, b) {
@@ -686,11 +687,9 @@ function displaySelectedRoute() {
             var stopTimesInTrip = $.grep(stopTimesInRoute, function (a) {
                 return a.trip_id == tripsInRoute[i].trip_id;
             });
-            console.log(stopTimesInTrip);
             stopTimesInTrip.sort(function (a, b) {
                 return new Date('1970/01/01 ' + a.departure_time) - new Date('1970/01/01 ' + b.departure_time);
             });
-            console.log(stopTimesInTrip);
             var j = 0;
 
             for (k = 0; k < uniqueStopNamesInRoute.length; k++) {
@@ -701,7 +700,23 @@ function displaySelectedRoute() {
                     j++;
                     k--;
                 } else if (columnId != stopTimesInTrip[j].stop_id) {
-                    $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
+                    // var insertThisStopId = $.grep(stopTimesInTrip, function(d) {
+                    //     return (d.stop_sequence == (k+1));
+                    // });
+                    // if (insertThisStopId[0] != undefined) {
+                    //     var insertThisStop = $.grep(stops, function(e) {
+                    //         return e.stop_id == insertThisStopId[0].stop_id;
+                    //     });
+                    //     $('#stopNames td:eq(' + (k-1) +')').after('<td id="' + insertThisStopId[0].stop_id + '"><a href="#stops?stopId=' + insertThisStopId[0].stop_code + '"><div><span data-stopid=' + insertThisStopId[0].stop_id + ' class="top">' + insertThisStop[0].stop_name + '</span></br><span class="bottom">(' + insertThisStop[0].stop_code + ')</span></div></a></td>');
+                    //     if (stopTimesInTrip[j].departure_time.length == 7) {
+                    //         $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">0' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
+                    //     } else {
+                    //         $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
+                    //     }
+                    //     j++;
+                    // } else {
+                         $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
+                    // }
                 } else {
                     if (stopTimesInTrip[j].departure_time.length == 7) {
                         $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">0' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
@@ -818,10 +833,13 @@ function displaySelectedRoute() {
                     var continuesOnAsRoute = $.grep(routes, function (a) {
                         return continuesOnAs[0].route_id === a.route_id
                     });
-                    continuesOnAsRoute = continuesOnAsRoute[0].route_short_name;
-                    continuesOnAs = continuesOnAsRoute + ' ' + continuesOnAsHeadsign;
-                    //$(this).append('<td class="continuing" id="' + continuesOnAsRoute + ' ' + continuesOnAsDirection + '" onClick="continuingRoute(' + continuesOnAsRouteId + ', ' + currentServiceID + ', ' + continuesOnAsDirection + ', ' + continuesOnAsHeadsignVar + ');">' + continuesOnAs + '</td>');
-                    $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '&?directionId=' + continuesOnAsDirection + '">' + continuesOnAs + '</a></td>');
+                    if (continuesOnAsRoute[0] == undefined) {
+                        $(this).append('<td class="outOfService">' + lang("Out of Service") + '</td>');
+                    } else {
+                        continuesOnAsRoute = continuesOnAsRoute[0].route_short_name;
+                        continuesOnAs = continuesOnAsRoute + ' ' + continuesOnAsHeadsign;
+                        $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '&?directionId=' + continuesOnAsDirection + '">' + continuesOnAs + '</a></td>');
+                    }
                 }
             });
             // Reset vars for sticky table header
@@ -843,13 +861,11 @@ function displaySelectedRoute() {
             //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
             $('#stopNames').append('<td><div class="continuesOnAs">' + lang("Continues On As") + '</div></td>');
         }
-    } catch (e) { alert(e.message);}
+    } catch (e) { console.log(e);}
     finally {
-        //$('.spinner').remove();
         hideLoading();
     }
 }
-
 function uniqueStops(currentRouteID) {
     var tripsInRoute = [];
     var specialService = $.grep(calendar_dates, function (a) {
