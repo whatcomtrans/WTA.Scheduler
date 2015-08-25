@@ -569,6 +569,7 @@ function thisDay(day) {
             currentServiceID = 11;
         }
         $("#dayTabs").tabs("option", "active", 0);
+        console.log($('#datepicker').datepicker('getDate'));
     } else if (day == 'Saturday') {
         if (currentDayNum <= serviceChangeDate) {
             currentServiceID = 2;
@@ -898,7 +899,7 @@ function displaySelectedRoute() {
             } else if (currentServiceID == 999) {
                 $('#noService').append(lang('Please check back later for future schedule information.'));
             } else {
-                $('#noService').append(lang('There is no service for the specified route and time.'));
+                $('#noService').append(lang('There is no service during the specified route and time.'));
             }
         } else {
             //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
@@ -1220,16 +1221,7 @@ function initializeStops() {
         visible: true,
     };
     panorama.setOptions(panoOptions);
-    // google.maps.event.addListener(panorama, 'position_changed', function() {
-    //     var lat = panorama.getPosition().k;
-    //     var lng = panorama.getPosition().D;
-    //     var panoLocation = new google.maps.LatLng(lat, lng);
-    //     var heading = google.maps.geometry.spherical.computeHeading(panoLocation,LatLng);
-    //     panorama.setPov({
-    //         heading: heading,
-    //         pitch:5
-    //     });
-    // });
+
     var streetviewService = new google.maps.StreetViewService();
 
     var day = new Date().getDay();
@@ -1240,19 +1232,47 @@ function initializeStops() {
     if (newMonth.length < 2) { newMonth = '0' + newMonth; }
     var newYear = (presentDate.getFullYear()).toString();
     specialServiceDate = newYear + newMonth + newDate;
+    var SSDint = parseInt(specialServiceDate);
+    serviceChangeDate = parseInt(calendar[0].end_date);
+    serviceLastDate = parseInt(calendar[4].end_date);
 
     if (day > 0 && day < 6) {
-        $('#Weekday').addClass('selectedDay');
-        currentServiceID = 1;
+        if (SSDint <= serviceChangeDate) {
+            $('#Weekday').addClass('selectedDay');
+            currentServiceID = 1;
+        } else if (SSDint > serviceLastDate) {
+            $('#Weekday').addClass('selectedDay');
+            currentServiceID = 999;
+        } else {
+            $('#Weekday').addClass('selectedDay');
+            currentServiceID = 11;
+        }
     }
     else if (day == 6) {
-        $('#Saturday').addClass('selectedDay');
-        currentServiceID = 2;
+        if (SSDint <= serviceChangeDate) {
+            $('#Saturday').addClass('selectedDay');
+            currentServiceID = 2;
+        } else if (SSDint > serviceLastDate) {
+            $('#Saturday').addClass('selectedDay');
+            currentServiceID = 999;
+        } else {
+            $('#Saturday').addClass('selectedDay');
+            currentServiceID = 12;
+        }
     }
     else if (day == 0) {
-        $('#Sunday').addClass('selectedDay');
-        currentServiceID = 3;
+        if (SSDint <= serviceChangeDate) {
+            $('#Sunday').addClass('selectedDay');
+            currentServiceID = 3;
+        } else if (SSDint > serviceLastDate) {
+            $('#Sunday').addClass('selectedDay');
+            currentServiceID = 999;
+        } else {
+            $('#Sunday').addClass('selectedDay');
+            currentServiceID = 13;
+        }
     }
+
     $("#dayTabs").tabs({ activate: onStopTabChanged });
 
 
@@ -1272,9 +1292,11 @@ function initializeStops() {
     var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
     var d = new Date().toLocaleDateString('en-US', dateConfig);
     $('#datepicker').attr('value', d);
+    var todaysDate = new Date();
     $(function () {
         $('#datepicker').datepicker({
             showOn: "both",
+            minDate: todaysDate,
             buttonText: "<i class='fa fa-calendar'></i>"
         });
     });
@@ -2085,7 +2107,7 @@ function DropTopNav($, l, a) {
 }
 function lang(englishString) {
   //Must maintain a one to one relationshin in the array of english to alternate langauge
-  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no service during the holiday.", "Please check back later for future schedule information.", "There is no service for the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
+  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no service during the holiday.", "Please check back later for future schedule information.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
   var esPhrases = ["Ruta", "Out of Service", "Fuera de servicio", "No hay servicio durante las vacaciones.", "Por favor, vuelva más tarde para el futuro información de programación.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode no tuvo éxito por la siguiente razón: ", "Hora", "Stop ID", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo."];;
   if (language == "es") {
     return esPhrases[enPhrases.indexOf(englishString)];
