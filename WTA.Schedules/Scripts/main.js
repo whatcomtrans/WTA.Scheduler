@@ -1547,12 +1547,8 @@ function servingRoutesMap() {
     });
     for (i = 0; i < finalStopsMap.length; i++) {
         if (i > 0) {
-            //servedByRoutesMap += ', <a href="index.html?' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
-            //servedByRoutesMap += ', <a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name + '</a>';
             servedByRoutesMap += ', <a href="#route-details?routeId=' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
         } else {
-            //servedByRoutesMap += ', <a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name + '</a>';
-            //servedByRoutesMap += '<a href="javascript:loadRouteDetails(' + finalStopsMap[i].route_id + ')">' + finalStopsMap[i].route_short_name; +'</a>';
             servedByRoutesMap += '<a href="#route-details?routeId=' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name; +'</a>';
         }
     }
