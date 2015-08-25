@@ -10,6 +10,7 @@ var entryPanoId = null;
 var scrollToTop = false;
 var searchURL = "http://www.ridewta.com/search/pages/results.aspx?k=";
 var markers = [];
+var serviceChangeDate, serviceLastDate, currentDayNum;
 
 $(document).ready(function () {
     //window.onpopstate = onPopState;
@@ -297,12 +298,6 @@ function initializeRouteDetails() {
     // If no route number selected go back to routes
     if (currentRouteID){
 
-        //$("#dayTabs").tabs({
-        //    activate: function (event, ui) {
-        //        var active = $('#dayTabs').tabs('option', 'active');
-        //        thisDay($("#dayTabs ul>li a").eq(active).html());
-        //    }
-        //});
         $("#dayTabs").tabs({ activate: onRouteTabChanged });
 
         //Select the current day tab on load
@@ -314,18 +309,45 @@ function initializeRouteDetails() {
         if (newMonth.length < 2) { newMonth = '0' + newMonth; }
         var newYear = (presentDate.getFullYear()).toString();
         specialServiceDate = newYear + newMonth + newDate;
+        var SSDint = parseInt(specialServiceDate);
+        serviceChangeDate = parseInt(calendar[0].end_date);
+        serviceLastDate = parseInt(calendar[4].end_date);
 
         if (day > 0 && day < 6) {
-            $('#Weekday').addClass('selectedDay');
-            currentServiceID = 1;
+            if (SSDint <= serviceChangeDate) {
+                $('#Weekday').addClass('selectedDay');
+                currentServiceID = 1;
+            } else if (SSDint > serviceLastDate) {
+                $('#Weekday').addClass('selectedDay');
+                currentServiceID = 999;
+            } else {
+                $('#Weekday').addClass('selectedDay');
+                currentServiceID = 11;
+            }
         }
         else if (day == 6) {
-            $('#Saturday').addClass('selectedDay');
-            currentServiceID = 2;
+            if (SSDint <= serviceChangeDate) {
+                $('#Saturday').addClass('selectedDay');
+                currentServiceID = 2;
+            } else if (SSDint > serviceLastDate) {
+                $('#Saturday').addClass('selectedDay');
+                currentServiceID = 999;
+            } else {
+                $('#Saturday').addClass('selectedDay');
+                currentServiceID = 12;
+            }
         }
         else if (day == 0) {
-            $('#Sunday').addClass('selectedDay');
-            currentServiceID = 3;
+            if (SSDint <= serviceChangeDate) {
+                $('#Sunday').addClass('selectedDay');
+                currentServiceID = 3;
+            } else if (SSDint > serviceLastDate) {
+                $('#Sunday').addClass('selectedDay');
+                currentServiceID = 999;
+            } else {
+                $('#Sunday').addClass('selectedDay');
+                currentServiceID = 13;
+            }
         }
         var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
         var d = new Date().toLocaleDateString('en-US', dateConfig);
@@ -402,6 +424,9 @@ function initializeRouteDetails() {
 }
 function onRouteDatepickerChanged(e) {
     currentDate = e.target.value;
+    currentDayNum = Date.parse(currentDate);
+    currentDayNum = new Date(currentDayNum);
+    currentDayNum = parseInt((currentDayNum.getFullYear().toString()) + (("0" + ((currentDayNum.getMonth()+1).toString())).slice(-2)) + (("0" + ((currentDayNum.getDate()).toString())).slice(-2)));
     currentDate = currentDate.split(',')[0];
     thisDay(currentDate);
 }
@@ -536,13 +561,31 @@ function flipRoute() {
 function thisDay(day) {
     $("#dayTabs").tabs({ activate: null });
     if (day == 'Weekday' || day == 'Monday' || day == 'Tuesday' || day == 'Wednesday' || day == 'Thursday' || day == 'Friday') {
-        currentServiceID = 1;
+        if (currentDayNum <= serviceChangeDate) {
+            currentServiceID = 1;
+        } else if (currentDayNum > serviceLastDate) {
+            currentServiceID = 999;
+        } else {
+            currentServiceID = 11;
+        }
         $("#dayTabs").tabs("option", "active", 0);
     } else if (day == 'Saturday') {
-        currentServiceID = 2;
+        if (currentDayNum <= serviceChangeDate) {
+            currentServiceID = 2;
+        } else if (currentDayNum > serviceLastDate) {
+            currentServiceID = 999;
+        } else {
+            currentServiceID = 12;
+        }
         $("#dayTabs").tabs("option", "active", 1);
     } else if (day == 'Sunday') {
-        currentServiceID = 3;
+        if (currentDayNum <= serviceChangeDate) {
+            currentServiceID = 3;
+        } else if (currentDayNum > serviceLastDate) {
+            currentServiceID = 999;
+        } else {
+            currentServiceID = 13;
+        }
         $("#dayTabs").tabs("option", "active", 2);
     }
     $("#dayTabs").tabs({ activate: onRouteTabChanged });
@@ -563,7 +606,6 @@ function displaySelectedRoute() {
     try{
         $('#busTable').empty();
         $('.routeNumber').empty();
-        //$('#datePicker').after('<div class="spinner"></div>');
 
         // populate heading
         var route = getRoute(currentRouteID);
@@ -653,9 +695,8 @@ function displaySelectedRoute() {
             }
         }
         var flags = {};
-        //this function is filtering out stops that are repeated on a trip, which is causing problems for routes 27, 43, 44
         var uniqueStopTimesInRoute = stopTimesInRoute.filter(function (entry) {
-            if (flags[entry.stop_sequence]) { //used to filter on stop_id
+            if (flags[entry.stop_sequence]) {
                 return false;
             }
             flags[entry.stop_sequence] = true;
@@ -854,6 +895,8 @@ function displaySelectedRoute() {
         if (trip_headsign === -1) {
             if (isHoliday.length > 0) {
                 $('#noService').append(lang('There is no service during the holiday.'));
+            } else if (currentServiceID == 999) {
+                $('#noService').append(lang('Please check back later for future schedule information.'));
             } else {
                 $('#noService').append(lang('There is no service for the specified route and time.'));
             }
@@ -1075,7 +1118,7 @@ function throwTheDate() {
     var prevYear = previousDate.getFullYear();
     var daysInSelectedMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
     var next = selectedDate;
-    if (currentServiceID == 1) {
+    if (currentServiceID == 1 || currentServiceID == 11) {
         if (!(previousDay > 0 && previousDay < 6)) {
             //next = selectedDate + (8 - previousDay);
             next = selectedDate - (8 - previousDay);
@@ -1088,7 +1131,7 @@ function throwTheDate() {
                 }
             }
         }
-    } else if (currentServiceID == 2) {
+    } else if (currentServiceID == 2 || currentServiceID == 12) {
         if (!(previousDay == 6)) {
             next = selectedDate + (6 - previousDay);
             if (next > daysInSelectedMonth) {
@@ -1100,7 +1143,7 @@ function throwTheDate() {
                 }
             }
         }
-    } else if (currentServiceID == 3) {
+    } else if (currentServiceID == 3 || currentServiceID == 13) {
         if (!(previousDay == 0)) {
             next = selectedDate + (7 - previousDay);
             if (next > daysInSelectedMonth) {
@@ -1251,6 +1294,9 @@ function initializeStops() {
 }
 function onStopDatepickerChanged(e) {
     currentDate = e.target.value;
+    currentDayNum = Date.parse(currentDate);
+    currentDayNum = new Date(currentDayNum);
+    currentDayNum = parseInt((currentDayNum.getFullYear().toString()) + (("0" + ((currentDayNum.getMonth()+1).toString())).slice(-2)) + (("0" + ((currentDayNum.getDate()).toString())).slice(-2)));
     currentDate = currentDate.split(',')[0];
     thisDayStops(currentDate);
 }
@@ -1331,19 +1377,37 @@ function thisDayStops(day) {
     $("#dayTabs").tabs({ activate: null });
     $('#dayTabs div').removeClass('selectedDay');
     if (day == 'Weekday' || day == 'Monday' || day == 'Tuesday' || day == 'Wednesday' || day == 'Thursday' || day == 'Friday') {
-        currentServiceID = 1;
+        if (currentDayNum <= serviceChangeDate) {
+            currentServiceID = 1;
+        } else if (currentDayNum > serviceLastDate) {
+            currentServiceID = 999;
+        } else {
+            currentServiceID = 11;
+        }
         $('#Weekday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
         $("#dayTabs").tabs("option", "active", 0);
     } else if (day == 'Saturday') {
-        currentServiceID = 2;
+        if (currentDayNum <= serviceChangeDate) {
+            currentServiceID = 2;
+        } else if (currentDayNum > serviceLastDate) {
+            currentServiceID = 999;
+        } else {
+            currentServiceID = 12;
+        }
         $('#Saturday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
         $("#dayTabs").tabs("option", "active", 1);
     } else if (day == 'Sunday') {
-        currentServiceID = 3;
+        if (currentDayNum <= serviceChangeDate) {
+            currentServiceID = 3;
+        } else if (currentDayNum > serviceLastDate) {
+            currentServiceID = 999;
+        } else {
+            currentServiceID = 13;
+        }
         $('#Sunday').addClass('selectedDay');
         $('#printThis').show();
         $('#map-canvas').hide();
@@ -1391,7 +1455,6 @@ function displaySelectedStop() {
                 }
 
                 $('#cityZip').text(city + ', ' + zip);
-                //$('#cityZip').text(results[0].formatted_address);
             }
         });
 
@@ -1425,6 +1488,11 @@ function servingRoutes() {
     });
     if (isHoliday.length > 0) {
         $('#stopTable').append('<tr><td colspan="2">' + lang("There is no service during the holiday.") + '</td></tr>');
+        selectedStopId = $('#selectedStopId')[0].innerHTML;
+        return;
+    }
+    if (currentServiceID == 999) {
+        $('#stopTable').append('<tr><td colspan="2">' + lang("Please check back later for future schedule information.") + '</td></tr>');
         selectedStopId = $('#selectedStopId')[0].innerHTML;
         return;
     }
@@ -1690,12 +1758,11 @@ function finishInit() {
         kmlStopCode = kmlStop[0].stop_code;
         kmlStopName = kmlStop[0].stop_name;
         e.featureData = {
-            //'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>Stop ID</th><th>Served By</th><tr><td><a href="javascript:loadStops(' + kmlStopCode + ')">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
             'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>' + lang("Stop ID") + '</th><th>' + lang("Served By") + '</th><tr><td><a href="#stops?stopId=' + kmlStopCode + '">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
         }
     });
 
-    fillStopsMap();
+    setTimeout(function() {fillStopsMap();},500);
     scrollContentTop();
 }
 function showPosition(position) {
@@ -2018,8 +2085,8 @@ function DropTopNav($, l, a) {
 }
 function lang(englishString) {
   //Must maintain a one to one relationshin in the array of english to alternate langauge
-  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no service during the holiday.", "There is no service for the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
-  var esPhrases = ["Ruta", "Out of Service", "Fuera de servicio", "No hay servicio durante las vacaciones.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode no tuvo éxito por la siguiente razón: ", "Hora", "Stop ID", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo."];;
+  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no service during the holiday.", "Please check back later for future schedule information.", "There is no service for the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
+  var esPhrases = ["Ruta", "Out of Service", "Fuera de servicio", "No hay servicio durante las vacaciones.", "Por favor, vuelva más tarde para el futuro información de programación.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode no tuvo éxito por la siguiente razón: ", "Hora", "Stop ID", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo."];;
   if (language == "es") {
     return esPhrases[enPhrases.indexOf(englishString)];
   } else {
