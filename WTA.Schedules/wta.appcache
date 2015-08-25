@@ -56,7 +56,6 @@ http://data.ridewta.com/gtfs/website/data_trips.js.gz
 /Images/go-red.jpg
 
 
-
 # Give permission to use anything from the network if it isn't already in cache
 NETWORK:
 *
