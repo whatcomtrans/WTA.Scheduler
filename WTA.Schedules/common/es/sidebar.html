@@ -1,30 +1,30 @@
 ﻿<div class="wta-widget trip-planner container-pad">
-    <h2>Trip Planner</h2>
+    <h2>Planificador de viajes</h2>
     <div class="">
         <form id="google-transit-maps" action="http://google.com/maps" >
             <div class="info-fields">
                 <input name="dirflg" type="hidden" value="r">
                 <p>
-                    <input id="tbStartLocation" name="saddr" title="Enter the Start Address" type="text" placeholder="Start" maxlength="2048">
+                    <input id="tbStartLocation" name="saddr" title="Introduzca la dirección de inicio" type="text" placeholder="Origen" maxlength="2048">
                     <br />
-                    <a class="usecurrent" href="javascript:useCurrentStart()">use my current location</a>
+                    <a class="usecurrent" href="javascript:useCurrentStart()">Utilizar mi ubicación actual</a>
                 </p>
                 <p>
-                    <input id="tbEndLocation" name="daddr" title="Enter the Destination Address" type="text" placeholder="End" maxlength="2048"> <br />
-                    <a class="usecurrent" href="javascript:useCurrentEnd()">use my current location</a>
+                    <input id="tbEndLocation" name="daddr" title="Introduzca la dirección de destino" type="text" placeholder="Origen" maxlength="2048"> <br />
+                    <a class="usecurrent" href="javascript:useCurrentEnd()">Utilizar mi ubicación actual</a>
                 </p>
                 <p id="google-transit-date">
-                    <input type="text" id="fdate" size="6" name="date" value="" maxlength="10" title="Enter the Date in MM/DD/YY format" placeholder="Date">
-                    <input type="text" id="ftime" size="5" name="time" value="" maxlength="8" title="Enter the Time in HH:MM AM or PM format" placeholder="Time">
+                    <input type="text" id="fdate" size="6" name="date" value="" maxlength="10" title="Enter the Date in MM/DD/YY format" placeholder="Fecha">
+                    <input type="text" id="ftime" size="5" name="time" value="" maxlength="8" title="Enter the Time in HH:MM AM or PM format" placeholder="Duración">
                 </p>
                 <p>
-                    <input type="radio" name="ttype" value="dep" checked /> Departing
-                    <input type="radio" name="ttype" value="arr" /> Arriving
+                    <input type="radio" name="ttype" value="dep" checked /> Salida
+                    <input type="radio" name="ttype" value="arr" /> Llegada
                 </p>
             </div>
             <div class="plan-trip">
-                <button id="google-transit-submit" type="submit" value="Plan Trip">Plan<br />Trip</button> </br>
-                <span>Or call <a href="tel:360-676-7433">360-676-RIDE</a></span>
+                <button id="google-transit-submit" type="submit" value="Planificación del viaje">Planificación <br\> del viaje</button> </br>
+                <span>o llame al <a href="tel:360-676-7433">360-676-RIDE</a></span>
             </div>
 
         </form>
@@ -32,33 +32,33 @@
 </div>
 
 <div class="wta-widget route-selector container-pad">
-    <h2>Routes</h2>
+    <h2>Rutas</h2>
     <div>
         <select id="selRoutes">
-            <option class="option" value="selectRoute">Select A Route</option>
+            <option class="option" value="selectRoute">Seleccione una ruta</option>
         </select>
-        <input id="findRoute" type="button" value="Find">
+        <input id="findRoute" type="button" value="Encontrar">
     </div>
 </div>
 
 <div class="wta-widget stop-selector container-pad">
-    <h2>My Stop</h2>
+    <h2>Mi parada</h2>
     <div>
-        <input id="tbStop" title="Enter the Stop ID" type="text" placeholder="Enter Stop Id, Address or Intersection" maxlength="2048">
-        <input id="findStop" type="button" value="Find">
+        <input id="tbStop" title="Ingresar ID de parada" type="text" placeholder="Ingresar ID de parada, dirección o intersección" maxlength="2048">
+        <input id="findStop" type="button" value="Encontrar">
     </div>
 </div>
 
 <div class="wta-widget system-map container-pad">
-    <h2>System Map</h2>
+    <h2>Mapa del sistema</h2>
     <div>
-        <p>Our interactive map displays our routes and stops.</p>
-        <a href="#map"><input id="systemMap" type=submit value="Find"></a>
+        <p>Nuestro mapa interactivo muestra nuestras rutas y paradas.</p>
+        <a href="#map"><input id="systemMap" type=submit value="Encontrar"></a>
     </div>
 </div>
 
 <div class="wta-widget notices container-pad">
-    <h2>Notices</h2>
+    <h2>Informes</h2>
     <div class="">
         <ul id="noticeList"></ul>
     </div>

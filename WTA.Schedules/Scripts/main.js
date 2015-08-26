@@ -8,7 +8,11 @@ var currentServiceID = 1; // Weekdays
 var currentDate = new Date();
 var entryPanoId = null;
 var scrollToTop = false;
-var searchURL = "http://www.ridewta.com/search/pages/results.aspx?k=";
+if (language == "es") {
+  var searchURL = "http://www.ridewta.com/search/pages/results.aspx?k=";
+} else {
+  var searchURL = "http://www.ridewta.com/search/pages/results.aspx?k=";
+}
 var markers = [];
 var serviceChangeDate, serviceLastDate, currentDayNum;
 
@@ -497,7 +501,7 @@ function setStickyHeader() {
 }
 
 function showMapDialog() {
-    if ($(window).width() >= 520) {  
+    if ($(window).width() >= 520) {
         jQuery('#mapDialog').dialog({
             modal : true,
             responsive: true,
@@ -652,7 +656,7 @@ function displaySelectedRoute() {
             }
             imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
             $("#mapDialog img").attr("src", "/Images/maps/" + route.route_short_name + ".png");
-            
+
         }
 
         var tripsInRoute = [];
@@ -1035,7 +1039,11 @@ function applyFilter() {
         var endingStop = $('#stopListEnd option:selected')[0].innerHTML;
         $('#stopNames').hide();
         //TODO Translating this will have to wait until I see what we get back from the translator as it may not be a one to one.
-        $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>');
+        if (language == "es") {
+          $('#busTable').append('<tr id="noStops"><td>La ruta ' + selectedRoute + ' a ' + trip_headsign + ' no se detiene en ' + startingStop + ' y ' + endingStop + ' entre los tiempos especificados.</td></tr>');
+        } else {
+          $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>');
+        }
     }
     setStickyHeader();
 }
@@ -2107,8 +2115,8 @@ function DropTopNav($, l, a) {
 }
 function lang(englishString) {
   //Must maintain a one to one relationshin in the array of english to alternate langauge
-  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no service during the holiday.", "Please check back later for future schedule information.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
-  var esPhrases = ["Ruta", "Out of Service", "Fuera de servicio", "No hay servicio durante las vacaciones.", "Por favor, vuelva más tarde para el futuro información de programación.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode no tuvo éxito por la siguiente razón: ", "Hora", "Stop ID", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo."];;
+  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no bus service on this holiday.", "We’re sorry. Bus schedules for the date you selected are not available yet. Please check back closer to your intended date of travel.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
+  var esPhrases = ["Ruta", "Fuera de servicio", "Fuera de servicio", "No hay servicio de autobús en estas vacaciones.", "Lo sentimos. Los horarios de autobuses para la fecha que ha seleccionado aún no están disponibles . Por favor, vuelva más cerca de su fecha prevista del viaje.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode falló por la siguiente razón: ", "Hora", "ID de parada", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo."];;
   if (language == "es") {
     return esPhrases[enPhrases.indexOf(englishString)];
   } else {

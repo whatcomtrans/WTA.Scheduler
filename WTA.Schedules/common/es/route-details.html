@@ -18,35 +18,35 @@
     <div class="row" style="clear:both">
         <div id="routeMap" class="map-image normal">
             <a id="btnResize" href="javascript:showMapDialog()"><i class="fa fa-search-plus"></i></a>
-            <div class="map-bottom-row"><span><a href="#map">Interactive Map</a></span></div>
+            <div class="map-bottom-row"><span><a href="#map">Mapa interactivo</a></span></div>
         </div>
         <div id="customizeRoute" class="">
             <div class="route-selector">
-                <h4>Choose a route:</h4>
+                <h4>Seleccione una ruta:</h4>
                 <select id="routeList" class="highlight" name="routeList">
-                    <option value="selectRoute" disabled>Select A Route</option>
+                    <option value="selectRoute" disabled>Seleccione una ruta</option>
                 </select>
             </div>
-            <h4>Customize Your Schedule</h4>
+            <h4>Personalizar su horario</h4>
             <div class="locations">
                 <fieldset>
-                    <label class="centerText">1. Starting from</label>
+                    <label class="centerText">1. Salida desde</label>
                     <select id="stopListStart" name="stopListStart" >
-                        <option value="selectStopListStart" disabled>Starting Bus Stop</option>
+                        <option value="selectStopListStart" disabled>Para de autobús inicial</option>
                     </select>
                 </fieldset>
                 <fieldset>
-                    <label class="centerText">2. Arriving at</label>
+                    <label class="centerText">2. Llegada en</label>
                     <select id="stopListEnd" name="stopListEnd">
-                        <option value="selectStopListEnd" disabled>Select the Starting Bus Stop First</option>
+                        <option value="selectStopListEnd" disabled>Primero, seleccione la parada de autobús inicial</option>
                     </select>
                 </fieldset>
             </div>
             <div class="times">
                 <fieldset>
-                    <label class="centerText">3. Between</label>
+                    <label class="centerText">3. Entre</label>
                     <input type="time" id="startTime" placeholder="HH:MM">
-                    <span> and </span>
+                    <span> y </span>
                     <input type="time" id="endTime" placeholder="HH:MM">
                 </fieldset>
 
@@ -54,10 +54,10 @@
 
             <div class="button-row">
                 <div class="spacer">
-                    <input type="button" name="applyFilter" id="applyFilter" value="Apply" onclick="applyFilter();">
+                    <input type="button" name="applyFilter" id="applyFilter" value="Postularse" onclick="applyFilter();">
                 </div>
                 <div class="spacer">
-                    <input type="button" name="clearFilter" id="clearFilter" value="Reset" onclick="clearFilter();">
+                    <input type="button" name="clearFilter" id="clearFilter" value="Reiniciar" onclick="clearFilter();">
                 </div>
             </div>
         </div>
@@ -67,15 +67,15 @@
 
         <div id="dayTabs">
             <ul>
-                <li><a href="javascript:thisDay('Weekday')">Weekday</a></li>
-                <li><a href="javascript:thisDay('Saturday')">Saturday</a></li>
-                <li><a href="javascript:thisDay('Sunday')">Sunday</a></li>
+                <li><a href="javascript:thisDay('Weekday')">Día de la semana</a></li>
+                <li><a href="javascript:thisDay('Saturday')">sábado</a></li>
+                <li><a href="javascript:thisDay('Sunday')">domingo</a></li>
             </ul>
             <div id="datePickerCont">
-                <label>Schedule for:</label>
+                <label>Horario para:</label>
                 <input type="text" name="datepicker" id="datepicker" value="" onclick="">
             </div>
-            <input type="button" name="printSchedule" id="printSchedule" value="Print" onclick="printDiv('route-details');">
+            <input type="button" name="printSchedule" id="printSchedule" value="Imprimir" onclick="printDiv('route-details');">
             <!--<div class="paging">
                 <div class="page-button left" onclick="pageLeft()">
                     <span class="circle-icon fa-stack fa-2x">
