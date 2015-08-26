@@ -1033,8 +1033,10 @@ function applyFilter() {
     });
     var cells = $('#busTable tr.tripTimes td');
     convertToStandard(cells);
-    var noRows = $('.tripTimes').is(':visible');
-    if (noRows == false) {
+    var noRows = $('.tripTimes td').filter(function () {
+        return $(this).is(':visible');
+    });
+    if (noRows.length == 0) {
         var startingStop = $('#stopListStart option:selected')[0].innerHTML;
         var endingStop = $('#stopListEnd option:selected')[0].innerHTML;
         $('#stopNames').hide();
