@@ -1016,12 +1016,13 @@ function applyFilter() {
     startCells.hide();
     var timeStart = $('#startTime').val();
     var timeEnd = $('#endTime').val();
-    var cellsRemaining = $('#busTable td').filter(function () {
+    var filterThis = $('#busTable td').not('.continuing' + ',' + '.outOfService');
+    var cellsRemaining = filterThis.filter(function () {
         return $(this).is(':visible');
     });
     cellsRemaining.splice(0, 1);
     cellsRemaining.splice(0, 1);
-    var cells = $('#busTable tr.tripTimes td');
+    var cells = $('#busTable tr.tripTimes td').not('.continuing' + ',' + '.outOfService');
     convertToMilitary(cells);
     $.each(cellsRemaining, function () {
         if ($(this)[0].innerHTML == '--') {
@@ -1031,7 +1032,7 @@ function applyFilter() {
             $(this).hide();
         }
     });
-    var cells = $('#busTable tr.tripTimes td');
+    var cells = $('#busTable tr.tripTimes td').not('.continuing' + ',' + '.outOfService');
     convertToStandard(cells);
     var noRows = $('.tripTimes td').filter(function () {
         return $(this).is(':visible');
