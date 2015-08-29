@@ -25,6 +25,7 @@ $(document).ready(function () {
 });
 
 function lookupRouteID(routeNum) {
+  routeNum = routeNum.toUpperCase();
   if (!routeList) { routeList = getRoutes(); }
   var route = $.grep(routeList, function (a) {
       return a.route_short_name == routeNum;
