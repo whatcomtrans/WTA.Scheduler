@@ -752,6 +752,9 @@ fieldset select{
 .highlight {
 	border: 2px solid green;
 }
+.continuing {
+    white-space:nowrap;
+}
 .spinner-cont{
     height:100%;
     text-align:center;
@@ -774,9 +777,6 @@ fieldset select{
 	border-bottom:6px solid rgba(0,174,239,.15);
 	border-top:6px solid rgba(0,174,239,.8);
 	border-radius:100%;
-}
-.continuing {
-    white-space:nowrap;
 }
 
 @-webkit-keyframes rotation {
