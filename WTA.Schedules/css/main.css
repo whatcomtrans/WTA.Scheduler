@@ -1432,6 +1432,10 @@ input[type=button]:hover,
     -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
 	box-shadow: 3px 3px 10px 0 #8E8E8E
 }
+.wta-widget.trip-planner .google-transit-submit-es{
+    font-size:13px;
+}
+
 .wta-widget.system-map p,
 .wta-widget.system-map input{
 	float:left;
