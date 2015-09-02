@@ -246,7 +246,7 @@ function initializeSidebar() {
     // Notices
     var noticeList = $("#noticeList");
     for (i = 0; i < notices.length; i ++) {
-        noticeList.append("<li>" + notices[i].title + "</li>");
+        noticeList.append("<li><a href='" + notices[i].url + "'>" + notices[i].title + "</a></li>");
     }
 }
 
