@@ -655,8 +655,8 @@ function displaySelectedRoute() {
             imgMap.onerror = function () {
                 $("#routeMap").hide();
             }
-            imgMap.src = "/Images/maps/" + route.route_short_name + ".png";
-            $("#mapDialog img").attr("src", "/Images/maps/" + route.route_short_name + ".png");
+            imgMap.src = "http://data.ridewta.com/routemaps/" + route.route_short_name + ".png";
+            $("#mapDialog img").attr("src", "http://data.ridewta.com/routemaps/" + route.route_short_name + ".png");
 
         }
 
