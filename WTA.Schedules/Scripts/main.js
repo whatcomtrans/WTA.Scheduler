@@ -1723,20 +1723,34 @@ function initializeMap() {
         ]
     }
     ];
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            mapOptions = {
-                center: { lat: position.coords.latitude, lng: position.coords.longitude },
-                zoom: 16,
-                styles: mapStyles,
-                zoomControl: false,
-                scrollwheel: true,
-                draggable: true,
-                keyboardShortcuts: true
-            };
-            finishInit();
-        });
-    } else {
+    //check if location services are enabled  
+    navigator.geolocation.getCurrentPosition(function(position) {
+        mapOptions = {
+            center: { lat: position.coords.latitude, lng: position.coords.longitude },
+            zoom: 16,
+            styles: mapStyles,
+            zoomControl: false,
+            scrollwheel: true,
+            draggable: true,
+            keyboardShortcuts: true
+        };
+        finishInit();
+    },
+    function (error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("Some mapping functions will not work without geolocation services enabled. For full functionality, please go to your browser's settings and enable location services.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("We were unable to get your currect location. Some mapping functions may not be available.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to use your location timed out. Some mapping functions may not be available.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("We were unable to get your current location. Some mapping functions may not be available.");
+                break;
+        }
         mapOptions = {
             center: { lat: 48.750057, lng: -122.476085 },
             zoom: 12,
@@ -1747,7 +1761,7 @@ function initializeMap() {
             keyboardShortcuts: true
         };
         finishInit();
-    }
+    });
 }
 function finishInit() {
     map = new google.maps.Map(document.getElementById('map-canvas'),
