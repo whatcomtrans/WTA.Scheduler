@@ -1,9 +1,7 @@
 ﻿CACHE MANIFEST
-# v0.8 2015-08-24
+# v0.93 2015-09-01
 
 CACHE:
-/schedules-en.html
-/schedules-es.html
 /common/en/footer.html
 /common/en/left-nav.html
 /common/en/sidebar.html
@@ -26,7 +24,6 @@ CACHE:
 /Scripts/app.min.js
 
 http://data.ridewta.com/gtfs/website/data_routes.js
-http://data.ridewta.com/gtfs/website/data_trips.js
 http://data.ridewta.com/gtfs/website/data_routes.js.gz
 http://data.ridewta.com/gtfs/website/data_trips.js.gz
 
