@@ -20,6 +20,10 @@ $(document).ready(function () {
     //window.onpopstate = onPopState;
     $(window).on('hashchange', function () {
         loadPageContent();
+        //scroll to top
+        $('html, body').animate({
+            scrollTop: 0
+        }, 'medium');
     });
     loadMain();
 });
@@ -1053,7 +1057,7 @@ function applyFilter() {
     //let the user know their filter has been set or show them the results below somehow
     $('html, body').animate({
         scrollTop: $("#mainSchedule").offset().top
-    }, 750);
+    }, 'medium');
 }
 function convertToMilitary(cells) {
     $.each(cells, function() {
