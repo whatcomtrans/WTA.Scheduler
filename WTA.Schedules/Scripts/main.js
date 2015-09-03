@@ -1050,6 +1050,10 @@ function applyFilter() {
         }
     }
     setStickyHeader();
+    //let the user know their filter has been set or show them the results below somehow
+    $('html, body').animate({
+        scrollTop: $("#mainSchedule").offset().top
+    }, 750);
 }
 function convertToMilitary(cells) {
     $.each(cells, function() {
@@ -1723,18 +1727,24 @@ function initializeMap() {
         ]
     }
     ];
+
+    mapOptions = {
+        center: { lat: 48.750057, lng: -122.476085 },
+        zoom: 12,
+        styles: mapStyles,
+        zoomControl: false,
+        scrollwheel: true,
+        draggable: true,
+        keyboardShortcuts: true
+    };
+    finishInit();
+
+
+
     //check if location services are enabled  
     navigator.geolocation.getCurrentPosition(function(position) {
-        mapOptions = {
-            center: { lat: position.coords.latitude, lng: position.coords.longitude },
-            zoom: 16,
-            styles: mapStyles,
-            zoomControl: false,
-            scrollwheel: true,
-            draggable: true,
-            keyboardShortcuts: true
-        };
-        finishInit();
+        var centerLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+        map.setCenter(centerLocation);
     },
     function (error) {
         switch(error.code) {
@@ -1751,16 +1761,6 @@ function initializeMap() {
                 alert("We were unable to get your current location. Some mapping functions may not be available.");
                 break;
         }
-        mapOptions = {
-            center: { lat: 48.750057, lng: -122.476085 },
-            zoom: 12,
-            styles: mapStyles,
-            zoomControl: false,
-            scrollwheel: true,
-            draggable: true,
-            keyboardShortcuts: true
-        };
-        finishInit();
     });
 }
 function finishInit() {
