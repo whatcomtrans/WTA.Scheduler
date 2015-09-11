@@ -24,6 +24,10 @@ $(document).ready(function () {
         $('html, body').animate({
             scrollTop: 0
         }, 'medium');
+        //GA
+        var page = "/" + window.location.hash;
+        ga('set','page',page);
+        ga('send','pageview',page);
     });
     loadMain();
 });
@@ -229,13 +233,16 @@ function initializeHeader() {
 function initializeSidebar() {
     //getLocation();
     $("#fdate").datepicker({ dateFormat: "mm/dd/y" }).datepicker("setDate", new Date());
+    var currentTime = new Date();
+    currentTime = currentTime.getHours() + ":" + currentTime.getMinutes();
+    $('#ftime').val(currentTime);
     // Route dropdown
     if (!routeList) {
         routeList = getRoutes();
     }
     var selRoutes = $("#selRoutes");
     for (i = 0; i < routeList.length; i ++) {
-        selRoutes.append("<option value='" + routeList[i].route_id + "'>" + routeList[i].route_short_name + "</option>");
+        selRoutes.append("<option value='" + routeList[i].route_short_name + "'>" + routeList[i].route_short_name + "</option>");
     }
     $("#findRoute").click(findRouteClick);
     $('#findStop').click(onFindStopClick);
@@ -291,7 +298,7 @@ function initializeRoutes() {
     for (i = 0; i < routeList.length; i++) {
         var longName = routeList[i].route_long_name;
         longName = longName.replace('&harr;', '<i class="fa fa-arrows-h"></i>');
-        ulRoutes.append("<li><span class='route-num'><a href='#route-details?routeId=" + routeList[i].route_id + "' class='route-num'>" + routeList[i].route_short_name + "</a></span><a href='#route-details?routeId=" + routeList[i].route_id + "'>" + longName + "</a></li>");
+        ulRoutes.append("<li><span class='route-num'><a href='#route-details?routeNum=" + routeList[i].route_short_name + "' class='route-num'>" + routeList[i].route_short_name + "</a></span><a href='#route-details?routeNum=" + routeList[i].route_short_name + "'>" + longName + "</a></li>");
     }
 }
 
@@ -385,7 +392,7 @@ function initializeRouteDetails() {
         $('#routeList').on('change', function () {
             currentRouteNumber = this.value;
             currentRouteID = $(this).children(":selected").attr("id");
-            window.location.href = "#route-details?routeId=" + currentRouteID;
+            window.location.href = "#route-details?routeNum=" + currentRouteNumber;
             //displaySelectedRouteAsync();
         });
         $('#routeList').on('click', function () {
@@ -544,17 +551,15 @@ function findRouteClick() {
     var selRoute = $("#selRoutes").val();
     if (selRoute != 'selectRoute') {
         //hash change here
-        window.location.href = "#route-details?routeId=" + selRoute;
+        window.location.href = "#route-details?routeNum=" + selRoute;
         // loadRouteDetails(selRoute);
     }
 }
 function flipRoute() {
-
     $tableHeader.removeClass("hiddenHeader");
     $tableHeaderClone.remove();
     $tableHeaderClone.removeClass('fixedHeader');
     $tableHeaderClone = null;
-
     if (currentDirectionID == 0) {
         currentDirectionID = 1;
     } else {
@@ -889,7 +894,7 @@ function displaySelectedRoute() {
                     } else {
                         continuesOnAsRoute = continuesOnAsRoute[0].route_short_name;
                         continuesOnAs = continuesOnAsRoute + ' ' + continuesOnAsHeadsign;
-                        $(this).append('<td class="continuing"><a href="#route-details?routeId=' + continuesOnAsRouteId + '&?directionId=' + continuesOnAsDirection + '">' + continuesOnAs + '</a></td>');
+                        $(this).append('<td class="continuing"><a href="#route-details?routeNum=' + continuesOnAsRoute + '&?directionId=' + continuesOnAsDirection + '">' + continuesOnAs + '</a></td>');
                     }
                 }
             });
@@ -1001,7 +1006,7 @@ function customizeStopListStart() {
         var lastTime = $('#busTable tr:last td:last')[0].innerHTML;
         var increment = 1;
         var increment2 = 1;
-        while (lastTime == '--') {
+        while ((lastTime == '--') || (lastTime.indexOf('<') != -1)) {
             increment++;
             lastTime = $('#busTable tr:last td:nth-last-child(' + increment + ')')[0].innerHTML;
         }
@@ -1042,6 +1047,10 @@ function applyFilter() {
     var noRows = $('.tripTimes td').filter(function () {
         return $(this).is(':visible');
     });
+    var filteredRows = $('.tripTimes').filter(function () {
+        return $(this).children().is(':visible');
+    });
+    //Checking to see if the filter returned any result times at all
     if (noRows.length == 0) {
         var startingStop = $('#stopListStart option:selected')[0].innerHTML;
         var endingStop = $('#stopListEnd option:selected')[0].innerHTML;
@@ -1052,9 +1061,26 @@ function applyFilter() {
         } else {
           $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>');
         }
-    }
+    } else {
+    //Check to see if both start and end stop times are within the user's filter range.
+    //If 1, show both cells in the row even though only one is within the range.
+        for (i=0;i<filteredRows.length;i++) {
+            var visibleChildren = $(filteredRows[i]).children().filter(function () {
+                return $(this).is(':visible');
+            });
+            if (visibleChildren.length == 1) {
+                //Show both the start and end stop times.
+                var hiddenChild = $(filteredRows[i]).children().filter(function () {
+                    return $(this).is(':hidden');
+                });
+                hiddenChild = $(hiddenChild).filter(function () {
+                    return ("#" + $(this).attr('id') == filterStart) || ("#" + $(this).attr('id') == filterEnd);
+                });
+                hiddenChild.show();
+            }
+        }
+    }       
     setStickyHeader();
-    //let the user know their filter has been set or show them the results below somehow
     $('html, body').animate({
         scrollTop: $("#mainSchedule").offset().top
     }, 'medium');
@@ -1121,6 +1147,13 @@ function clearFilter() {
     $('#busTable tr:hidden').show();
     $('#busTable td:hidden').show();
     setStickyHeader();
+    var cells = $('#busTable tr.tripTimes td').not('.continuing' + ',' + '.outOfService');
+    convertToMilitary(cells);
+    customizeStopListStart();
+    convertToStandard(cells);
+    $('html, body').animate({
+        scrollTop: $("#mainSchedule").offset().top
+    }, 'medium');
 }
 function printDiv(divName) {
     //var printContents = document.getElementById(divName).innerHTML;
@@ -1574,9 +1607,9 @@ function servingRoutes() {
 
     for (i = 0; i < finalStops.length; i++) {
         if (i > 0) {
-            servedByRoutes += ', <a href="#route-details?routeId=' + finalStops[i].route_id + '">' + finalStops[i].route_short_name + '</a>';
+            servedByRoutes += ', <a href="#route-details?routeNum=' + finalStops[i].route_short_name + '">' + finalStops[i].route_short_name + '</a>';
         } else {
-            servedByRoutes += '<a href="#route-details?routeId=' + finalStops[i].route_id + '">' + finalStops[i].route_short_name; +'</a>';
+            servedByRoutes += '<a href="#route-details?routeNum=' + finalStops[i].route_short_name + '">' + finalStops[i].route_short_name; +'</a>';
         }
     }
     for (i = 0; i < servingStops.length; i++) {
@@ -1657,9 +1690,9 @@ function servingRoutesMap() {
     });
     for (i = 0; i < finalStopsMap.length; i++) {
         if (i > 0) {
-            servedByRoutesMap += ', <a href="#route-details?routeId=' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name + '</a>';
+            servedByRoutesMap += ', <a href="#route-details?routeNum=' + finalStopsMap[i].route_short_name + '">' + finalStopsMap[i].route_short_name + '</a>';
         } else {
-            servedByRoutesMap += '<a href="#route-details?routeId=' + finalStopsMap[i].route_id + '">' + finalStopsMap[i].route_short_name; +'</a>';
+            servedByRoutesMap += '<a href="#route-details?routeNum=' + finalStopsMap[i].route_short_name + '">' + finalStopsMap[i].route_short_name; +'</a>';
         }
     }
 }

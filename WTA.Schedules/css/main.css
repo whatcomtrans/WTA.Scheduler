@@ -355,6 +355,9 @@ fieldset select{
 .direction-row .fa-arrows-h{
     color:#666666;
 }
+#routeDir2:hover {
+    cursor:auto;
+}
 #route-details .row{
     margin-bottom:20px;
 }
@@ -391,6 +394,11 @@ fieldset select{
 #route-details h1{
      word-break:break-all;
      color:#006699;
+}
+#route-details #selRouteDir {
+    color:#666;
+    display:block;
+    margin-bottom:10px;
 }
 #route-details #customizeRoute{
     border-radius:8px;
@@ -2012,6 +2020,11 @@ input[type=button]:hover,
     #my-stop #schedule .button{
         display:block;
     }
+    #flipRoute {
+        display:block;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
 }
 @media (max-width:485px) {
 	#DeltaSiteLogo{
@@ -2067,6 +2080,15 @@ input[type=button]:hover,
 	    width:100%;
 	    margin-top:10px;
 	}
+    #route-details .times input {
+        width:100%;
+    }
+    #route-details .times #endTime {
+        margin-top:10px;
+    }
+    #route-details .times #startTime {
+        margin-bottom:10px;
+    }
 }
 @media (max-width:280px) {
 	#SocialShare img {

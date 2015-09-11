@@ -61,8 +61,10 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-30405965-4', 'auto');
-      ga('send', 'pageview');
+      var page = "/" + window.location.hash;
+      ga('create', 'UA-30405965-3', 'auto');
+      ga('set','page',page);
+      ga('send', 'pageview',page);
 
     </script>
 </head>
