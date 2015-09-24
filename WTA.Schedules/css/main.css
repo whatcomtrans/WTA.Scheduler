@@ -584,12 +584,15 @@ fieldset select{
 #top-scrollbar .fake-content{
     height:20px;
 }
-
+#mainSchedule {
+    clear:both;
+}
 #route-details #mainSchedule #datePickerCont,
 #route-details #mainSchedule #printSchedule{
     display:inline-block;
 }
-#route-details #mainSchedule #printSchedule{
+#route-details #mainSchedule #printSchedule,
+#route-details #mainSchedule #pdf{
     float:right;
     margin:10px;
 }

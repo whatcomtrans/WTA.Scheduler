@@ -1,10 +1,10 @@
-﻿// locals
+// locals
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
     map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId, chosenRoute, chosenRouteId,
     stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $tableHeader, $tableHeaderClone, tableHeaderTop, $tableContainer, $table;
 var currentDirectionID = 0;
-var currentServiceID = 1; // Weekdays
+var currentServiceID = 1;
 var currentDate = new Date();
 var entryPanoId = null;
 var scrollToTop = false;
@@ -15,23 +15,30 @@ if (language == "es") {
 }
 var markers = [];
 var serviceChangeDate, serviceLastDate, currentDayNum;
-
 $(document).ready(function () {
-    //window.onpopstate = onPopState;
     $(window).on('hashchange', function () {
         loadPageContent();
-        //scroll to top
         $('html, body').animate({
             scrollTop: 0
         }, 'medium');
-        //GA
         var page = "/" + window.location.hash;
         ga('set','page',page);
         ga('send','pageview',page);
     });
     loadMain();
 });
-
+//Function to convert any element(s) to another element(s) and retain its attributes. Call it like: $("h3").changeElementType("h1");
+(function($) {
+    $.fn.changeElementType = function(newType) {
+        var attrs = {};
+        $.each(this[0].attributes, function(idx, attr) {
+            attrs[attr.nodeName] = attr.nodeValue;
+        });
+        this.replaceWith(function() {
+            return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+    }
+})(jQuery);
 function lookupRouteID(routeNum) {
   routeNum = routeNum.toUpperCase();
   if (!routeList) { routeList = getRoutes(); }
@@ -41,25 +48,20 @@ function lookupRouteID(routeNum) {
   if (route) { return route[0].route_id; }
   else { return null}
 }
-
 function getQueryParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.hash);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
 function loadQueryParams() {
-    //RouteId
     var routeId = getQueryParameterByName("routeId");
     if (routeId && (routeId == parseInt(routeId))) {
-        //currentRouteID = routeId;
         validateRouteId(routeId);
     }
     else {
         currentRouteID = null;
     }
-    //routeNum
     var routeNum = getQueryParameterByName("routeNum");
     if (routeNum) {
       var foundRouteId = lookupRouteID(routeNum);
@@ -69,23 +71,18 @@ function loadQueryParams() {
     } else {
       routeNum = null;
     }
-
-    //StopId
     var stopId = getQueryParameterByName("stopId");
     if (stopId && (stopId == parseInt(stopId))) {
-        //currentStopID = stopId;
         validateStopId(stopId);
     } else {
         currentStopID = null;
     }
-    //DirectionId
     var dirId = getQueryParameterByName("directionId");
     if (dirId) {
         validateDirId(dirId);
     } else {
         currentDirectionID = 0;
     }
-    // Stop query - used if searching for either a stop id or an address
     var q = getQueryParameterByName("search");
     if (q) {
         stopQuery = q;
@@ -105,7 +102,6 @@ function loadMain() {
     window.setTimeout(function () { loadTripData }, 500)
     loadPageContent();
 }
-
 function loadTripData(callback) {
     if (typeof trips != 'undefined') {
         if (callback) { callback() };
@@ -119,27 +115,18 @@ function loadTripData(callback) {
           oScript.src = "http://data.ridewta.com/gtfs/website/data_trips.js";
         }
         (document.head || document.getElementsByTagName("head")[0]).appendChild(oScript);
-        //if (callback) {
-        //    callback()
-        //};
     }
 }
-
 function loadPageContent() {
-    // Clear Google map stuff. This isn't 100% working yet
     try{
         google.maps.event.clearListeners(window, 'resize');
         $('#map-canvas').remove();
     }
     catch(e){}
-
     loadQueryParams();
-
-    // If we have a hash then load that section otherwise load Routes
     var hash = window.location.hash.split("?")[0].replace("#","");
     switch (hash) {
         case "route-details":
-            //loadTripData(loadRouteDetails(currentRouteID));
             loadTripData(function () { loadRouteDetails(currentRouteID) });
             break;
         case "map":
@@ -160,9 +147,14 @@ function setLeftnav(item) {
     $("#leftNav ul li").removeClass("selected");
     $(item).addClass("selected");
 }
+function searchSite() {
+    var searchText = $("#searchInput").val().trim();
+    if (searchText) {
+        window.location = searchURL + encodeURIComponent(searchText);
+    }
+}
 // ----------- History -------------------
 function setHistory(appPage) {
-
     //var params = "";
     //switch (appPage) {
     //    case "routes":
@@ -211,19 +203,8 @@ function onPopState(event) {
     //    }
     //}
 };
-
-// Route search to SharePoint
-function searchSite() {
-    var searchText = $("#searchInput").val().trim();
-    if (searchText) {
-        window.location = searchURL + encodeURIComponent(searchText);
-    }
-}
-
-// --------- Common sections load/initialize ------------
 function initializeHeader() {
     BindTopNav();
-    // search on enter
     $("#searchInput").keypress(function (event) {
         if (event.keyCode == 13) {
             searchSite();
@@ -231,12 +212,10 @@ function initializeHeader() {
     });
 }
 function initializeSidebar() {
-    //getLocation();
     $("#fdate").datepicker({ dateFormat: "mm/dd/y" }).datepicker("setDate", new Date());
     var currentTime = new Date();
     currentTime = currentTime.getHours() + ":" + currentTime.getMinutes();
     $('#ftime').val(currentTime);
-    // Route dropdown
     if (!routeList) {
         routeList = getRoutes();
     }
@@ -248,26 +227,25 @@ function initializeSidebar() {
     $('#findStop').click(onFindStopClick);
     $('#tbStop').keypress(function (e) {
         if (e.which == 13) {
-            //onFindStopClick();
             $('#findStop').trigger('click');
         }
     });
-
-
-    // Notices
     var noticeList = $("#noticeList");
     for (i = 0; i < notices.length; i ++) {
         noticeList.append("<li><a href='" + notices[i].url + "'>" + notices[i].title + "</a></li>");
     }
 }
-
-function showLoading() {
-    $("#appPage").hide();
-    $(".spinner-cont").show();
+function showLoading(element) {
+    var items = $(element).children(':visible');
+    items.hide();
+    $(element).addClass('spinner');
+    items.addClass('spinnerMark');
 }
 function hideLoading() {
-    $(".spinner-cont").hide();
-    $("#appPage").show();
+    $('.spinner-cont').hide();
+    $('.spinner').removeClass('spinner');
+    $('.spinnerMark').show();
+    $('.spinnerMark').removeClass('spinnerMark');
 }
 function scrollContentTop() {
     if(isElementInViewport($("#appPage")) == false){
@@ -283,14 +261,11 @@ function isElementInViewport(content) {
     var rect = content.getBoundingClientRect();
     return ( rect.top >= 0 );
 }
-
-// -------- Routes ----------
 function loadRoutes() {
     $("#appPage").load("/common/" + language + "/routes.html", function () { initializeRoutes(); });
     setLeftnav("#lnavRoutes");
 }
 function initializeRoutes() {
-    //setHistory("routes");
     if (!routeList) {
         routeList = getRoutes();
     }
@@ -301,22 +276,62 @@ function initializeRoutes() {
         ulRoutes.append("<li><span class='route-num'><a href='#route-details?routeNum=" + routeList[i].route_short_name + "' class='route-num'>" + routeList[i].route_short_name + "</a></span><a href='#route-details?routeNum=" + routeList[i].route_short_name + "'>" + longName + "</a></li>");
     }
 }
-
-// -------- Route Details ----------
 function loadRouteDetails(route_id) {
     currentRouteID = route_id;
     $("#appPage").load("/common/" + language + "/route-details.html", function () { initializeRouteDetails(); });
     setLeftnav("#lnavRouteDetails");
 }
 function initializeRouteDetails() {
-    //setHistory("route-details")
-    // Get main route info
-    // If no route number selected go back to routes
     if (currentRouteID){
-
+        $('.routeNumber').empty();
+        var route = getRoute(currentRouteID);
+        if (route) {
+            var directions = route.route_long_name.split("&harr;");
+            routeDir0 = directions[0];
+            routeDir1 = directions[1];
+            var routeDirNum = 2;
+            if (routeDir1 === undefined) {
+                routeDirNum = 1;
+            } else {
+                routeDirNum = 2;
+            }
+            var routeDirOptions = '';
+            for (i = 0; i < routeDirNum; i++) {
+                routeDirOptions += '<option value="' + [i] + '" id="dir' + [i] + '">' + "to " + directions[i] + '</option>';
+            }
+            $('#selRouteDir').append(routeDirOptions);
+            $("#routeNumber").html(lang("Route") + " " + route.route_short_name + " - <br />" + lang("to") + " " + directions[currentDirectionID]);
+            if (route.route_color == "blue" ||
+                route.route_color == "gold" ||
+                route.route_color == "green" ||
+                route.route_color == "red") {
+                $(".go-line").attr("src", "../Images/go-" + route.route_color + ".jpg");
+                $(".go-line").show();
+            } else {
+                $(".go-line").hide();
+            }
+            var imgMap = document.createElement('img');
+            imgMap.onload = function () {
+                $("#routeMap img").remove();
+                $("#routeMap").prepend(imgMap);
+                $('#routeMap img').attr('onClick', 'showMapDialog();');
+            }
+            imgMap.onerror = function () {
+                $("#routeMap").hide();
+            }
+            imgMap.src = "http://data.ridewta.com/routemaps/" + route.route_short_name + ".png";
+            $("#mapDialog img").attr("src", "http://data.ridewta.com/routemaps/" + route.route_short_name + ".png");
+        }
+        $('#selRouteDir').on('change', function () {
+            if (currentDirectionID == $(this).children(":selected").attr("value")) {
+                //don't re-run.
+            } else {
+                currentDirectionID = $(this).children(":selected").attr("value");
+                $("#routeNumber").html(lang("Route") + " " + route.route_short_name + " - <br />" + lang("to") + " " + directions[currentDirectionID]);
+                displaySelectedRouteAsync();
+            }
+        });
         $("#dayTabs").tabs({ activate: onRouteTabChanged });
-
-        //Select the current day tab on load
         var day = new Date().getDay();
         var presentDate = new Date();
         var newDate = (presentDate.getDate()).toString();
@@ -328,7 +343,6 @@ function initializeRouteDetails() {
         var SSDint = parseInt(specialServiceDate);
         serviceChangeDate = parseInt(calendar[0].end_date);
         serviceLastDate = parseInt(calendar[4].end_date);
-
         if (day > 0 && day < 6) {
             if (SSDint <= serviceChangeDate) {
                 $('#Weekday').addClass('selectedDay');
@@ -377,8 +391,6 @@ function initializeRouteDetails() {
                 buttonText: "<i class='fa fa-calendar'></i>"
             });
         });
-
-        //Fill the drop-down with existing route options from the routes.json file on load
         var option = '';
         for (i = 0; i < routes.length; i++) {
             option += '<option value="' + routes[i].route_short_name + '" id="' + routes[i].route_id + '">' + routes[i].route_short_name + '</option>';
@@ -387,19 +399,14 @@ function initializeRouteDetails() {
         if (currentRouteID) {
             $('#routeList option[id="' + currentRouteID + '"]').attr('selected', 'selected');
         }
-        //Change the header of the page based on the selected route from the drop down
-        //hash change here
         $('#routeList').on('change', function () {
             currentRouteNumber = this.value;
             currentRouteID = $(this).children(":selected").attr("id");
             window.location.href = "#route-details?routeNum=" + currentRouteNumber;
-            //displaySelectedRouteAsync();
         });
         $('#routeList').on('click', function () {
             $(this).removeClass('highlight');
         });
-
-        //Set paging button events
         $(".page-button.left").mousedown(function(){
             pagerTimeout = setInterval(function(){
                 pageLeft();
@@ -414,23 +421,17 @@ function initializeRouteDetails() {
             clearInterval(pagerTimeout);
             return false;
         });
-
         $('#datepicker').on('change', onRouteDatepickerChanged);
-
         $('#stopListStart').on('change', function () {
-            $('#stopListEnd').empty();
+            $('#stopListEnd option:disabled').not('.first').removeAttr('disabled');
             var selectedIndex = $('#stopListStart option:selected').index();
             var selectedStop = this.value;
             var selectedStopId = $(this).children(":selected").attr("id");
             var availableStopsEnd = $('#busTable tr:eq(' + 0 + ') td span.top');
-            var endingOptions = '';
-            for (i = selectedIndex; i < availableStopsEnd.length; i++) {
-                //endingOptions += '<option value="' + availableStopsEnd[i].innerHTML + '" id="' + availableStopsEnd[i].id + '">' + availableStopsEnd[i].innerHTML + '</option>';
-                endingOptions += '<option value="' + $(availableStopsEnd[i]).text() + '" id="' + $(availableStopsEnd[i]).attr("data-stopid") + '">' + $(availableStopsEnd[i]).text() + '</option>';
+            for (i = 0; i < selectedIndex; i++) {
+                $('#stopListEnd option:nth-child('+i+')').prop('disabled', true);
             }
-            $('#stopListEnd').append(endingOptions);
         });
-
         displaySelectedRouteAsync();
         scrollContentTop();
     }
@@ -450,33 +451,27 @@ function onRouteTabChanged(event, ui) {
     var day = ui.newTab[0].textContent;
     thisDay(day);
 }
-
 var sync = function(){
     $tableHeaderClone.scrollLeft(this.scrollLeft);
 }
 function setStickyHeader() {
-    // Set sticky table header
     $tableHeader = $("#stopNames");
     $tableHeaderClone = $("#stopNames").clone();
     $tableHeaderClone.attr("id", "stopNamesFixed");
-    // Need to set each table header cells' width or they don't line up correctly
     var tds = $('TD div', $tableHeader);
     var tdsClone = $('TD div', $tableHeaderClone);
     for (var i = 0; i < tds.length; i++) {
         var w = $(tds[i]).width()
         $(tdsClone[i]).width(w);
     }
-
     tableHeaderTop = $tableHeader.offset().top;
     $tableContainer = $("#schedule");
     $table = $('table', $tableContainer);
-    // Resize clone when user resizes window.
     $(window).resize(function () {
         if ($tableHeader) {
             $tableHeaderClone.width($tableContainer.width() );
         }
     });
-
     $tableHeaderClone.css("width", $("#dayTabs").width()).css("overflow", "hidden");
     $("#top-scrollbar .fake-content").css("width", $("#busTable").width() + "px");
 
@@ -488,7 +483,6 @@ function setStickyHeader() {
         $("#top-scrollbar")
             .scrollLeft($("#schedule").scrollLeft());
             });
-
     $(window).scroll(function () {
         if ($tableHeader) {
             if ($(window).scrollTop() > $tableHeader.offset().top
@@ -508,10 +502,8 @@ function setStickyHeader() {
             }
         }
     });
-    // Sync horizontal scrolling
     $tableContainer.on("scroll", sync)
 }
-
 function showMapDialog() {
     if ($(window).width() >= 520) {
         jQuery('#mapDialog').dialog({
@@ -526,7 +518,6 @@ function showMapDialog() {
         });
     }
 }
-
 function swapMapSize() {
     var rMap = $("#routeMap");
     if (rMap.hasClass("normal")) {
@@ -542,17 +533,12 @@ function swapMapSize() {
         $("i", rMap).removeClass("fa-search-minus");
         $("i", rMap).addClass("fa-search-plus");
         rMap.animate({ width: "25%" }, "slow");
-        //$('html, body').animate({
-        //    scrollTop: offset.top
-        //});
     }
 }
 function findRouteClick() {
     var selRoute = $("#selRoutes").val();
     if (selRoute != 'selectRoute') {
-        //hash change here
         window.location.href = "#route-details?routeNum=" + selRoute;
-        // loadRouteDetails(selRoute);
     }
 }
 function flipRoute() {
@@ -566,7 +552,6 @@ function flipRoute() {
         currentDirectionID = 0;
     }
     displaySelectedRouteAsync();
-    // Flip trip head signs
     var dir1 = $("#routeDir1").html();
     var dir2 = $("#routeDir2").html();
     $("#routeDir1").html(dir2);
@@ -582,8 +567,11 @@ function thisDay(day) {
         } else {
             currentServiceID = 11;
         }
+        $('#routeMap').hide();
+        $('#busTable').show();
+        $('#controls').show();
+        $('#top-scrollbar').show();
         $("#dayTabs").tabs("option", "active", 0);
-        console.log($('#datepicker').datepicker('getDate'));
     } else if (day == 'Saturday') {
         if (currentDayNum <= serviceChangeDate) {
             currentServiceID = 2;
@@ -592,6 +580,10 @@ function thisDay(day) {
         } else {
             currentServiceID = 12;
         }
+        $('#routeMap').hide();
+        $('#busTable').show();
+        $('#controls').show();
+        $('#top-scrollbar').show();
         $("#dayTabs").tabs("option", "active", 1);
     } else if (day == 'Sunday') {
         if (currentDayNum <= serviceChangeDate) {
@@ -601,74 +593,46 @@ function thisDay(day) {
         } else {
             currentServiceID = 13;
         }
+        $('#routeMap').hide();
+        $('#busTable').show();
+        $('#controls').show();
+        $('#top-scrollbar').show();
         $("#dayTabs").tabs("option", "active", 2);
+    } else if (day == 'Route Map') {
+        $('#busTable').hide();
+        $('#controls').hide();
+        $('#top-scrollbar').hide();
+        $('#routeMap').show();
+        $("#dayTabs").tabs("option", "active", 3);
     }
     $("#dayTabs").tabs({ activate: onRouteTabChanged });
     throwTheDate();
     displaySelectedRouteAsync();
 }
 function displaySelectedRouteAsync() {
-    //$('#datePicker').after('<div class="spinner"></div>');
-    showLoading();
+    var element = $('#schedule');
+    $('#top-scrollbar').hide();
+    $('#schedule').css("overflow-x","hidden");
+    showLoading(element);
     if (typeof trips != "undefined") {
-        setTimeout(function () { displaySelectedRoute();}, 1000);
+        setTimeout(function () { 
+            displaySelectedRoute();
+            $('#schedule').css("overflow-x","scroll");
+            $('#top-scrollbar').show();
+        }, 1000);
     } else {
-        loadTripData(function () { displaySelectedRoute });
+        loadTripData(function () { 
+            displaySelectedRoute();
+            $('#schedule').css("overflow-x","scroll");
+            $('#top-scrollbar').show();
+        });
     }
 }
 function displaySelectedRoute() {
     $('#noService').empty();
+    $('#stopListEnd').empty();
     try{
         $('#busTable').empty();
-        $('.routeNumber').empty();
-
-        // populate heading
-        var route = getRoute(currentRouteID);
-        if (route) {
-            $("#routeNumber").html(lang("Route") + " " + route.route_short_name);
-            var directions = route.route_long_name.split("&harr;");
-            routeDir0 = directions[0];
-            routeDir1 = directions[1];
-            if (routeDir1 === undefined) {
-                $('#flipRoute').hide();
-            } else {
-                $('#flipRoute').show();
-            }
-            if (currentDirectionID == 0) {
-                $("#routeDir1").html(routeDir0);
-                $("#routeDir2").html(routeDir1);
-            }
-            else {
-                $("#routeDir1").html(routeDir1);
-                $("#routeDir2").html(routeDir0);
-            }
-
-            // Go Line?
-            if (route.route_color == "blue" ||
-                route.route_color == "gold" ||
-                route.route_color == "green" ||
-                route.route_color == "red") {
-                $(".go-line").attr("src", "../Images/go-" + route.route_color + ".jpg");
-                $(".go-line").show();
-            } else {
-                $(".go-line").hide();
-            }
-
-            // Set map image if we have one.
-            var imgMap = document.createElement('img');
-            imgMap.onload = function () {
-                $("#routeMap img").remove();
-                $("#routeMap").prepend(imgMap);
-                $('#routeMap img').attr('onClick', 'showMapDialog();');
-            }
-            imgMap.onerror = function () {
-                $("#routeMap").hide();
-            }
-            imgMap.src = "http://data.ridewta.com/routemaps/" + route.route_short_name + ".png";
-            $("#mapDialog img").attr("src", "http://data.ridewta.com/routemaps/" + route.route_short_name + ".png");
-
-        }
-
         var tripsInRoute = [];
         var specialService = $.grep(calendar_dates, function (a) {
             return a.date == specialServiceDate;
@@ -677,9 +641,7 @@ function displaySelectedRoute() {
             return a.exception_type == 2;//magic number based on data for now
         });
         if (isHoliday.length > 0) {
-        }/* else if (specialServiceDate > calendar[0].end_date) {
-            "sorry please check back later for schedule information at that date.";
-        }*/ else if (specialService.length > 0) {
+        } else if (specialService.length > 0) {
             var specialServiceDate_id = specialService[0].service_id;
             if (specialServiceDate == specialService[0].date) {
                 for (i = 0; i < trips.length; i++) {
@@ -756,23 +718,7 @@ function displaySelectedRoute() {
                     j++;
                     k--;
                 } else if (columnId != stopTimesInTrip[j].stop_id) {
-                    // var insertThisStopId = $.grep(stopTimesInTrip, function(d) {
-                    //     return (d.stop_sequence == (k+1));
-                    // });
-                    // if (insertThisStopId[0] != undefined) {
-                    //     var insertThisStop = $.grep(stops, function(e) {
-                    //         return e.stop_id == insertThisStopId[0].stop_id;
-                    //     });
-                    //     $('#stopNames td:eq(' + (k-1) +')').after('<td id="' + insertThisStopId[0].stop_id + '"><a href="#stops?stopId=' + insertThisStopId[0].stop_code + '"><div><span data-stopid=' + insertThisStopId[0].stop_id + ' class="top">' + insertThisStop[0].stop_name + '</span></br><span class="bottom">(' + insertThisStop[0].stop_code + ')</span></div></a></td>');
-                    //     if (stopTimesInTrip[j].departure_time.length == 7) {
-                    //         $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">0' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
-                    //     } else {
-                    //         $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
-                    //     }
-                    //     j++;
-                    // } else {
                          $(tripId).append('<td id="' + uniqueStopNamesInRoute[k].stop_id + '">--</td>');
-                    // }
                 } else {
                     if (stopTimesInTrip[j].departure_time.length == 7) {
                         $(tripId).append('<td id="' + stopTimesInTrip[j].stop_id + '">0' + stopTimesInTrip[j].departure_time.slice(0, -3) + '</td>');
@@ -898,11 +844,8 @@ function displaySelectedRoute() {
                     }
                 }
             });
-            // Reset vars for sticky table header
             setStickyHeader();
         }
-        //Convert from military time right here
-        //Step1- select all the td cells that's parent hasClass of tripTimes
         var cells = $('#busTable tr.tripTimes td');
         convertToStandard(cells);
         setTimeout(processContinuing, 100);
@@ -916,13 +859,21 @@ function displaySelectedRoute() {
                 $('#noService').append(lang('There is no service during the specified route and time.'));
             }
         } else {
-            //$('#routeNumber').append('Route ' + selectedRoute + ' to ' + trip_headsign);
             $('#stopNames').append('<td><div class="continuesOnAs">' + lang("Continues On As") + '</div></td>');
         }
     } catch (e) { console.log(e);}
     finally {
         hideLoading();
     }
+    var selectedIndex = $('#stopListStart option:selected').index();
+    var selectedStop = this.value;
+    var selectedStopId = $(this).children(":selected").attr("id");
+    var availableStopsEnd = $('#busTable tr:eq(' + 0 + ') td span.top');
+    var endingOptions = '';
+    for (i = selectedIndex; i < availableStopsEnd.length; i++) {
+        endingOptions += '<option value="' + $(availableStopsEnd[i]).text() + '" id="' + $(availableStopsEnd[i]).attr("data-stopid") + '">' + $(availableStopsEnd[i]).text() + '</option>';
+    }
+    $('#stopListEnd').append(endingOptions);
 }
 function uniqueStops(currentRouteID) {
     var tripsInRoute = [];
@@ -989,7 +940,6 @@ function uniqueStops(currentRouteID) {
     }
     return uniqueStopNamesInRoute;
 }
-
 function customizeStopListStart() {
     $('#stopListStart').empty();
     $('#stopListStart').append('<option value="selectStopListStart" disabled>' + lang("Starting Bus Stop") + '</option>');
@@ -997,7 +947,6 @@ function customizeStopListStart() {
     if (availableStops.length > 0) {
         var startingOptions = '';
         for (i = 0; i < availableStops.length; i++) {
-            //startingOptions += '<option value="' + availableStops[i].innerHTML + '" id="' + availableStops[i].id + '">' + availableStops[i].innerHTML + '</option>';
             startingOptions += '<option value="' + $(availableStops[i]).text() + '" id="' + $(availableStops[i]).attr("data-stopid") + '">' + $(availableStops[i]).text() + '</option>';
         }
         $('#stopListStart').append(startingOptions)
@@ -1019,71 +968,15 @@ function customizeStopListStart() {
     }
 }
 function applyFilter() {
-    clearFilter();
+    $('#noStops').remove();
+    $('#busTable tr:hidden').show();
+    $('#busTable td:hidden').show();
     var filterStart = '#' + $('#stopListStart').children(":selected").attr("id");
     var filterEnd = '#' + $('#stopListEnd').children(":selected").attr("id");
     var startCells = $('#busTable td').not(filterStart + ', ' + filterEnd);
     startCells.hide();
-    var timeStart = $('#startTime').val();
-    var timeEnd = $('#endTime').val();
-    var filterThis = $('#busTable td').not('.continuing' + ',' + '.outOfService');
-    var cellsRemaining = filterThis.filter(function () {
-        return $(this).is(':visible');
-    });
-    cellsRemaining.splice(0, 1);
-    cellsRemaining.splice(0, 1);
-    var cells = $('#busTable tr.tripTimes td').not('.continuing' + ',' + '.outOfService');
-    convertToMilitary(cells);
-    $.each(cellsRemaining, function () {
-        if ($(this)[0].innerHTML == '--') {
-            $(this).parent().hide();
-        } else if ($(this)[0].innerHTML >= timeStart && $(this)[0].innerHTML <= timeEnd) {
-        } else {
-            $(this).hide();
-        }
-    });
-    var cells = $('#busTable tr.tripTimes td').not('.continuing' + ',' + '.outOfService');
-    convertToStandard(cells);
-    var noRows = $('.tripTimes td').filter(function () {
-        return $(this).is(':visible');
-    });
-    var filteredRows = $('.tripTimes').filter(function () {
-        return $(this).children().is(':visible');
-    });
-    //Checking to see if the filter returned any result times at all
-    if (noRows.length == 0) {
-        var startingStop = $('#stopListStart option:selected')[0].innerHTML;
-        var endingStop = $('#stopListEnd option:selected')[0].innerHTML;
-        $('#stopNames').hide();
-        //TODO Translating this will have to wait until I see what we get back from the translator as it may not be a one to one.
-        if (language == "es") {
-          $('#busTable').append('<tr id="noStops"><td>La ruta ' + selectedRoute + ' a ' + trip_headsign + ' no se detiene en ' + startingStop + ' y ' + endingStop + ' entre los tiempos especificados.</td></tr>');
-        } else {
-          $('#busTable').append('<tr id="noStops"><td>Route ' + selectedRoute + ' to ' + trip_headsign + ' does not stop at both ' + startingStop + ' and ' + endingStop + ' between the specified times.</td></tr>');
-        }
-    } else {
-    //Check to see if both start and end stop times are within the user's filter range.
-    //If 1, show both cells in the row even though only one is within the range.
-        for (i=0;i<filteredRows.length;i++) {
-            var visibleChildren = $(filteredRows[i]).children().filter(function () {
-                return $(this).is(':visible');
-            });
-            if (visibleChildren.length == 1) {
-                //Show both the start and end stop times.
-                var hiddenChild = $(filteredRows[i]).children().filter(function () {
-                    return $(this).is(':hidden');
-                });
-                hiddenChild = $(hiddenChild).filter(function () {
-                    return ("#" + $(this).attr('id') == filterStart) || ("#" + $(this).attr('id') == filterEnd);
-                });
-                hiddenChild.show();
-            }
-        }
-    }       
+    $('#printSchedule').show();     
     setStickyHeader();
-    $('html, body').animate({
-        scrollTop: $("#mainSchedule").offset().top
-    }, 'medium');
 }
 function convertToMilitary(cells) {
     $.each(cells, function() {
@@ -1115,8 +1008,6 @@ function convertToMilitary(cells) {
     });
 }
 function convertToStandard(cells) {
-    //Step2- for each of them, check if they begin with a 0--if so, remove the 0 and append am to the end
-
     $.each(cells, function() {
         if (($(this)[0].innerHTML) == '--') {
         //do nothing
@@ -1143,24 +1034,18 @@ function convertToStandard(cells) {
     });
 }
 function clearFilter() {
-    $('#noStops').remove();
     $('#busTable tr:hidden').show();
     $('#busTable td:hidden').show();
+    $('#printSchedule').hide();
     setStickyHeader();
-    var cells = $('#busTable tr.tripTimes td').not('.continuing' + ',' + '.outOfService');
-    convertToMilitary(cells);
-    customizeStopListStart();
-    convertToStandard(cells);
-    $('html, body').animate({
-        scrollTop: $("#mainSchedule").offset().top
-    }, 'medium');
 }
 function printDiv(divName) {
-    //var printContents = document.getElementById(divName).innerHTML;
-    //var originalContents = document.body.innerHTML;
-    //document.body.innerHTML = printContents;
     window.print();
-    //document.body.innerHTML = originalContents;
+}
+function pdf() {
+    var routeName = getRoute(currentRouteID).route_short_name;
+    var pdfUrl = "http://ridewta.com/Documents/Route%20"+routeName+".pdf";
+    window.open(pdfUrl,'_blank');
 }
 //When clicking on the day tabs, date should remain in the same week
 //When clicking on the date picker, just use the date they selected
@@ -1211,7 +1096,6 @@ function throwTheDate() {
         }
     }
     var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-    //var d = new Date(prevYear, prevMonth, next).toLocaleDateString('en-US', dateConfig);
     var d = new Date(prevYear, prevMonth, next);
     $('#datepicker').attr('value', d);
     $(function () {
@@ -1233,18 +1117,15 @@ function pageRight() {
     var pos = $("#schedule").scrollLeft();
     $("#schedule").scrollLeft(pos + 100);
 }
-
-
-
-// -------- Stops ----------
 function loadStops(stopId) {
+    if (stopId == null) {
+        stopId = 2001;
+    }
     currentStopID = stopId;
     $("#appPage").load("/common/" + language + "/stops.html", function () { initializeStops(); });
     setLeftnav("#lnavStops");
 }
 function initializeStops() {
-    //setHistory("stops");
-    //Get the Lat/Lng of the StopId
     var LatLng;
     var panoLatLng;
     var cameraHeading;
@@ -1274,9 +1155,7 @@ function initializeStops() {
         visible: true,
     };
     panorama.setOptions(panoOptions);
-
     var streetviewService = new google.maps.StreetViewService();
-
     var day = new Date().getDay();
     var presentDate = new Date();
     var newDate = (presentDate.getDate()).toString();
@@ -1288,7 +1167,6 @@ function initializeStops() {
     var SSDint = parseInt(specialServiceDate);
     serviceChangeDate = parseInt(calendar[0].end_date);
     serviceLastDate = parseInt(calendar[4].end_date);
-
     if (day > 0 && day < 6) {
         if (SSDint <= serviceChangeDate) {
             $('#Weekday').addClass('selectedDay');
@@ -1325,10 +1203,7 @@ function initializeStops() {
             currentServiceID = 13;
         }
     }
-
     $("#dayTabs").tabs({ activate: onStopTabChanged });
-
-
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {
             directSearch();
@@ -1340,7 +1215,6 @@ function initializeStops() {
     $('#scheduleFor').on('change', function () {
         chosenRoute = this.value;
         chosenRouteId = $(this).children(":selected").attr("id");
-        //filterStops(chosenRouteId);
     });
     var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
     var d = new Date().toLocaleDateString('en-US', dateConfig);
@@ -1353,9 +1227,7 @@ function initializeStops() {
             buttonText: "<i class='fa fa-calendar'></i>"
         });
     });
-
     $('#datepicker').on('change', onStopDatepickerChanged);
-
     if (currentStopID) {
         $('#stopNameHeader')[0].innerHTML = stopNameVariable;
         $("#searchStops").val(currentStopID);
@@ -1379,7 +1251,6 @@ function onStopTabChanged(event, ui) {
     var day = ui.newTab[0].textContent;
     thisDayStops(day);
 }
-
 function SVpano() {
     var distance = 50;
     var stopLatLng = $.grep(stops, function(a) {
@@ -1427,9 +1298,7 @@ function directSearch() {
     if (searchTerm.length > 0) {
         if (searchTerm.length == 4 && (searchTerm == parseInt(searchTerm))) {
             if (validateStopId(searchTerm)) {
-                //hash change here
                 window.location.href = "#stops?stopId=" + searchTerm;
-                //displaySelectedStop();
             }
             else {
                 window.location.href = "#map?search=" + searchTerm;
@@ -1499,23 +1368,17 @@ function thisDayStops(day) {
     displaySelectedStop();
 }
 function displaySelectedStop() {
-    // get Stop info and populate header if found
     var stop = getStop(currentStopID);
-
     if (stop) {
         stopIdVariable = stop.stop_id;
         stopNameVariable = stop.stop_name;
-
-        //Add the city/zip info below the stop name
         var currentStopLatLng = $.grep(stops, function(a) {
             return a.stop_code == currentStopID;
         });
         var LatLng = new google.maps.LatLng(currentStopLatLng[0].stop_lat,currentStopLatLng[0].stop_lon);
-
         geocode.geocode({ 'latLng': LatLng  }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var city, zip;
-
                 for (h=0;h<results.length;h++) {
                     for (i=0;i<results[0].address_components.length;i++) {
                         for (j=0;j<results[0].address_components[i].types.length;j++) {
@@ -1532,7 +1395,6 @@ function displaySelectedStop() {
                 $('#cityZip').text(city + ', ' + zip);
             }
         });
-
         $('#stopTable').empty();
         $('#stopTable').append('<tr><th>' + lang("Time") + '</th><th>' + lang("Route") + '</th></tr>');
         $('#stopNameHeader')[0].innerHTML = stop.stop_name;
@@ -1597,14 +1459,12 @@ function servingRoutes() {
         return true;
     });
     servedByRoutes = '';
-
     finalStops.sort(function (a, b) {
         a = Number(String(a.route_short_name).replace(/\D/g, ''));
         b = Number(String(b.route_short_name).replace(/\D/g, ''));
         var a1 = typeof a, b1 = typeof b;
         return a1 < b1 ? -1 : a1 > b1 ? 1 : a < b ? -1 : a > b ? 1 : 0;
     });
-
     for (i = 0; i < finalStops.length; i++) {
         if (i > 0) {
             servedByRoutes += ', <a href="#route-details?routeNum=' + finalStops[i].route_short_name + '">' + finalStops[i].route_short_name + '</a>';
@@ -1646,14 +1506,9 @@ function servingRoutes() {
         }
         $('#stopTable').append('<tr id="' + finalTimeRoute[0].route_id + '"><td>' + currentTime + '</td><td>' + finalTimeRoute[0].route_short_name + ' ' + currentTimeRoute[0].trip_headsign + '</td></tr>');
     }
-    //convert the times to standard format here
     var cells = $('#stopTable tr td:nth-child(1)');
     convertToStandard(cells);
-
     selectedStopId = $('#selectedStopId')[0].innerHTML;
-    //set the pano
-    //move the map and pano
-
 }
 function servingRoutesMap() {
     var servingStops = $.grep(stop_times, function (a) {
@@ -1681,7 +1536,6 @@ function servingRoutesMap() {
         return true;
     });
     servedByRoutesMap = '';
-    // Sort
     finalStopsMap.sort(function (a, b) {
         a = Number(String(a.route_short_name).replace(/\D/g, ''));
         b = Number(String(b.route_short_name).replace(/\D/g, ''));
@@ -1730,15 +1584,11 @@ function onFindStopClick(e){
     }
 
 }
-
-
-// -------- Map ----------
 function loadMap() {
     $("#appPage").load("/common/" + language + "/map.html", function () { initializeMap(); });
     setLeftnav("#lnavMap");
 }
 function initializeMap() {
-    //setHistory("map");
     directionsDisplay = new google.maps.DirectionsRenderer();
     $('#searchStops').keypress(function (e) {
         if (e.which == 13) {
@@ -1764,21 +1614,16 @@ function initializeMap() {
         ]
     }
     ];
-
     mapOptions = {
         center: { lat: 48.750057, lng: -122.476085 },
         zoom: 12,
         styles: mapStyles,
-        zoomControl: false,
+        zoomControl: true,
         scrollwheel: true,
         draggable: true,
         keyboardShortcuts: true
     };
-    finishInit();
-
-
-
-    //check if location services are enabled  
+    finishInit();  
     navigator.geolocation.getCurrentPosition(function(position) {
         var centerLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
         map.setCenter(centerLocation);
@@ -1817,8 +1662,6 @@ function finishInit() {
         }
     });
     google.maps.event.addListenerOnce(map, 'idle', function(){
-    // do something only the first time the map is loaded
-    //@mapCopyright - gets the google copyright tags
         var mapCopyright=document.getElementById('map-canvas').getElementsByTagName("a");
         $(mapCopyright).click(function(){
             return false;
@@ -1846,7 +1689,6 @@ function finishInit() {
             'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>' + lang("Stop ID") + '</th><th>' + lang("Served By") + '</th><tr><td><a href="#stops?stopId=' + kmlStopCode + '">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
         }
     });
-
     setTimeout(function() {fillStopsMap();},500);
     scrollContentTop();
 }
@@ -1861,13 +1703,10 @@ function codeAddressMap() {
     var center;
     var address = document.getElementById('searchStops').value;
     if (address.length == 3 || address.length == 4) {
-        //search the stop_codes for the matching
         var stopCodeResult = $.grep(stops, function (a) {
             return a.stop_code == address;
         });
-        //if match is found
         if (stopCodeResult.length == 0 || stopCodeResult.length > 1) {
-            //Geocode normally, what they input isn't a valid stop_code
             geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
                 center = results[0].geometry.location;
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -1882,7 +1721,6 @@ function codeAddressMap() {
                 }
             });
         } else {
-            //grab the latlng from this stop and use it to center and zoom the map
             stopIdVariable = stopCodeResult[0].stop_id;
             kmlStopName = stopCodeResult[0].stop_name;
             kmlStopCode = stopCodeResult[0].stop_code;
@@ -1908,11 +1746,9 @@ function codeAddressMap() {
             if (status == google.maps.GeocoderStatus.OK) {
                 center = results[0].geometry.location;
                 if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
-                    //we are within the bounds, go ahead and display
                     map.setCenter(results[0].geometry.location);
                     map.setZoom(17);
                 } else {
-                    //we are outside bounds, do something to let user know their search didn't yield any relevant results
                     alert(lang('There were no results within our service area. Please check the address you entered and try again.'));
                 }
             } else {
@@ -1939,8 +1775,6 @@ function fillStopsMap() {
         codeAddressMap();
     }
 }
-
-// -------- GEO functions ---------
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(saveLocation, showError);
@@ -1975,38 +1809,20 @@ function useCurrentEnd() {
         });
     }
 }
-
 function showError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
-            //x.innerHTML = "User denied the request for Geolocation."
             break;
         case error.POSITION_UNAVAILABLE:
-            //x.innerHTML = "Location information is unavailable."
             break;
         case error.TIMEOUT:
-            //x.innerHTML = "The request to get user location timed out."
             break;
         case error.UNKNOWN_ERROR:
-            //x.innerHTML = "An unknown error occurred."
             break;
     }
 }
-
-
-// ------------------ Data functions -----------------
-// Gets array of route and sorts by route_short_name
 function getRoutes() {
-    //var myRoutes = Enumerable.From(trips)
-    //    .Join(routes, "$.route_id", "$.route_id", "{service_id:$.service_id, route_id:$.route_id, route_short_name:$$.route_short_name, trip_headsign:$.trip_headsign, direction_id:$.direction_id}")
-    //    .Where("$.service_id == 1")
-    //    .Distinct("$.route_id + $.trip_headsign + $.direction_id")
-    //    .OrderBy("$.route_short_name")
-    //    .ToArray();
-
     var myRoutes = routes;
-
-    // Need to convert to number and sort.
     myRoutes.sort(function (a, b) {
         a = Number(String(a.route_short_name).replace(/\D/g, ''));
         b = Number(String(b.route_short_name).replace(/\D/g, ''));
@@ -2015,7 +1831,6 @@ function getRoutes() {
     });
     return myRoutes;
 }
-// Gets the route for given routeID
 function getRoute(routeID) {
     if (!routeList) { routeList = getRoutes(); }
     var route = $.grep(routeList, function (a) {
@@ -2024,7 +1839,6 @@ function getRoute(routeID) {
     if (route) { return route[0]; }
     else { return null}
 }
-
 function getStop(stopId) {
     var stop = null;
     if (stopId) {
@@ -2038,9 +1852,7 @@ function getStop(stopId) {
     return stop;
 }
 function validateStopId(stopId) {
-    // Technically we're validating stop_code since that's what we're passing around.
-    // If stopId is found set local vars.
-    var valid = false;
+     var valid = false;
     if (stopId) {
         var stop = getStop(stopId);
         if (stop) {
@@ -2067,32 +1879,23 @@ function validateDirId(dirId) {
     }
 }
 function validateRouteId(routeId) {
-    // If routeId is found set local vars.
-    var route = getRoute(routeId);
+     var route = getRoute(routeId);
     if (route) {
         currentRouteID = route.route_id;
-        //currentRouteNumber = route.route_short_name;
-        return true;
+         return true;
     } else {
         currentRouteID = null;
         currentRouteNumber = null;
         return false;
     }
 }
-
-
-// ---- Global Navigation functions ----------
 function BindTopNav() {
-    /*grab top nav SP generated list*/
     var u = $('#topnavbar ul.root');
     if (u.length > 0) {
-        /*loop through every nav item that has dynamic children*/
         u.find('li.dynamic-children').each(function () {
-            /*get li's menu item, either a or span*/
             var a = $(this).children('.menu-item');
             var s = a.children('span').eq(0);
             var t = s.children('span.menu-item-text').eq(0);
-            /*override parent li hover event to show dropdown*/
             $(this).hover(
 				function () { HoverTopNav($, $(this), ''); },
 				function () { HoverTopNav($, $(this), 'o'); }
@@ -2109,7 +1912,6 @@ function BindTopNav() {
             }
             else {
                 a.bind('click', function (e) {
-                    //if click occured inside of a text span, then redirect
                     if (((e.pageX >= t.offset().left) && (e.pageX <= (t.offset().left + t.outerWidth(true)))) &&
 						((e.pageY >= t.offset().top) && (e.pageY <= (t.offset().top + t.outerHeight(true))))) {
                         return true;
@@ -2118,9 +1920,7 @@ function BindTopNav() {
                         DropTopNav($, $(this).eq(0));
                     return false;
                 });
-                /*need to trap link span too for some browsers*/
                 s.bind('click', function (e) {
-                    //if click occured inside of a text span, then redirect
                     if (((e.pageX >= t.offset().left) && (e.pageX <= (t.offset().left + t.outerWidth(true)))) &&
 						((e.pageY >= t.offset().top) && (e.pageY <= (t.offset().top + t.outerHeight(true))))) {
                         window.location.href = $(this).parent('a').eq(0).attr('href');
@@ -2129,7 +1929,6 @@ function BindTopNav() {
                         DropTopNav($, $(this).parent('a').eq(0));
                     return false;
                 });
-
             }
         });
     }
@@ -2138,7 +1937,6 @@ function HoverTopNav($, l, a) {
     if (l.length > 0) {
         var m = $('.navbar-toggle');
         if (m.length > 0) {
-            /*only down dropdown on hover if not mobile nav view*/
             if (m.css('display') == 'none')
                 DropTopNav($, l.children('.menu-item').eq(0), a);
         }
@@ -2149,7 +1947,6 @@ function DropTopNav($, l, a) {
         var u = l.siblings('ul').eq(0);
         var p = l.parent();
         if (u.length > 0) {
-            /*if the sub menu is hidden, then show or visa-versa*/
             if (p.hasClass('shown') || (a == 'o')) {
                 p.removeClass('shown');
                 u.attr('style', '');
@@ -2157,11 +1954,9 @@ function DropTopNav($, l, a) {
             else {
                 p.addClass('shown');
             }
-            // Following code attempts to keep mega menu dropdown on screen by positioning left or right depending on width of dropdown.
             if ($(window).width() > 840) {
                 var ddRightEdge = u.offset().left + u.width();
                 if (ddRightEdge > ($(window).width() - 20)) {
-
                     u.attr('style', 'left: -' + (ddRightEdge - ($(window).width() - 20)) + 'px !important;  position:absolute !important;');
                 }
             }
@@ -2169,9 +1964,8 @@ function DropTopNav($, l, a) {
     }
 }
 function lang(englishString) {
-  //Must maintain a one to one relationshin in the array of english to alternate langauge
-  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no bus service on this holiday.", "We’re sorry. Bus schedules for the date you selected are not available yet. Please check back closer to your intended date of travel.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again."];
-  var esPhrases = ["Ruta", "Fuera de servicio", "Continuar como", "No hay servicio de autobús en estas vacaciones.", "Lo sentimos. Los horarios de autobuses para la fecha que ha seleccionado aún no están disponibles . Por favor, vuelva más cerca de su fecha prevista del viaje.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode falló por la siguiente razón: ", "Hora", "ID de parada", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo."];;
+  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no bus service on this holiday.", "We’re sorry. Bus schedules for the date you selected are not available yet. Please check back closer to your intended date of travel.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again.","to"];
+  var esPhrases = ["Ruta", "Fuera de servicio", "Continuar como", "No hay servicio de autobús en estas vacaciones.", "Lo sentimos. Los horarios de autobuses para la fecha que ha seleccionado aún no están disponibles . Por favor, vuelva más cerca de su fecha prevista del viaje.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode falló por la siguiente razón: ", "Hora", "ID de parada", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo.",""];;
   if (language == "es") {
     return esPhrases[enPhrases.indexOf(englishString)];
   } else {

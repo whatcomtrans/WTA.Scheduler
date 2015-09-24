@@ -1,0 +1,1 @@
+var notices=[{"id":3,"title":"Bus stop closure on Alabama","url":"http://www.ridewta.com/Pages/notice-details.aspx?ID=3"}];setTimeout(function(){var noticeList=$("#noticeList");for(i=0;i<notices.length;i++){noticeList.append("<li><a href='"+notices[i].url+"'>"+notices[i].title+"</a></li>");}},2000);

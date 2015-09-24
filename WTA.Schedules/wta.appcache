@@ -1,31 +1,29 @@
 ﻿CACHE MANIFEST
-# v0.11 2015-09-10
+# v0.14 2015-09-24
 
 CACHE:
-/common/en/footer.html
-/common/en/left-nav.html
-/common/en/sidebar.html
-/common/en/header.html
-/common/en/map.html
-/common/en/routes.html
-/common/en/route-details.html
-/common/en/stops.html
-/common/es/footer.html
-/common/es/left-nav.html
-/common/es/sidebar.html
-/common/es/header.html
-/common/es/map.html
-/common/es/routes.html
-/common/es/route-details.html
-/common/es/stops.html
+/common/en/footer.html.gz
+/common/en/left-nav.html.gz
+/common/en/sidebar.html.gz
+/common/en/header.html.gz
+/common/en/map.html.gz
+/common/en/routes.html.gz
+/common/en/route-details.html.gz
+/common/en/stops.html.gz
+/common/es/footer.html.gz
+/common/es/left-nav.html.gz
+/common/es/sidebar.html.gz
+/common/es/header.html.gz
+/common/es/map.html.gz
+/common/es/routes.html.gz
+/common/es/route-details.html.gz
+/common/es/stops.html.gz
 
-/css/schedules.min.css
+/css/schedules.min.css.gz
 
-/Scripts/app.min.js
+/Scripts/app.min.js.gz
 
-http://data.ridewta.com/gtfs/website/data_routes.js
-http://data.ridewta.com/gtfs/website/data_routes.js.gz
-http://data.ridewta.com/gtfs/website/data_trips.js.gz
+http://data.ridewta.com/gtfs/website/data.min.js.gz
 
 /fonts/fontawesome-webfont.eot
 /fonts/fontawesome-webfont.svg
