@@ -15,6 +15,19 @@ if (language == "es") {
 }
 var markers = [];
 var serviceChangeDate, serviceLastDate, currentDayNum;
+currentDate = new Date();
+currentDayNum = Date.parse(currentDate);
+currentDayNum = new Date(currentDayNum);
+currentDayNum = parseInt((currentDayNum.getFullYear().toString()) + (("0" + ((currentDayNum.getMonth()+1).toString())).slice(-2)) + (("0" + ((currentDayNum.getDate()).toString())).slice(-2)));
+var weekday = new Array(7);
+weekday[0]=  "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+currentDate = weekday[d.getDay()];
 $(document).ready(function () {
     $(window).on('hashchange', function () {
         loadPageContent();
