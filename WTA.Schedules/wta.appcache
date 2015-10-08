@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-# v0.14 2015-09-24
+# v0.26 2015-10-08
 
 CACHE:
 /common/en/footer.html.gz
@@ -23,7 +23,7 @@ CACHE:
 
 /Scripts/app.min.js.gz
 
-http://data.ridewta.com/gtfs/website/data.min.js.gz
+http://data.ridewta.com/gtfs/data.min.js.gz
 
 /fonts/fontawesome-webfont.eot
 /fonts/fontawesome-webfont.svg
