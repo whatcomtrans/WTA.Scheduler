@@ -243,10 +243,6 @@ function initializeSidebar() {
             $('#findStop').trigger('click');
         }
     });
-    var noticeList = $("#noticeList");
-    for (i = 0; i < notices.length; i ++) {
-        noticeList.append("<li><a href='" + notices[i].url + "'>" + notices[i].title + "</a></li>");
-    }
 }
 function showLoading(element) {
     var items = $(element).children(':visible');
@@ -628,13 +624,13 @@ function displaySelectedRouteAsync() {
     $('#schedule').css("overflow-x","hidden");
     showLoading(element);
     if (typeof trips != "undefined") {
-        setTimeout(function () { 
+        setTimeout(function () {
             displaySelectedRoute();
             $('#schedule').css("overflow-x","scroll");
             $('#top-scrollbar').show();
         }, 1000);
     } else {
-        loadTripData(function () { 
+        loadTripData(function () {
             displaySelectedRoute();
             $('#schedule').css("overflow-x","scroll");
             $('#top-scrollbar').show();
@@ -988,7 +984,7 @@ function applyFilter() {
     var filterEnd = '#' + $('#stopListEnd').children(":selected").attr("id");
     var startCells = $('#busTable td').not(filterStart + ', ' + filterEnd);
     startCells.hide();
-    $('#printSchedule').show();     
+    $('#printSchedule').show();
     setStickyHeader();
 }
 function convertToMilitary(cells) {
@@ -1636,9 +1632,9 @@ function initializeMap() {
         draggable: true,
         keyboardShortcuts: true
     };
-    finishInit();  
+    finishInit();
     navigator.geolocation.getCurrentPosition(function(position) {
-        var centerLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+        var centerLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         map.setCenter(centerLocation);
     },
     function (error) {
