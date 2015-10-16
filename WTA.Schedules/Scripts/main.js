@@ -225,9 +225,10 @@ function initializeHeader() {
     });
 }
 function initializeSidebar() {
-    $("#fdate").datepicker({ dateFormat: "mm/dd/y" }).datepicker("setDate", new Date());
+    if (language=="es"){$("#fdate").datepicker({ dateFormat: "dd.mm.y" }).datepicker("setDate", new Date());} 
+    else {$("#fdate").datepicker({ dateFormat: "mm/dd/y" }).datepicker("setDate", new Date());}
     var currentTime = new Date();
-    currentTime = currentTime.getHours() + ":" + currentTime.getMinutes();
+    currentTime = currentTime.getHours() + ":" + ('0'+currentTime.getMinutes()).slice(-2);
     $('#ftime').val(currentTime);
     if (!routeList) {
         routeList = getRoutes();
@@ -389,7 +390,11 @@ function initializeRouteDetails() {
             }
         }
         var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-        var d = new Date().toLocaleDateString('en-US', dateConfig);
+        if (language=="es") {
+            var d = new Date().toLocaleDateString('es', dateConfig);
+        } else {
+            var d = new Date().toLocaleDateString('en-US', dateConfig);
+        }
         $('#datepicker').attr('value', d);
         var todaysDate = new Date();
         $(function () {
@@ -1226,13 +1231,18 @@ function initializeStops() {
         chosenRouteId = $(this).children(":selected").attr("id");
     });
     var dateConfig = { weekday: "long", year: "numeric", month: "long", day: "numeric" }
-    var d = new Date().toLocaleDateString('en-US', dateConfig);
+    if (language=="es") {
+        var d = new Date().toLocaleDateString('es', dateConfig);
+    } else {
+        var d = new Date().toLocaleDateString('en-US', dateConfig);
+    }
     $('#datepicker').attr('value', d);
     var todaysDate = new Date();
     $(function () {
         $('#datepicker').datepicker({
-            showOn: "both",
+            dateFormat: 'DD, MM d, yy',
             minDate: todaysDate,
+            showOn: "both",
             buttonText: "<i class='fa fa-calendar'></i>"
         });
     });
@@ -1980,4 +1990,26 @@ function lang(englishString) {
   } else {
     return englishString;
   }
+}
+if (language == "es") {
+    $.datepicker.setDefaults({minDate: todaysDate,
+            showOn: "both",
+            buttonText: "<i class='fa fa-calendar'></i>",
+            closeText: "Cerrar",
+            prevText: "&#x3C;Ant",
+            nextText: "Sig&#x3E;",
+            currentText: "Hoy",
+            monthNames: [ "enero","febrero","marzo","abril","mayo","junio",
+            "julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+            monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+            "jul","ago","sep","oct","nov","dic" ],
+            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+            dayNamesMin: [ "D","L","M","X","J","V","S" ],
+            weekHeader: "Sm",
+            dateFormat: "dd/mm/yy",
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ""});
 }
