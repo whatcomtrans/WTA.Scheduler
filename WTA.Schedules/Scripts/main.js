@@ -1,7 +1,7 @@
 // locals
 var currentRouteID, currentRouteNumber, currentStopID, routeList, map,
     trip_headsign, servedByRoutes, servedByRoutesMap, finalStops, finalStopsMap, specialServiceDate,
-    map, busLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId, chosenRoute, chosenRouteId,
+    map, busLayer, routesLayer, mapOptions, currentLocation, mapStyles, geocoder, kmlStopCode, kmlStopName, kmlStopId, chosenRoute, chosenRouteId,
     stopIdVariable, bounds, panorama, stopNameVariable, stopVariable, stopQuery, pagerTimeout, $tableHeader, $tableHeaderClone, tableHeaderTop, $tableContainer, $table;
 var currentDirectionID = 0;
 var currentServiceID = 1;
@@ -235,7 +235,7 @@ function initializeSidebar() {
     }
     var selRoutes = $("#selRoutes");
     for (i = 0; i < routeList.length; i ++) {
-        selRoutes.append("<option value='" + routeList[i].route_short_name + "'>" + routeList[i].route_short_name + "</option>");
+        selRoutes.append("<option value='" + routeList[i].route_short_name + "'>" + routeList[i].route_short_name + " " + routeList[i].route_long_name + "</option>");
     }
     $("#findRoute").click(findRouteClick);
     $('#findStop').click(onFindStopClick);
@@ -1669,10 +1669,15 @@ function finishInit() {
         mapOptions);
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+    //load routes geoJSON
+    routesLayer = map.data;
+    routesLayer.loadGeoJson('http://data.ridewta.com/kml/routes_min.json');
+
     busLayer = new google.maps.KmlLayer({
         url: 'http://data.ridewta.com/kml/Stops.kml',
         preserveViewport: true
     });
+
     google.maps.event.addListener(map, 'zoom_changed', function () {
         if (map.zoom < 15) {
             busLayer.setMap(null);
@@ -1687,7 +1692,7 @@ function finishInit() {
         });
     });
     if (map.zoom < 15) {
-        busLayer.setMap(null)
+        busLayer.setMap(null);
     } else {
         busLayer.setMap(map);
     }
@@ -1707,6 +1712,23 @@ function finishInit() {
         e.featureData = {
             'infoWindowHtml': '<h4 style="text-decoration: underline">' + kmlStopName + '</h4><table class="table table-striped table-hover table-bordered"><tr><th>' + lang("Stop ID") + '</th><th>' + lang("Served By") + '</th><tr><td><a href="#stops?stopId=' + kmlStopCode + '">' + kmlStopCode + '</a></td><td id="servedByRoutes">' + servedByRoutesMap + '</td></tr></table>'
         }
+    });
+    var infowindow = new google.maps.InfoWindow();
+    routesLayer.addListener('click', function(e) {
+        deleteMarkers();
+        var myHTML = e.feature.getProperty("name");
+        var num = myHTML.substring(6);
+        infowindow.setContent('<h4><a href="#route-details?routeNum=' + num + '">' +myHTML+ '</a></h4>');
+        infowindow.setPosition(e.latLng);
+        infowindow.setOptions({pixelOffset: new google.maps.Size(0,-10)});
+        infowindow.open(map);
+    });
+    routesLayer.addListener('mouseover', function(event) {
+        routesLayer.revertStyle();
+        routesLayer.overrideStyle(event.feature, {strokeWeight: 8});
+    });
+    routesLayer.addListener('mouseout', function(event) {
+        routesLayer.revertStyle();
     });
     setTimeout(function() {fillStopsMap();},500);
     scrollContentTop();
