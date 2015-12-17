@@ -1749,7 +1749,7 @@ function showPosition(position) {
 function codeAddressMap() {
     var center;
     var address = document.getElementById('searchStops').value;
-    if (address.length == 3 || address.length == 4) {
+    if ((address.length == 3 || address.length == 4) && address.match(/^[0-9]+$/) != null) {//new
         var stopCodeResult = $.grep(stops, function (a) {
             return a.stop_code == address;
         });
