@@ -2109,6 +2109,37 @@ input[type=button]:hover,
 
 /*************************************** Responsive End ***************************************/
 
+/********** Error Messages ***********/
+
+.info, .success, .warning, .error, .validation {
+z-index: 999;
+position: absolute;
+border: 1px solid;
+border-radius:3px;
+margin: 10px 0px;
+top: 0px;
+left: 20%;
+width: 60%;
+padding:15px 10px 15px 15px;
+}
+.info {
+color: #00529B;
+background-color: #BDE5F8;
+}
+.success {
+color: #4F8A10;
+background-color: #DFF2BF;
+}
+.warning {
+color: #9F6000;
+background-color: #FEEFB3;
+}
+.error {
+color: #D8000C;
+background-color: #FFBABA;
+}
+
+/********** End Error Messages *************/
 
 /* Print CSS */
 @media print {

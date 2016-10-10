@@ -244,6 +244,14 @@ function initializeSidebar() {
             $('#findStop').trigger('click');
         }
     });
+    var inputStart = document.getElementById('tbStartLocation');
+    var inputEnd = document.getElementById('tbEndLocation');
+    var options = {
+        bounds: bounds,
+        componentRestrictions: {country: 'us'}
+    };
+    var autocompleteStart = new google.maps.places.Autocomplete(inputStart, options);
+    var autocompleteEnd = new google.maps.places.Autocomplete(inputEnd, options);
 }
 function showLoading(element) {
     var items = $(element).children(':visible');
@@ -354,6 +362,7 @@ function initializeRouteDetails() {
         serviceChangeDate = parseInt(calendar[0].end_date);
         serviceLastDate = parseInt(calendar[4].end_date);
         if (day > 0 && day < 6) {
+            day = 'Weekday';
             if (SSDint <= serviceChangeDate) {
                 $('#Weekday').addClass('selectedDay');
                 currentServiceID = 1;
@@ -366,6 +375,7 @@ function initializeRouteDetails() {
             }
         }
         else if (day == 6) {
+            day = 'Saturday';
             if (SSDint <= serviceChangeDate) {
                 $('#Saturday').addClass('selectedDay');
                 currentServiceID = 2;
@@ -378,6 +388,7 @@ function initializeRouteDetails() {
             }
         }
         else if (day == 0) {
+            day = 'Sunday';
             if (SSDint <= serviceChangeDate) {
                 $('#Sunday').addClass('selectedDay');
                 currentServiceID = 3;
@@ -446,7 +457,7 @@ function initializeRouteDetails() {
                 $('#stopListEnd option:nth-child('+i+')').prop('disabled', true);
             }
         });
-        displaySelectedRouteAsync();
+        thisDay(day);
         scrollContentTop();
     }
     else {
@@ -888,6 +899,10 @@ function displaySelectedRoute() {
         endingOptions += '<option value="' + $(availableStopsEnd[i]).text() + '" id="' + $(availableStopsEnd[i]).attr("data-stopid") + '">' + $(availableStopsEnd[i]).text() + '</option>';
     }
     $('#stopListEnd').append(endingOptions);
+    var route = getRoute(currentRouteID);
+    if (route.route_short_name == '55' || route.route_short_name == '71X' || route.route_short_name == '72X') {
+    	$('#noService').append(lang('<br />Flex service is available on this route within the flex service area (see map). Click <a href="http://www.ridewta.com/types-of-service/fixed-route/flex-service">here</a> for more information on Flex Service.'));
+    }
 }
 function uniqueStops(currentRouteID) {
     var tripsInRoute = [];
@@ -1314,7 +1329,7 @@ function codeAddressStop() {
                 position: results[0].geometry.location
             });
         } else {
-            alert(lang('Geocode was not successful for the following reason: ') + status);
+            alertBox((lang('Geocode was not successful for the following reason: ') + status),'error');
         }
     });
 }
@@ -1648,6 +1663,7 @@ function initializeMap() {
         draggable: true,
         keyboardShortcuts: true
     };
+
     finishInit();
     navigator.geolocation.getCurrentPosition(function(position) {
         var centerLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -1656,16 +1672,16 @@ function initializeMap() {
     function (error) {
         switch(error.code) {
             case error.PERMISSION_DENIED:
-                alert("Some mapping functions will not work without geolocation services enabled. For full functionality, please go to your browser's settings and enable location services.");
+                alertBox(("Some mapping functions will not work without geolocation services enabled. For full functionality, please go to your browser's settings and enable location services."),'info');
                 break;
             case error.POSITION_UNAVAILABLE:
-                alert("We were unable to get your currect location. Some mapping functions may not be available.");
+                alertBox(("We were unable to get your currect location. Some mapping functions may not be available."),'warning');
                 break;
             case error.TIMEOUT:
-                alert("The request to use your location timed out. Some mapping functions may not be available.");
+                alertBox(("The request to use your location timed out. Some mapping functions may not be available."),'warning');
                 break;
             case error.UNKNOWN_ERROR:
-                alert("We were unable to get your current location. Some mapping functions may not be available.");
+                alertBox(("We were unable to get your current location. Some mapping functions may not be available."),'warning');
                 break;
         }
     });
@@ -1678,12 +1694,20 @@ function finishInit() {
     //load routes geoJSON
     routesLayer = map.data;
     routesLayer.loadGeoJson('http://data.ridewta.com/kml/routes_min.json');
-
+    //set up autocomplete
+    var input = document.getElementById('searchStops');
+    var options = {
+        bounds: bounds,
+        componentRestrictions: {country: 'us'}
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        codeAddressMap();
+    });
     busLayer = new google.maps.KmlLayer({
         url: 'http://data.ridewta.com/kml/Stops.kml',
         preserveViewport: true
     });
-
     google.maps.event.addListener(map, 'zoom_changed', function () {
         if (map.zoom < 15) {
             busLayer.setMap(null);
@@ -1749,7 +1773,8 @@ function showPosition(position) {
 function codeAddressMap() {
     var center;
     var address = document.getElementById('searchStops').value;
-    if ((address.length == 3 || address.length == 4) && address.match(/^[0-9]+$/) != null) {//new
+    var service = new google.maps.places.PlacesService(map);
+    if ((address.length == 3 || address.length == 4) && address.match(/^[0-9]+$/) != null) {
         var stopCodeResult = $.grep(stops, function (a) {
             return a.stop_code == address;
         });
@@ -1761,10 +1786,12 @@ function codeAddressMap() {
                         map.setCenter(results[0].geometry.location);
                         map.setZoom(17);
                     } else {
-                        alert(lang('There were no results within our service area. Please check the stop number you entered and try again.'));
+                        //TODO: Graceful error messages
+                        alertBox((lang('There were no results within our service area. Please check the stop number you entered and try again.')),'error');
                     }
                 } else {
-                    alert(lang('Geocode was not successful for the following reason: ') + status);
+                    //TODO: Graceful error messages
+                    alertBox((lang('Geocode was not successful for the following reason: ') + status),'error');
                 }
             });
         } else {
@@ -1789,19 +1816,54 @@ function codeAddressMap() {
             markers.push(marker);
         }
     } else {
-        geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                center = results[0].geometry.location;
-                if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
-                    map.setCenter(results[0].geometry.location);
-                    map.setZoom(17);
+        //TODO: Use places api to search first. If no results, then use geocoder as backup.
+        var usrLocation = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
+        var request = {
+            keyword: address,
+            rankBy: google.maps.places.RankBy.DISTANCE,
+            location: usrLocation
+        };
+        var callback = function(results, status) {
+            if (results.length > 0) {
+                console.log(status);
+                if (status == "OK") {
+                    //Sorts results by their rating (not entirely helpful, turning off)
+                    // results.sort(function(a,b){
+                    //     var a1 = a.rating, b1 = b.rating;
+                    //     if (a1==b1) return 0;
+                    //     return a1>b1? 1: -1;
+                    // });
+                    center = results[0].geometry.location;
+                    if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
+                        map.setCenter(results[0].geometry.location);
+                        map.setZoom(17);
+                    } else {
+                        //TODO: Graceful error messages
+                        alertBox((lang('There were no results within our service area. Please check the address you entered and try again.')),'error');
+                    }
                 } else {
-                    alert(lang('There were no results within our service area. Please check the address you entered and try again.'));
+                    //TODO: Graceful error messages
+                    alertBox((lang('Geocode was not successful for the following reason: ') + status),'error');
                 }
             } else {
-                alert(lang('Geocode was not successful for the following reason: ') + status);
+                geocoder.geocode({ 'address': address, 'bounds': bounds }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        center = results[0].geometry.location;
+                        if (center.lat() < 49.004438 && center.lat() > 48.410863 && center.lng() < -121.595991 && center.lng() > -122.904638) {
+                            map.setCenter(results[0].geometry.location);
+                            map.setZoom(17);
+                        } else {
+                            //TODO: Graceful error messages
+                            alertBox((lang('There were no results within our service area. Please check the address you entered and try again.')),'error');
+                        }
+                    } else {
+                        //TODO: Graceful error messages
+                        alertBox((lang('Geocode was not successful for the following reason: ') + status),'error');
+                    }
+                });
             }
-        });
+        };
+        service.nearbySearch(request, callback);
     }
 }
 function setAllMap(map) {
@@ -2010,9 +2072,28 @@ function DropTopNav($, l, a) {
         }
     }
 }
+function alertBox(alertText, alertType) {
+    var type;
+    if (alertType=='error') {
+        type='exclamation';
+    } else if (alertType=='success') {
+        type='check';
+    } else if (alertType=='warning') {
+        type='warning';
+        alertText='exclamation';
+    }
+    $('.alertBox').html('');
+    $('.alertBox').addClass(alertType);
+    $('.alertBox').html('<i class="fa fa-'+type+'-circle"></i><p>'+alertText+'</p>');
+    $('.alertBox').slideDown();
+    setTimeout(function() {
+        $('.alertBox').slideUp();
+        $('.alertBox').removeClass(alertType);
+    },50000);
+}
 function lang(englishString) {
-  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no bus service on this holiday.", "We’re sorry. Bus schedules for the date you selected are not available yet. Please check back closer to your intended date of travel.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again.","to"];
-  var esPhrases = ["Ruta", "Fuera de servicio", "Continuar como", "No hay servicio de autobús en estas vacaciones.", "Lo sentimos. Los horarios de autobuses para la fecha que ha seleccionado aún no están disponibles . Por favor, vuelva más cerca de su fecha prevista del viaje.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode falló por la siguiente razón: ", "Hora", "ID de parada", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo.",""];;
+  var enPhrases = ["Route", "Out of Service", "Continues On As", "There is no bus service on this holiday.", "We’re sorry. Bus schedules for the date you selected are not available yet. Please check back closer to your intended date of travel.", "There is no service during the specified route and time.", "Starting Bus Stop", "No available view of this bus stop.", "Geocode was not successful for the following reason: ", "Time", "Stop ID", "Served By", "There were no results within our service area. Please check the stop number you entered and try again.","to",'Flex service is available on this route within the flex service area (see map). Click <a href="http://www.ridewta.com/types-of-service/fixed-route/flex-service">here</a> for more information on Flex Service.'];
+  var esPhrases = ["Ruta", "Fuera de servicio", "Continuar como", "No hay servicio de autobús en estas vacaciones.", "Lo sentimos. Los horarios de autobuses para la fecha que ha seleccionado aún no están disponibles . Por favor, vuelva más cerca de su fecha prevista del viaje.", "No hay servicio de la ruta y la hora especificadas.", "A partir de la parada de autobús", "No hay vistas disponibles de esta parada de autobús.", "Geocode falló por la siguiente razón: ", "Hora", "ID de parada", "Servido por", "No hubo resultados dentro de nuestra área de servicio . Por favor, compruebe el número de parada que ha introducido y vuelva a intentarlo.","",'Servicio flexible está disponible en esta ruta dentro del área de servicio de la flexión (ver mapa). Haga clic <a href="http://www.ridewta.com/espanol/tipos-de-servicio/ruta-fija/servicio-flexible">aquí</a> para obtener más información sobre el servicio flexible.'];;
   if (language == "es") {
     return esPhrases[enPhrases.indexOf(englishString)];
   } else {
