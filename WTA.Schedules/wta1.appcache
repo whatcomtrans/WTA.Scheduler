@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-#09/20/2016 09:33:29
+#04/05/2017 10:28:53
 
 CACHE:
 /common/en/footer.html.gz
@@ -24,7 +24,7 @@ CACHE:
 
 /Scripts/app.min.js.gz
 
-http://data.ridewta.com/gtfs/data.min.js.gz
+https://data.ridewta.com/gtfs/data.min.js.gz
 
 /fonts/fontawesome-webfont.eot
 /fonts/fontawesome-webfont.svg
@@ -50,6 +50,7 @@ http://data.ridewta.com/gtfs/data.min.js.gz
 /Images/go-gold.jpg
 /Images/go-green.jpg
 /Images/go-red.jpg
+/Images/go-plum.jpg
 
 
 # Give permission to use anything from the network if it isn't already in cache

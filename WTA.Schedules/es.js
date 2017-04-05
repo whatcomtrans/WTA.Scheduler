@@ -1,4 +1,13 @@
-//App cache handling
+//App cache handling -- updated
+if (window.applicationCache.status === 5) {
+  console.log('obsolete manifest state');
+  window.location.reload();
+}
+window.applicationCache.addEventListener('onobsolete', function(e) {
+  console.log('obsolete manifest event');
+  window.location.reload();
+});
+
 window.applicationCache.addEventListener('updateready', function(e) {
 	console.log('update is ready!');
 	if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
@@ -26,10 +35,10 @@ function loadNotices() {
         	var noticeID = notices[i].url.substring(70);
             noticeList.append("<li><a href='http://www.ridewta.com/espanol/Pages/notice-details.aspx?ID=" + noticeID + "'>" + notices[i].title + "</a></li>");
         }
-        setTimeout(loadNotices, 300000);
+        setTimeout(loadNotices, 5000);
       }
     }
-  xhttp.open("GET", "https://pi1s1ct7mb.execute-api.us-west-2.amazonaws.com/prod/notices/es/", true);
+  xhttp.open("GET", "https://api.ridewta.com/notices/es/", true);
   xhttp.send();
 }
 setTimeout(loadNotices, 1000);
