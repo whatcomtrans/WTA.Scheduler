@@ -6,7 +6,7 @@ goto %1
 :help
 Echo Use parameter css to minify the CSS, ex "build css"
 Echo Use parameter js to minify the JavaScript, ex "build js"
-Echo Use parameter isntall to install the UglifyJS2 and UglifyCSS to global, ex "build install"
+Echo Use parameter install to install the UglifyJS2 and UglifyCSS to global, ex "build install"
 pause
 goto :end
 
@@ -22,11 +22,11 @@ cd ..
 cd WTA.Schedules
 cd Scripts
 Echo Minifying and combining Javascript application files
-uglifyjs jquery-ui.min.js linq.min.js bootstrap.min.js jquery-1.9.0.min.js routes.js > app.min.js
+uglifyjs jquery-ui.min.js linq.min.js bootstrap.min.js jquery-1.9.0.min.js main.js app.js > app.min.js
 cd ..
 cd ..
 Echo Minifying and combining data
-uglifyjs trips.js stops.js stop_times.js calendar.js calendar_dates.js > data.min.js
+REM uglifyjs trips.js stops.js stop_times.js calendar.js calendar_dates.js > data.min.js
 cd ..
 cd ..
 

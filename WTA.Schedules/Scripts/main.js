@@ -1072,15 +1072,9 @@ function printDiv(divName) {
     window.print();
 }
 function pdf() {
-    if (language == 'es') {
-        var routeName = getRoute(currentRouteID).route_short_name;
-        var pdfUrl = "http://ridewta.com/espanol/Documents/ruta%20"+routeName+".pdf";
-        window.open(pdfUrl,'_blank');
-    } else {
-        var routeName = getRoute(currentRouteID).route_short_name;
-        var pdfUrl = "http://ridewta.com/Documents/Route%20"+routeName+".pdf";
-        window.open(pdfUrl,'_blank');
-    }
+    var routeName = getRoute(currentRouteID).route_short_name;
+    var pdfUrl = "https://data.ridewta.com/routepdfs/" + language + "/" + routeName + "_" + language + ".pdf";
+    window.open(pdfUrl,'_blank');
 }
 //When clicking on the day tabs, date should remain in the same week
 //When clicking on the date picker, just use the date they selected
